@@ -1,0 +1,739 @@
+﻿@using XCRV.Domain.Entities
+
+@model ClientBorrowerViewModel
+@{
+    ViewData["Title"] = "Client And Guarantor Summary";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+<style>
+.modal.fade {
+  z-index: 10000000 !important;
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="~/css/Charts/chartist.css">
+<link rel="stylesheet" type="text/css" href="~/css/Charts/chartist-plugin-tooltip.css">
+<link rel="stylesheet" type="text/css" href="~/css/Charts/chartist.min.css">
+<link rel="stylesheet" type="text/css" href="~/css/Charts/palette-gradient.css">
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"></h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Customer</a></li>
+                    <li class="breadcrumb-item active">Customer 360 Analyzer</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Customer 360 Analyzer</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-controller="CustomerGeneralDetails" asp-action="Index">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-warning">Customer Id</button>
+                                </div>
+                                <!-- /btn-group -->
+                                <input type="text" id="txtCustomerId" name="customerId" class="form-control" value="@ViewBag.CustomerId">
+                                <span class="input-group-append">
+                                    <button type="button" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /.row -->
+             <div class="row">
+                 <h2 class="card-title">Customer 360 Degree Details</h2>
+              </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="customerInfo" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Graphic View</th>
+                                    <th>CIF</th>
+                                    <th>Business Name</th>
+                                    <th>Role</th>
+                                    <th>Key Person's Name</th>
+                                    <th>Contact</th>
+                                    <th>NID</th>
+                                    <th>First A/C Open Date</th>
+                                    <th>Adress</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+
+    <div class="modal fade" id="GuarantorIntroducerModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-gradient-info">
+                    <h4 class="modal-title">360 analysis view</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id='GuarantorIntroducerModalBody' class="modal-body">
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+     <div class="modal fade" id="GuarantorIntroducerModalTab">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header bg-gradient-info">
+                    <h4 class="modal-title">360 analysis view</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id='GuarantorIntroducerModalBodyTab' class="modal-body">
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    
+     <div class="modal fade" id="GraphicTab">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-gradient-info">
+                    <h4 class="modal-title">Graphical View</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+               @await Html.PartialAsync("_GraphView")
+
+                <div id='GraphicBodyTab' class="modal-body">
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+</div>
+<!-- /.content -->
+
+@section ScriptSection
+{
+    <!-- DataTables  & Plugins -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/plugins/jszip/jszip.min.js"></script>
+    <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <script src="~/css/Charts/chart.min.js" type="text/javascript"></script>
+
+    <script>
+        $(document).on('click', '#btnSearch',  function () {
+           let  searchString = $('#txtCustomerId').val();
+           let  seachType = "CustomerID";
+           if(searchString==null)
+           {
+             toastr.error('Customer Id cannot be empty');
+           }
+           else{
+             loadClentInfo(searchString );
+           }
+      });
+
+ var table;
+
+     $('#customerInfo').DataTable({
+        "filter": false, 
+        "paging": true,
+        "pageLength": 10,
+        "lengthChange": false,
+        "pagingType": "full_numbers",
+        "scrollX": false,
+        "autoWidth": true,
+        "initComplete": function (settings, json) {
+            $("#customerInfo").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+        },
+    });
+
+   function loadClentInfo(searchString) {       
+     $('#customerInfo').DataTable().destroy();       
+      table=  $('#customerInfo').DataTable({
+            //"processing": true, // for show progress bar
+            "language": {
+                processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+            },
+            "filter": true, // this is for disable filter (search box)
+            "paging": true,
+            "pageLength": 5,
+            "lengthChange": false,
+            "pagingType": "full_numbers",
+            "scrollX": false,
+            "autoWidth": true,
+            "ajax": {
+                "url": "/ClientGuarantorSummary/CustomerLevelStaticData",
+                "dataSrc": function (d) {
+                    if (d.data.length === 0) {
+                        var settings = $('#customerInfo').DataTable().settings()[0];
+                        settings.oLanguage.sEmptyTable = d.message;
+                    }
+                    return d.data;
+                },
+                "data": {customerId: searchString },
+                "type": "GET",
+                "dataType": "json"
+            },
+            "columns": [
+                 {
+                        data: null,
+                        render: function (data, type, row) {
+                            var dom = '<span class="cursor-pointer graphView" ><i class="fas fa-eye fa-1x" style="text-align: center;color: cornflowerblue; display: block;"></i></span>';
+                            return dom;
+                        },
+                        ordering: false
+                 },
+                {
+                    "data": "cif_id", "name": "cif_id", render: function (data, type) {
+                    if (type === 'display') {
+                    if(data){
+                                                           
+                        return '<i></i><a class="cursor-pointer popupTab">' + data + '</a>';
+                    }
+                    }
+                     return data;
+                   }
+                },
+                { "data": "business_name", "name": "business_name" },
+                { "data": "role", "name": "role" },
+                { "data": "key_person_name", "name": "key_person_name" },
+                { "data": "phone_number", "name": "phone_number" },
+                { "data": "nid", "name": "nid" },
+                { "data": "account_open_date", "name": "account_open_date" },
+                { "data": "organizationaddress", "name": "organizationaddress" }
+            ]
+        });
+       
+        $("#customerInfo").wrap('<div style="overflow:auto;" />');
+     }
+
+    $('#customerInfo').on('click', '.popup', function() {
+        $('#DepositTable').DataTable().destroy(); 
+        var rowData = table.row($(this).parents('tr')).data();
+        console.log(rowData);   
+        $.ajax({
+            url: "/ClientGuarantorSummary/CIFDetails",
+            type: "GET",
+            data: { cif_id: rowData['cif_id']},
+            success: function (result) {
+                $("#GuarantorIntroducerModal").modal('show');
+                $("#GuarantorIntroducerModalBody").html(result);
+                
+                $('#DepositTable').DataTable({
+                "filter": false, 
+                "paging": true,
+                "pageLength": 5,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "scrollX": false,
+                "autoWidth": true,
+                "initComplete": function (settings, json) {
+                    $("#DepositTable").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                },
+            });
+
+                 $('#CurrentAccTable').DataTable({
+                "filter": false, 
+                "paging": true,
+                "pageLength": 5,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "scrollX": false,
+                "autoWidth": true,
+                "initComplete": function (settings, json) {
+                    $("#CurrentAccTable").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                },
+            });
+                 $('#TermDisTable').DataTable({
+                "filter": false, 
+                "paging": true,
+                "pageLength": 5,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "scrollX": false,
+                "autoWidth": true,
+                "initComplete": function (settings, json) {
+                    $("#TermDisTable").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                },
+                    });
+                 $('#TermPerformanceTable').DataTable({
+                "filter": false, 
+                "paging": true,
+                "pageLength": 5,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "scrollX": false,
+                "autoWidth": true,
+                "initComplete": function (settings, json) {
+                    $("#TermPerformanceTable").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                },
+            });
+           }
+         });    
+     } )
+
+      $('#customerInfo').on('click', '.popupTab', function() { 
+        var rowData = table.row($(this).parents('tr')).data();
+        var flag=1;
+        console.log(rowData);   
+        $.ajax({
+            url: "/ClientGuarantorSummary/CIFDetails",
+            type: "GET",
+            data: { cif_id: rowData['cif_id'],flag:flag},
+            success: function (result) {
+                $("#GuarantorIntroducerModalTab").modal('show');
+                $("#GuarantorIntroducerModalBodyTab").html(result);
+               
+                $('#Tab1').DataTable({
+                "filter": false, 
+                "paging": true,
+                "pageLength": 5,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "scrollX": false,
+                "autoWidth": true,
+                "initComplete": function (settings, json) {
+                    $("#Tab1").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                },
+            });
+
+                 $('#Tab2').DataTable({
+                "filter": false, 
+                "paging": true,
+                "pageLength": 5,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "scrollX": false,
+                "autoWidth": true,
+                "initComplete": function (settings, json) {
+                    $("#Tab2").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                },
+            });
+                 $('#Tab3').DataTable({
+                "filter": false, 
+                "paging": true,
+                "pageLength": 5,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "scrollX": false,
+                "autoWidth": true,
+                "initComplete": function (settings, json) {
+                    $("#Tab3").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                },
+                    });
+                 $('#Tab4').DataTable({
+                "filter": false, 
+                "paging": true,
+                "pageLength": 5,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "scrollX": false,
+                "autoWidth": true,
+                "initComplete": function (settings, json) {
+                    $("#Tab4").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                },
+            });
+             $('#creditCardIssuence').DataTable({
+                "filter": false, 
+                "paging": true,
+                "pageLength": 5,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "scrollX": false,
+                "autoWidth": true,
+                "initComplete": function (settings, json) {
+                    $("#creditCardIssuence").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                },
+            });
+             $('#creditCardPerformance').DataTable({
+                "filter": false, 
+                "paging": true,
+                "pageLength": 5,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "scrollX": false,
+                "autoWidth": true,
+                "initComplete": function (settings, json) {
+                    $("#creditCardPerformance").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                },
+            });
+            $('#FundedLoan').DataTable({
+                "filter": false, 
+                "paging": true,
+                "pageLength": 5,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "scrollX": false,
+                "autoWidth": true,
+                "initComplete": function (settings, json) {
+                    $("#FundedLoan").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                },
+            });
+             $('#NonFundedLoan').DataTable({
+                "filter": false, 
+                "paging": true,
+                "pageLength": 5,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "scrollX": false,
+                "autoWidth": true,
+                "initComplete": function (settings, json) {
+                    $("#NonFundedLoan").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                },
+            });
+             $('#CompositLimit').DataTable({
+                "filter": false, 
+                "paging": true,
+                "pageLength": 5,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "scrollX": false,
+                "autoWidth": true,
+                "initComplete": function (settings, json) {
+                    $("#CompositLimit").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                },
+            });
+
+            $('#Assetsummary').DataTable({
+                "filter": false, 
+                "paging": false,
+                "pageLength": 3,
+                "bInfo" : false,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "scrollX": false,
+                "autoWidth": true,
+                "initComplete": function (settings, json) {
+                    $("#Assetsummary").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                },
+            });
+             $('#LiabilitiesSummary').DataTable({
+                "filter": false, 
+                "paging": false,
+                "pageLength": 3,
+                "bInfo" : false,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "scrollX": false,
+                "autoWidth": true,
+                "initComplete": function (settings, json) {
+                    $("#LiabilitiesSummary").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                },
+            });
+             
+
+
+           }
+         });    
+     } )
+
+     
+    $('#customerInfo').on('click', '.graphView', function() {
+        debugger;
+        var rowData = table.row($(this).parents('tr')).data();
+        var cif= rowData['cif_id'];
+       // var flag1='C1';
+        //var flag2='C2';
+       // var flag3='C3';
+        console.log(rowData);  
+         $("#GraphicTab").modal('show');
+         loadCardData(cif);
+        // loadCardData(flag2,cif);
+        // loadCardData(flag3,cif);
+         loadChart1(cif);
+        
+     } )
+
+ function loadCardData(cif){
+   $.ajax({
+        
+            url: "/ClientGuarantorSummary/GetSummaryDataForDashBoard",
+            type: "GET",
+            data: {cif_id:cif },
+            complete: function (response) {           
+                summaryData = response.responseJSON.data;
+             
+                $("#cardNo1").html(summaryData.graphDatasCard1[0].nO_OF_AC);
+                $("#cardValue1").html(summaryData.graphDatasCard1[0].suM_OF_VALUE);
+                $("#cardno2").html(summaryData.graphDatasCard2[0].nO_OF_AC2);
+                $("#cardvalue2").html(summaryData.graphDatasCard2[0].suM_OF_VALUE2);
+                $("#cardno3").html(summaryData.graphDatasCard3[0].nO_OF_AC3);
+                $("#cardvalue3").html(summaryData.graphDatasCard3[0].suM_OF_VALUE3);
+                $("#cardno3").html(summaryData.graphDatasCard4[0].nO_OF_AC3);
+                $("#cardvalue3").html(summaryData.graphDatasCard4[0].suM_OF_VALUE3);
+            }
+        });
+ }
+ 
+
+ //  function loadChart1(cif) {
+ //    setTimeout(function() {
+ //         var userCtx = $("#customerActivation-chart");
+ //// Chart Options
+ //       var userChartOptions = {
+ //           responsive: true,
+ //           maintainAspectRatio: false,
+ //           responsiveAnimationDuration: 500,
+ //       };
+
+ //       // Chart Data
+ //       var userChartData = {
+ //           labels: ["Term Loan", "FDR", "DPS"],
+ //           datasets: [{
+ //               label: "Customer Activation",
+ //               data: [10,20,30],
+ //               backgroundColor: ['#666EE8', '#28D094', '#7a49a5'],
+ //           }]
+ //       };
+
+ //       var userChartconfig = {
+ //           type: 'doughnut',
+
+ //           // Chart Options
+ //           options: userChartOptions,
+
+ //           data: userChartData
+ //       };
+
+ //       // Create the chart
+ //       new Chart(userCtx, userChartconfig); 
+       
+ //       userCtx.update();
+ //       }, 1000);
+ //  }
+
+function loadChart1(cif){
+    setTimeout(function() {
+    var userCtx = $("#customerActivation-chart");
+    $.ajax({
+            url: "/ClientGuarantorSummary/GetSummaryDataForDashBoard",
+            type: "GET",
+            data: {cif_id:cif },
+            //async: false,
+            //  dataType: "json",
+            complete: function (response) {
+
+                userCount = response.responseJSON.data;
+
+                // Chart Options
+          
+                var userChartOptions = {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    responsiveAnimationDuration: 500,
+                };
+
+                // Chart Data
+                var userChartData = {
+                    labels: ["Term Loan", "FDR", "DPS"],
+                    datasets: [{
+                        label: "Term Loan",
+                        data: [userCount.graphDatasCard4[0].suM_OF_VALUE,
+                               userCount.graphDatasCard4[1].suM_OF_VALUE,
+                                userCount.graphDatasCard4[2].suM_OF_VALUE],
+                        backgroundColor: ['#666EE8', '#28D094', '#7a49a5'],
+                    }
+                    //{
+                    //    label: "FDR",
+                    //    data: [userCount.graphDatasCard4[0].valuE_FOR, userCount.graphDatasCard4[0].suM_OF_VALUE],
+                    //    backgroundColor: ['#666EE8', '#28D094', '#7a49a5'],
+                    //},
+                    //{
+                    //    label: "DPS",
+                    //    data: [userCount.graphDatasCard4[2].valuE_FOR, userCount.graphDatasCard4[2].suM_OF_VALUE],
+                    //    backgroundColor: ['#666EE8', '#28D094', '#7a49a5'],
+                    //}
+                ]
+                };
+
+                var userChartconfig = {
+                    type: 'doughnut',
+
+                    // Chart Options
+                    options: userChartOptions,
+
+                    data: userChartData
+                };
+
+                // Create the chart
+                new Chart(userCtx, userChartconfig);
+                
+            }
+        });
+         userCtx.update();
+             }, 1000);
+}
+
+
+function loadChart3(){
+    var loanActivationCtx = $("#loanActivation-chart");
+     setTimeout(function() {
+         $.ajax({
+            //url: "/Home/CountLoanActivationForDashBoard",
+            type: "GET",
+            //async: false,
+            //  dataType: "json",
+            complete: function (response) {
+
+                ///////////////////////////////
+
+                //loanActivationCount = response.responseJSON.data;
+                // Chart Options
+                var loanActivationChartOptions = {
+                    // Elements options apply to all of the options unless overridden in a dataset
+                    // In this case, we are setting the border of each bar to be 2px wide and green
+                    elements: {
+                        rectangle: {
+                            borderWidth: 2,
+                            borderColor: 'rgb(0, 255, 0)',
+                            borderSkipped: 'bottom'
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    responsiveAnimationDuration: 500,
+                    legend: {
+                        position: 'top',
+                    },
+                    scales: {
+                        xAxes: [{
+                            display: true,
+                            gridLines: {
+                                color: "#f3f3f3",
+                                drawTicks: false,
+                            },
+                            scaleLabel: {
+                                display: true,
+                            }
+                        }],
+                        yAxes: [{
+                            display: true,
+                            gridLines: {
+                                color: "#f3f3f3",
+                                drawTicks: false,
+                            },
+                            scaleLabel: {
+                                display: true,
+                            }
+                        }]
+                    },
+                    title: {
+                        display: false,
+                        text: 'Loan Activation'
+                    }
+                };
+
+                // Chart Data
+                var loanActivationChartData = {
+                    labels: ["Today", "Last 7 days", "Last 30 days"],
+                    datasets: [{
+                        label: "Initiated",
+                        data: [100,200,300],
+                        backgroundColor: "#FF4961",
+                        hoverBackgroundColor: "rgba(40,208,148,.9)",
+                        borderColor: "transparent"
+                    }, {
+                        label: "Active",
+                        data: [100,200,300],
+                        backgroundColor: "#28D094",
+                        hoverBackgroundColor: "rgba(255,73,97,.9)",
+                        borderColor: "transparent"
+                    }]
+                };
+
+                var loanActivationChartconfig = {
+                    type: 'bar',
+
+                    // Chart Options
+                    options: loanActivationChartOptions,
+
+                    data: loanActivationChartData
+                };
+
+                // Create the chart
+                new Chart(loanActivationCtx, loanActivationChartconfig);
+
+            }
+        });
+       
+        loanActivationCtx.update();
+    }, 1000);
+}
+   
+    $(document).ready(function () {
+     @if (TempData.ContainsKey("ErrorMessage"))
+     {
+       @:toastr.error('@TempData["ErrorMessage"]');
+     };
+   });
+
+    </script>
+
+}
+
+

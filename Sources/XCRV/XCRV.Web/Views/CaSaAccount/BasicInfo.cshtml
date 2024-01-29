@@ -1,0 +1,369 @@
+﻿
+@{
+    ViewData["Title"] = ViewBag.Title;
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+@using XCRV.Domain.Entities
+@model IEnumerable<CustomerDetails>
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"></h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Deposit</a></li>
+                    <li class="breadcrumb-item active">@ViewBag.Title</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">@ViewBag.Title</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-8">
+                        <form asp-controller="CaSaAccount" asp-action="BasicInfo">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-warning">Account Number</button>
+                                </div>
+                                <!-- /btn-group -->
+                                <input type="text" id="txtAccountNo" name="accountNo" class="form-control" value="@ViewBag.AccountNo">
+                                <span class="input-group-append">
+                                    <button type="submit" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-sm-12 col-md-4" style="padding-bottom: 20px; text-align:right">
+                        <div class="btn-group w-50">
+                            <button type="button" class="btn btn-warning" id="btnNominee" name="btnNominee">
+                                <span>Nominee</span>
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-12 bg-gradient-lightblue" style="margin:5px;">
+                        <span style="font-weight: bold; font-size:1.2em;">
+                            Accocount Name: @ViewBag.AccountName
+                        </span>                        
+                    </div>
+                    
+                </div>
+
+                <div class="row">
+                    @{ int a = 0; }
+                    @foreach (var item in Model)
+                    {
+                        <input type="hidden" value="@(a= a + 1)" />
+                        <div class="col-12" id="accordion">
+                            <div class="card card-primary card-outline">
+                                <a class="d-block w-100" data-toggle="collapse" href="@string.Format("#collapse{0}",a)">
+                                    <div class="card-header">
+                                        <h4 class="card-title w-100">
+                                            @item.cust_section_title
+                                        </h4>
+                                    </div>
+                                </a>
+                                <div id="@string.Format("collapse{0}",a)" class="collapse" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <div class="row">
+
+                                            <div class="col-5 col-sm-3">
+                                                <div class="nav flex-column nav-tabs h-100" id="@string.Format("vert-tabs-tab{0}",a)" role="tablist" aria-orientation="vertical">
+                                                    <a class="nav-link active" id="@string.Format("vert-tabs-home-tab{0}",a)" data-toggle="pill" href="@string.Format("#vert-tabs-home{0}",a)" role="tab" aria-controls="@string.Format("vert-tabs-home{0}",a)" aria-selected="true">General Info</a>
+                                                    <a class="nav-link" id="@string.Format("vert-tabs-profile-tab{0}",a)" data-toggle="pill" href="@string.Format("#vert-tabs-profile{0}",a)" role="tab" aria-controls="@string.Format("vert-tabs-profile{0}",a)" aria-selected="false">Communication Address</a>
+                                                    <a class="nav-link" id="@string.Format("vert-tabs-messages-tab{0}",a)" data-toggle="pill" href="@string.Format("#vert-tabs-messages{0}",a)" role="tab" aria-controls="@string.Format("vert-tabs-messages{0}",a)" aria-selected="false">Employment Address</a>
+                                                    <a class="nav-link" id="@string.Format("vert-tabs-settings-tab{0}",a)" data-toggle="pill" href="@string.Format("#vert-tabs-settings{0}",a)" role="tab" aria-controls="@string.Format("vert-tabs-settings{0}",a)" aria-selected="false">Permanent Address</a>
+                                                    <a class="nav-link" id="@string.Format("vert-tabs-settings-tab1{0}",a)" data-toggle="pill" href="@string.Format("#vert-tabs-settings1{0}",a)" role="tab" aria-controls="@string.Format("vert-tabs-settings1{0}",a)" aria-selected="false">Present Address</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-7 col-sm-9">
+                                                <div class="tab-content" id="@string.Format("vert-tabs-tabContent{0}",a)">
+                                                    <div class="tab-pane text-left fade show active" id="@string.Format("vert-tabs-home{0}",a)" role="tabpanel" aria-labelledby="@string.Format("vert-tabs-home-tab{0}",a)">
+                                                        <div class="row">
+                                                            <div class="col-12 table-responsive-sm">
+                                                                <table class="table table-striped smallfrontTable">
+                                                                    <tr>
+                                                                        <th style=" width: 25%; text-align: right;"><b>Name : </b></th>
+                                                                        <td style=" width: 25%; text-align: left;">@item.cust_name</td>
+                                                                        <th style=" width: 25%; text-align: right;"><b>National ID : </b></th>
+                                                                        <td style=" width: 25%; text-align: left;">@item.nat_id_card_num</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th style=" width: 25%; text-align: right;"><b>Father Name	 : </b></th>
+                                                                        <td style=" width: 25%; text-align: left;">@item.father_name</td>
+                                                                        <th style=" width: 25%; text-align: right;"><b>Mother Name : </b></th>
+                                                                        <td style=" width: 25%; text-align: left;">@item.mother_name</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th style=" width: 25%; text-align: right;"><b>Date of Birth : </b></th>
+                                                                        <td style=" width: 25%; text-align: left;">@item.date_of_birth</td>
+                                                                        <th style=" width: 25%; text-align: right;"><b>Minor : </b></th>
+                                                                        <td style=" width: 25%; text-align: left;">@item.cust_minor_flg</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th style=" width: 25%; text-align: right;"><b>Occupation : </b></th>
+                                                                        <td style=" width: 25%; text-align: left;">@item.cust_occp_code</td>
+                                                                        <th style=" width: 25%; text-align: right;"><b>Gender : </b></th>
+                                                                        <td style=" width: 25%; text-align: left;">@item.cust_sex</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th style=" width: 25%; text-align: right;"><b>Passport No : </b></th>
+                                                                        <td style=" width: 25%; text-align: left;">@item.psprt_num</td>
+                                                                        <th style=" width: 25%; text-align: right;"><b>Non Resident : </b></th>
+                                                                        <td style=" width: 25%; text-align: left;">@item.cust_nre_flg</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th style=" width: 25%; text-align: right;"><b>Mobile No : </b></th>
+                                                                        <td style=" width: 25%; text-align: left;">@item.cust_pager_no</td>
+                                                                        <th style=" width: 25%; text-align: right;"><b>Fax No :</b></th>
+                                                                        <td style=" width: 25%; text-align: left;">@item.cust_fax_no</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th style=" width: 25%; text-align: right;"><b>Number Of A/C : </b></th>
+                                                                        <td style=" width: 25%; text-align: left;">@item.num_of_accounts</td>
+                                                                        <th style=" width: 25%; text-align: right;"><b>Primary SOL : </b></th>
+                                                                        <td style=" width: 25%; text-align: left;">@item.primary_sol_id</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="@string.Format("vert-tabs-profile{0}",a)" role="tabpanel" aria-labelledby="@string.Format("vert-tabs-profile-tab{0}",a)">
+                                                        <div class="row">
+                                                            <div class="col-12 table-responsive-sm">
+                                                                <table class="table smallfrontTable">
+                                                                    <tr>
+                                                                        <th>Address</th>
+                                                                        <td colspan="3">@item.cust_comu_addr1 @item.cust_comu_addr2</td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>City</th>
+                                                                        <td>@item.cust_comu_city_code</td>
+                                                                        <th>State</th>
+                                                                        <td>@item.cust_comu_state_code</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Country</th>
+                                                                        <td>@item.cust_comu_cntry_code</td>
+                                                                        <th>Post Code</th>
+                                                                        <td>@item.cust_comu_pin_code</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Phone No</th>
+                                                                        <td>@item.cust_comu_phone_num_1</td>
+                                                                        <th>Telex No</th>
+                                                                        <td>@item.cust_comu_telex_num</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Email</th>
+                                                                        <td colspan="3">@item.email_id</td>
+
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="@string.Format("vert-tabs-messages{0}",a)" role="tabpanel" aria-labelledby="@string.Format("vert-tabs-messages-tab{0}",a)">
+                                                        <div class="row">
+                                                            <div class="col-12 table-responsive-sm">
+                                                                <table class="table smallfrontTable">
+                                                                    <tr>
+                                                                        <th>Address</th>
+                                                                        <td colspan="3">@item.cust_emp_addr1 @item.cust_emp_addr2</td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>City</th>
+                                                                        <td>@item.cust_emp_city_code</td>
+                                                                        <th>State</th>
+                                                                        <td>@item.cust_emp_state_code</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Country</th>
+                                                                        <td>@item.cust_emp_cntry_code</td>
+                                                                        <th>Post Code</th>
+                                                                        <td>@item.cust_emp_pin_code</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Phone No</th>
+                                                                        <td>@item.cust_emp_phone_num_1</td>
+                                                                        <th>Telex No</th>
+                                                                        <td>@item.cust_emp_telex_num</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Email</th>
+                                                                        <td colspan="3">@item.cust_emp_email_id</td>
+
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="@string.Format("vert-tabs-settings{0}",a)" role="tabpanel" aria-labelledby="@string.Format("vert-tabs-settings-tab{0}",a)">
+                                                        <div class="row">
+                                                            <div class="col-12 table-responsive-sm">
+                                                                <table class="table smallfrontTable">
+                                                                    <tr>
+                                                                        <th>Address</th>
+                                                                        <td colspan="3">@item.cust_perm_addr1 @item.cust_perm_addr2</td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>City</th>
+                                                                        <td>@item.cust_perm_city_code</td>
+                                                                        <th>State</th>
+                                                                        <td>@item.cust_perm_state_code</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Country</th>
+                                                                        <td>@item.cust_perm_cntry_code</td>
+                                                                        <th>Post Code</th>
+                                                                        <td>@item.cust_perm_pin_code</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Phone No</th>
+                                                                        <td>@item.cust_perm_phone_num</td>
+                                                                        <th>Telex No</th>
+                                                                        <td>@item.cust_perm_telex_num</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Email</th>
+                                                                        <td colspan="3">@item.cust_perm_email_id</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="@string.Format("vert-tabs-settings1{0}",a)" role="tabpanel" aria-labelledby="@string.Format("vert-tabs-settings-tab1{0}",a)">
+                                                        <div class="row">
+                                                            <div class="col-12 table-responsive-sm">
+                                                                <table class="table smallfrontTable">
+                                                                    <tr>
+                                                                        <th>Address</th>
+                                                                        <td colspan="3">@item.cust_pesent_addr1 @item.cust_pesent_addr2</td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>City</th>
+                                                                        <td>@item.cust_pesent_city</td>
+                                                                        <th>State</th>
+                                                                        <td>@item.cust_pesent_state</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Country</th>
+                                                                        <td>@item.cust_perm_cntry_code</td>
+                                                                        <th>Post Code</th>
+                                                                        <td>@item.cust_pesent_zip</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Phone No</th>
+                                                                        <td>@item.cust_perm_phone_num</td>
+                                                                        <th>Telex No</th>
+                                                                        <td>@item.cust_perm_telex_num</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Email</th>
+                                                                        <td colspan="3">@item.cust_perm_email_id</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="NomineeModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-gradient-info">
+                    <h4 class="modal-title">Nominees</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</div>
+
+
+@section ScriptSection
+{
+    <script>
+    $(document).ready(function () {
+
+    @if (TempData.ContainsKey("ErrorMessage"))
+    {
+        @:toastr.error('@TempData["ErrorMessage"]');
+    };
+    });
+    </script>
+
+    <script>
+        $(document).on('click', '#btnNominee', function () {
+            var accountNo = $('#txtAccountNo').val();
+
+            if (accountNo) {
+                $.ajax({
+                    url: "@Url.Action("ShowNominees", "CaSaAccount")",
+                    data: { accountNo: accountNo },
+                    success: function (data) {
+                        $("#NomineeModal .modal-body").html(data);
+
+                        $("#NomineeModal").modal("show");
+                    }
+                });
+            }
+            else {
+                toastr.error('Sorry!!! Account Number is required!!!!');
+            }
+
+        });
+    </script>
+
+}
+

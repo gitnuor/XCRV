@@ -1,0 +1,56 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+@using XCRV.Domain.Entities;
+@model IEnumerable<ChqReqLog>
+
+
+<div class="col-12">
+    <input type="hidden" id="errorMessage" value="@ViewBag.ErrorMessage" />
+    <table class="table table-striped table-bordered smallfrontDataTable" id="chqLog">
+        <thead>
+            <tr>
+                <th >
+                    <input type="checkbox" id="checkall"/>
+                </th>
+                <th>Acc_No</th>
+                <th>Acc_Name</th>
+                <th >From CHQ</th>
+                <th >To CHQ</th>
+                <th >Action</th>
+                <th >Particular</th>
+                <th >Remarks</th>
+                <th>Date</th>
+                <th>User</th>
+                      
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    <input type="checkbox" id="chkSelect" class='delete_check' data-foracid="@item.Foracid" data-acid="@item.Acid" data-frm_chqno="@item.FrmChqno"
+                           data-to_chqno="@item.ToChqno" data-particular="@item.Particular" data-user_id="@item.User_Id"/>
+                </td>
+                <td>@item.Foracid</td>
+                <td>@item.Acct_Name</td>
+                <td>@item.FrmChqno</td>
+                <td>@item.ToChqno</td>
+                <td>@item.ActionCount</td>
+                <td>@item.Particular</td>
+                <td>@item.Remarks</td>
+                <td>@item.v_Datetime</td>
+                <td style="display:block;">@item.User_Id</td>
+                
+                
+                
+
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

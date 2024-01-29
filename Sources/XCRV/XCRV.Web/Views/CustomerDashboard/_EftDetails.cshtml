@@ -1,0 +1,39 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model IList<ChequeDetailsViewModel>
+
+<div class="row">
+    <div class="col-12" id="accordion">
+        <div class="card card-primary card-outline">
+
+            @foreach(var item in Model)
+            {
+                var fName = "collapse_" + item.AccountNumber;
+
+                var fNameDiv = "divCollapse_" + item.AccountNumber;
+                
+                <a class="d-block w-100" data-toggle="collapse" href="#@fName" onclick="showEftInfo('@item.AccountNumber', '@fNameDiv', '@fName')">
+                    <div class="card-header">
+                        <h4 class="card-title w-100">
+                            Account Number: @item.AccountNumber
+                        </h4>
+                    </div>
+                </a>
+                <div id="@fName" class="collapse " data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12" id="@fNameDiv">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+            }
+            
+        </div>
+        
+    </div>
+</div>

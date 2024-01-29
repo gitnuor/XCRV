@@ -1,0 +1,50 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using XCRV.Domain.Entities;
+@model ClientBorrowerViewModel
+
+<table id="creditCardIssuence" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>CUST ID</th>
+            <th>CARD NAME</th>
+            <th>PRODUCT</th>
+            <th>LIMIT</th>
+            <th>OUTSTANDING</th>
+            <th>INTEREST RATE</th>
+            <th>BILLING DATE</th>
+            <th>OVERDUE AMOUNT</th>
+            <th>SANCTION DATE</th>
+            <th>EXPIRY DATE </th>
+            <th>MIN. DUE</th>
+            <th> CARD TYPE</th>
+            <th>SECURITY</th>
+            <th>CARD STATUS </th>
+            <th>FIRST UTILZATION DATE</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.cardIssuence)
+        {
+            <tr>
+                <td>@item.cust_id</td>
+                <td>@item.card_name</td>
+                <td>@item.product</td>
+                <td>@item.format_limit</td>
+                <td>@item.format_outstanding</td>
+                <td>@item.interest_rate</td>
+                <td>@item.billing_date</td>
+                <td>@item.format_overdue_amount</td>
+                <td>@item.sanction_date</td>
+                <td>@item.expiry_date</td>
+                <td>@item.format_min_due</td>
+                <td>@item.card_type</td>
+                <td>@item.security</td>
+                <td>@item.card_status</td>
+                <td>@item.first_utilzation_date</td>
+            </tr>
+        }
+    </tbody>
+</table>

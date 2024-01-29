@@ -1,0 +1,282 @@
+﻿
+@*
+For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using XCRV.Domain.Entities
+
+@model CustomerDetails
+
+<div class="row">
+    <div class="col-12 table-responsive-sm">
+        <table class="table smallfrontTable">
+            <tr>
+                <th>Name</th>
+                <td>@Model.cust_name</td>
+                <th>Account Manager</th>
+                <td>@Model.acct_mgr_user_id</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>@Model.cust_type_code</td>
+                <th>Suspended</th>
+                <td>@Model.party_flg</td>
+            </tr>
+            <tr>
+                <th>Date of Birth</th>
+                <td>@Model.date_of_birth</td>
+                <th>Minor</th>
+                <td>@Model.cust_minor_flg</td>
+            </tr>
+            <tr>
+                <th>Occupation</th>
+                <td>@Model.cust_occp_code</td>
+                <th>Gender</th>
+                <td>@Model.cust_sex</td>
+            </tr>
+            <tr>
+                <th>Constitution</th>
+                <td>@Model.cust_const</td>
+                <th>National ID</th>
+                <td>@Model.nat_id_card_num</td>
+            </tr>
+            <tr>
+                <th>Short Name</th>
+                <td>@Model.cust_short_name</td>
+                <th>National Language Name</th>
+                <td>@Model.native_lang_name</td>
+            </tr>
+            <tr>
+                <th>Passport No</th>
+                <td>@Model.psprt_num</td>
+                <th>PAN/GIR</th>
+                <td>@Model.pan_gir_num</td>
+            </tr>
+            <tr>
+                <th>First A/C Date</th>
+                <td>@Model.cust_first_acct_date</td>
+                <th>Non Resident</th>
+                <td>@Model.cust_nre_flg</td>
+            </tr>
+            <tr>
+                <th>Mobile No</th>
+                <td>@Model.cust_pager_no</td>
+                <th>Fax No</th>
+                <td>@Model.cust_fax_no</td>
+            </tr>
+            <tr>
+                <th>Charge Level Code</th>
+                <td>@Model.chrg_level_code</td>
+                <th>Cust Health Code</th>
+                <td>@Model.cust_hlth_code</td>
+            </tr>
+            <tr>
+                <th>Group</th>
+                <td>@Model.cust_grp</td>
+                <th>DSA ID</th>
+                <td>@Model.dsa_id</td>
+            </tr>
+            <tr>
+                <th>Number Of A/C</th>
+                <td>@Model.num_of_accounts</td>
+                <th>Primary SOL</th>
+                <td>@Model.primary_sol_id</td>
+            </tr>
+            <tr>
+                <th>Intro CIF</th>
+                <td>
+                    @if (@Model.cust_introd_cust_id != null)
+                    {
+                        <i class="fa fa-user"></i>
+                        @Html.ActionLink(@Model.cust_introd_cust_id, "Index", "CustomerGeneralDetails", new { customerId = @Model.cust_introd_cust_id }, null)
+                    }
+                </td>
+                <th>Address Type</th>
+                <td>@Model.address_type</td>
+            </tr>
+            <tr>
+                <th>Sweep Allowed</th>
+                <td>@Model.allow_sweeps</td>
+                <th>Manager's Opinion</th>
+                <td>@Model.cust_mgr_opin</td>
+            </tr>
+            <tr>
+                <th>Father's Name</th>
+                <td>@Model.father_name</td>
+                <th>Mother's Name</th>
+                <td>@Model.mother_name</td>
+            </tr>
+            <tr>
+                <th>Spouse Name</th>
+                <td>@Model.spouse_name</td>
+                <th></th>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-16">
+        <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+            <li class="nav-item">
+            <a class="nav-link active" id="communication-address-tab" data-toggle="pill" href="#communication-address" role="tab" aria-controls="communication-address" aria-selected="true">Communication Address</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" id="employment-address-tab" data-toggle="pill" href="#employment-address" role="tab" aria-controls="employment-address" aria-selected="false">Employment Address</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" id="permanent-address-tab" data-toggle="pill" href="#permanent-address" role="tab" aria-controls="permanent-address" aria-selected="false">Permanent Address</a>
+            </li>
+             <li class="nav-item">
+            <a class="nav-link" id="permanent-address-tab1" data-toggle="pill" href="#permanent-address1" role="tab" aria-controls="permanent-address1" aria-selected="false">Present Address</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="custom-content-below-tabContent">
+            <div class="tab-pane fade show active" id="communication-address" role="tabpanel" aria-labelledby="communication-address-tab">
+                <div class="row">
+                <div class="col-12 table-responsive-sm">
+                    <table class="table smallfrontTable">
+                        <tr>
+                            <th>Address</th>
+                            <td colspan="3">@Model.cust_comu_addr1 @Model.cust_comu_addr2</td>
+
+                        </tr>
+                        <tr>
+                            <th>City</th>
+                            <td>@Model.cust_comu_city_code</td>
+                            <th>State</th>
+                            <td>@Model.cust_comu_state_code</td>
+                        </tr>
+                        <tr>
+                            <th>Country</th>
+                            <td>@Model.cust_comu_cntry_code</td>
+                            <th>Post Code</th>
+                            <td>@Model.cust_comu_pin_code</td>
+                        </tr>
+                        <tr>
+                            <th>Phone No</th>
+                            <td>@Model.cust_comu_phone_num_1</td>
+                            <th>Telex No</th>
+                            <td>@Model.cust_comu_telex_num</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td colspan="3">@Model.email_id</td>
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            </div>
+            <div class="tab-pane fade" id="employment-address" role="tabpanel" aria-labelledby="employment-address-tab">
+                <div class="row">
+                <div class="col-12 table-responsive-sm">
+                    <table class="table smallfrontTable">
+                        <tr>
+                            <th>Address</th>
+                            <td colspan="3">@Model.cust_emp_addr1 @Model.cust_emp_addr2</td>
+
+                        </tr>
+                        <tr>
+                            <th>City</th>
+                            <td>@Model.cust_emp_city_code</td>
+                            <th>State</th>
+                            <td>@Model.cust_emp_state_code</td>
+                        </tr>
+                        <tr>
+                            <th>Country</th>
+                            <td>@Model.cust_emp_cntry_code</td>
+                            <th>Post Code</th>
+                            <td>@Model.cust_emp_pin_code</td>
+                        </tr>
+                        <tr>
+                            <th>Phone No</th>
+                            <td>@Model.cust_emp_phone_num_1</td>
+                            <th>Telex No</th>
+                            <td>@Model.cust_emp_telex_num</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td colspan="3">@Model.cust_emp_email_id</td>
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            </div>
+            <div class="tab-pane fade" id="permanent-address" role="tabpanel" aria-labelledby="permanent-address-tab">
+                <div class="row">
+                <div class="col-12 table-responsive-sm">
+                    <table class="table smallfrontTable">
+                        <tr>
+                            <th>Address</th>
+                            <td colspan="3">@Model.cust_perm_addr1 @Model.cust_perm_addr2</td>
+
+                        </tr>
+                        <tr>
+                            <th>City</th>
+                            <td>@Model.cust_perm_city_code</td>
+                            <th>State</th>
+                            <td>@Model.cust_perm_state_code</td>
+                        </tr>
+                        <tr>
+                            <th>Country</th>
+                            <td>@Model.cust_perm_cntry_code</td>
+                            <th>Post Code</th>
+                            <td>@Model.cust_perm_pin_code</td>
+                        </tr>
+                        <tr>
+                            <th>Phone No</th>
+                            <td>@Model.cust_perm_phone_num</td>
+                            <th>Telex No</th>
+                            <td>@Model.cust_perm_telex_num</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td colspan="3">@Model.cust_perm_email_id</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            </div>
+
+             <div class="tab-pane fade" id="permanent-address1" role="tabpanel" aria-labelledby="permanent-address-tab1">
+                <div class="row">
+                <div class="col-12 table-responsive-sm">
+                    <table class="table smallfrontTable">
+                        <tr>
+                            <th>Address</th>
+                            <td colspan="3">@Model.cust_pesent_addr1 @Model.cust_pesent_addr2</td>
+
+                        </tr>
+                        <tr>
+                            <th>City</th>
+                            <td>@Model.cust_pesent_city</td>
+                            <th>State</th>
+                            <td>@Model.cust_pesent_state</td>
+                        </tr>
+                        <tr>
+                            <th>Country</th>
+                            <td>@Model.cust_perm_cntry_code</td>
+                            <th>Post Code</th>
+                            <td>@Model.cust_pesent_zip</td>
+                        </tr>
+                        <tr>
+                            <th>Phone No</th>
+                            <td>@Model.cust_perm_phone_num</td>
+                            <th>Telex No</th>
+                            <td>@Model.cust_perm_telex_num</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td colspan="3">@Model.cust_perm_email_id</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            </div>
+                                          
+        </div>
+            
+    </div>
+</div>

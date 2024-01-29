@@ -1,0 +1,175 @@
+﻿@using XCRV.Domain.Entities
+<div class="card-body">
+    <div class="row">
+        <div class="col-12" id="accordion">
+
+
+            <div class="card card-primary card-outline">
+                <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                    <div class="card-header">
+                        <h4 class="card-title w-100">
+                            Summary View
+                        </h4>
+                    </div>
+                </a>
+                <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+                                    <li class="nav-item" style="font-size: 14px;">
+                                        <a class="nav-link active" id="assetSummary-tab" data-toggle="pill" href="#assetSummary" role="tab" aria-controls="assetSummary" aria-selected="true"> Asset Summary</a>
+                                    </li>
+                                    <li class="nav-item" style="font-size: 14px;">
+                                        <a class="nav-link" id="labilitesSummary-tab" data-toggle="pill" href="#labilitesSummary" role="tab" aria-controls="labilitesSummary" aria-selected="false"> Liabilities Summary</a>
+                                    </li>
+                                    </ul>
+
+                                <div class="tab-content" id="custom-content-below-tabContent">
+                                    <div class="tab-pane fade show active" id="assetSummary" role="tabpanel" aria-labelledby="assetSummary-tab">
+                                        <div class="row">
+                                            <div class="col-12 table-responsive-sm">
+                                                @await Html.PartialAsync("Summary")
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="labilitesSummary" role="tabpanel" aria-labelledby="labilitesSummary-tab">
+                                        <div class="row">
+                                            <div class="col-12 table-responsive-sm">
+                                                @await Html.PartialAsync("_LiabilitiesSummary")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="card card-primary card-outline">
+                <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+                    <div class="card-header">
+                        <h4 class="card-title w-100">
+                            Details View
+                        </h4>
+                    </div>
+                </a>
+                <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+                                    <li class="nav-item" style="font-size: 14px;">
+                                        <a class="nav-link active" id="Deposits-tab" data-toggle="pill" href="#Deposits" role="tab" aria-controls="Deposits" aria-selected="true"> Deposits</a>
+                                    </li>
+                                    <li class="nav-item" style="font-size: 14px;">
+                                        <a class="nav-link" id="CurrentAcc-tab" data-toggle="pill" href="#CurrentAcc" role="tab" aria-controls="CurrentAcc" aria-selected="false"> Current A/C Summary</a>
+                                    </li>
+                                    <li class="nav-item" style="font-size: 14px;">
+                                        <a class="nav-link" id="permanent-address-tab" data-toggle="pill" href="#permanent-address" role="tab" aria-controls="permanent-address" aria-selected="false">Term Loan Disbursement</a>
+                                    </li>
+                                    <li class="nav-item" style="font-size: 14px;">
+                                        <a class="nav-link" id="permanent-address-tab1" data-toggle="pill" href="#permanent-address1" role="tab" aria-controls="permanent-address1" aria-selected="false">Term Loan Perormance</a>
+                                    </li>
+                                    <li class="nav-item" style="font-size: 14px;">
+                                        <a class="nav-link" id="credt-card-issuence-tab1" data-toggle="pill" href="#credt-card-issuence" role="tab" aria-controls="credt-card-issuence" aria-selected="false">Credit Issue</a>
+                                    </li>
+                                    <li class="nav-item" style="font-size: 14px;">
+                                        <a class="nav-link" id="credt-card-performance-tab1" data-toggle="pill" href="#credt-card-performance" role="tab" aria-controls="credt-card-performance" aria-selected="false">Credit Performance</a>
+                                    </li>
+                                     <li class="nav-item" style="font-size: 14px;">
+                                        <a class="nav-link" id="funded-loan-tab" data-toggle="pill" href="#funded-loan" role="tab" aria-controls="funded-loan" aria-selected="false">Funded Loan</a>
+                                    </li>
+                                    <li class="nav-item" style="font-size: 14px;">
+                                        <a class="nav-link" id="Non-funded-loan-tab" data-toggle="pill" href="#Non-funded-loan" role="tab" aria-controls="Non-funded-loan" aria-selected="false">Non Funded Loan</a>
+                                    </li>
+                                     <li class="nav-item" style="font-size: 14px;">
+                                        <a class="nav-link" id="composite-limit-tab" data-toggle="pill" href="#composite-limit" role="tab" aria-controls="composite-limit" aria-selected="false">Composite Limit</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="custom-content-below-tabContent">
+                                    <div class="tab-pane fade show active" id="Deposits" role="tabpanel" aria-labelledby="Deposits-tab">
+                                        <div class="row">
+                                            <div class="col-12 table-responsive-sm">
+                                                @await Html.PartialAsync("Tab1")
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="CurrentAcc" role="tabpanel" aria-labelledby="CurrentAcc-tab">
+                                        <div class="row">
+                                            <div class="col-12 table-responsive-sm">
+                                                @await Html.PartialAsync("Tab2")
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="permanent-address" role="tabpanel" aria-labelledby="permanent-address-tab">
+                                        <div class="row">
+                                            <div class="col-12 table-responsive-sm">
+                                                @await Html.PartialAsync("Tab3")
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="permanent-address1" role="tabpanel" aria-labelledby="permanent-address-tab1">
+                                        <div class="row">
+                                            <div class="col-12 table-responsive-sm">
+                                                @await Html.PartialAsync("Tab4")
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="credt-card-issuence" role="tabpanel" aria-labelledby="credt-card-issuence-tab1">
+                                        <div class="row">
+                                            <div class="col-12 table-responsive-sm">
+                                                @await Html.PartialAsync("_CreditCardIssuence")
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="credt-card-performance" role="tabpanel" aria-labelledby="credt-card-performance-tab1">
+                                        <div class="row">
+                                            <div class="col-12 table-responsive-sm">
+                                                @await Html.PartialAsync("_creditCardPerformance")
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="funded-loan" role="tabpanel" aria-labelledby="funded-loan-tab">
+                                        <div class="row">
+                                            <div class="col-12 table-responsive-sm">
+                                                @await Html.PartialAsync("_FundedLoan")
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="tab-pane fade" id="Non-funded-loan" role="tabpanel" aria-labelledby="Non-funded-loan-tab">
+                                        <div class="row">
+                                            <div class="col-12 table-responsive-sm">
+                                                @await Html.PartialAsync("_NonFunded")
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="tab-pane fade" id="composite-limit" role="tabpanel" aria-labelledby="composite-limit-tab">
+                                        <div class="row">
+                                            <div class="col-12 table-responsive-sm">
+                                                @await Html.PartialAsync("_CompositeLimit")
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+          
+
+        </div>
+    </div>
+
+</div>
+
+
+
+

@@ -1,0 +1,447 @@
+﻿
+@{
+    ViewData["Title"] = "Card Cheque Active Verify";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+<style>
+    .form-check {
+        padding-left: 0rem !important;
+    }
+
+    .dropdown-menu {
+        /*  position: absolute;
+                top: 100%;
+                left: 0;*/
+        z-index: 1035;
+    }
+</style>
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Queue Management</a></li>
+                    <li class="breadcrumb-item active">Card Cheque Active Verify</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Card Cheque Active Verify</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>Card Number</label>
+                            <input type="text" class="form-control" id="CardNo" name="CardNo" value="@ViewBag.CardNo" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>Cheque Number</label>
+                            <input type="text" class="form-control" id="ChequeNo" name="ChequeNo" value="@ViewBag.ChequeNo" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6" style="display:none">
+                        <div class="form-group">
+                            <label>Maker User</label>
+                            <select class="form-control" id="ddlMakerUser">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>From Date</label>
+                            <div class='input-group'>
+                                <input type="text" id="fromDate" name="fromDate" class="form-control singledate" value="@ViewBag.FromDate" autocomplete="off" />
+                                <div class="input-group-append">
+                                    <label for="payOffDate" class="input-group-text">
+                                        <span class="fa fa-calendar"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>To Date</label>
+                            <div class='input-group'>
+                                <input type="text" id="toDate" name="toDate" class="form-control singledate" value="@ViewBag.ToDate" autocomplete="off" />
+                                <div class="input-group-append">
+                                    <label for="payOffDate" class="input-group-text">
+                                        <span class="fa fa-calendar"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <div class="btn-group w-100">
+                                <button type="button" class="btn btn-info" id="btnSearch" name="btnPaymentHistory">
+                                    <span>Search</span>
+                                </button>
+                                <button type="button" class="btn btn-danger" id="btnShowCheckSelected" name="btnShowCheckSelected">
+                                    <span>Check</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center align-items-center" id="chqInfo">
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+
+</div><!-- /.contant -->
+
+<div class="modal fade" id="ChqBookVerifyConfrimModal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-info">
+                <h4 class="modal-title">Cheque Book Check</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Are you sure?</h3>
+                        <input type="hidden" id="confirmChqNo" />
+                        <input type="hidden" id="confirmCardNo" />
+                        <input type="hidden" id="confirmRemark" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <button id="btnConfirmVerify" type="button" class="btn btn-success">Yes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="SelectedChqBookVerifyConfrimModal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-info">
+                <h4 class="modal-title">Cheque Book Check</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <input type="text" class="form-control" id="Remarks" name="Remarks"  />
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <h3>Are you sure?</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <button id="btnConfirmSelectedVerify" type="button" class="btn btn-success">Yes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@section ScriptSection
+{
+    <!-- DataTables  & Plugins -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/plugins/jszip/jszip.min.js"></script>
+    <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
+    <script>
+    $(document).ready(function () {
+
+    @if (TempData.ContainsKey("ErrorMessage"))
+    {
+        @:toastr.error('@TempData["ErrorMessage"]');
+    };
+    });
+
+    </script>
+
+
+    <script>
+        $(function () {
+            $('#fromDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                format: "dd-M-yyyy",
+                language: "tr",
+                autoclose: true
+            });
+
+            $('#toDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                format: "dd-M-yyyy",
+                language: "tr",
+                autoclose: true
+            });
+        });
+
+    </script>
+
+
+    <script>
+        var table;
+
+
+        //function GetMakerList() {
+        //    $.ajax({
+        //        url: "@Url.Action("GeMakerList", "CardChq")",
+        //        success: function (data) {
+        //            console(data);
+        //        }
+        //    });
+
+        //}
+
+        function ChqBookInfo(submited) {
+            var refNo= '';
+            var chqNo = $('#ChequeNo').val();
+            var cardNo = $('#CardNo').val();
+            var userID = $('#ddlMakerUser').val();
+            var frmDate = $('#fromDate').val();
+            var todate = $('#toDate').val();
+            var remarks = $('#Remarks').val();
+
+            $.ajax({
+                url: "@Url.Action("ShowChqBookInfoForVerification", "CardChq")",
+                data: { refNo: refNo, chqNo: chqNo, cardNo: cardNo, remarks: remarks, userID: userID, frmDate: frmDate, todate: todate, submited: submited },
+                success: function (data) {
+
+                    $("#chqInfo").html(data);
+
+                    $("#chqbookList").DataTable().destroy();
+                    table = $("#chqbookList").DataTable({
+                        "responsive": false, "autoWidth": false, "filter": true, "ordering": false
+                    });
+                    $("#chqbookList").wrap('<div style="overflow:auto;" />');
+
+
+                    $('#checkall').click(function () {
+                        if ($(this).is(':checked')) {
+                            $('.delete_check').prop('checked', true);
+                        } else {
+                            $('.delete_check').prop('checked', false);
+                        }
+                    });
+
+                    $('.delete_check').click(function () {
+                        var totalCheckboxes = $("#chqbookList input[id*='chkSelect']:checkbox").length;
+                        //Get number of checked checkboxes in list
+                        var checkedCheckboxes = $("#chqbookList input[id*='chkSelect']:checkbox:checked").length;
+                        //Check / Uncheck top checkbox if all the checked boxes in list are checked
+                        $("#chqbookList input[id*='checkall']:checkbox").attr('checked', totalCheckboxes == checkedCheckboxes);
+                    });
+
+                    //GetMakerList();
+
+                   
+
+                    //var message = $('#errorMessage').val();
+                    //if (message) {
+                    //    toastr.error(message)
+                    //}
+                }
+                //,
+                //error: function (jqXHR, textStatus, errorThrown) {
+
+                //    console.log(jqXHR);
+
+                //    if (jqXHR.status == 500) {
+                //        toastr.error("Error", 'Internal error: ' + jqXHR.responseText);
+                //    } else {
+                //        toastr.error("Error", 'Unexpected error.' + jqXHR.status);
+                //    }
+                //}
+            });
+
+        }
+
+        ChqBookInfo('');
+
+        $(document).on('click', '#btnSearch', function () {
+            ChqBookInfo('submited');
+        });
+
+        function ShowConfirmModalPopup(chqBookSL, cardNo) {
+
+            remarks = $("#txtRemarksGrid_" + chqBookSL).val();
+
+            if (!remarks) {
+                toastr.error("Error", 'Remarks can\'t be empty');
+                return;
+            }
+            $("#ChqBookVerifyConfrimModal").modal("show");
+            $("#confirmChqNo").val(chqBookSL);
+            $("#confirmCardNo").val(cardNo);
+            $("#confirmRemark").val(remarks);
+
+        }
+
+        $(document).on('click', '#btnConfirmVerify', function () {
+
+            remarks = $('#confirmRemark').val();
+
+            if (!remarks) {
+                toastr.error("Error", "Remarks is Required!!!");
+                return;
+            }
+            //alert(remarks);
+            data = {
+                remarks: remarks,
+                chqNo: $("#confirmChqNo").val(),
+                cardNo: $("#confirmCardNo").val()
+            }
+
+
+            $.ajax({
+                url: "/CardChq/VerifyActiveChqBook",
+                type: "POST",
+                data: { requst: data },
+                success: function (data) {
+
+                    if (data.status == true) {
+                        toastr.success("message", data.message);
+                    }
+                    else {
+                        toastr.error("Error", data.message);
+                    }
+
+                    $("#ChqBookVerifyConfrimModal").modal("hide");
+                    ChqBookInfo('submitted');
+                }
+                //,
+                //error: function (jqXHR, textStatus, errorThrown) {
+                //    if (jqXHR.status == 500) {
+                //        toastr.error("Error", 'Internal error: ' + jqXHR.responseText);
+                //    } else {
+                //        toastr.error("Error", 'Unexpected error.' + jqXHR.status);
+                //    }
+                //}
+            });
+
+        });
+
+
+        $(document).on('click', '#btnShowCheckSelected', function () {
+                        var checkedCheckboxes = $("#chqbookList input[id*='chkSelect']:checkbox:checked");
+
+            console.log(checkedCheckboxes);
+
+
+            if (checkedCheckboxes.length == 0) {
+                toastr.error("Error", "No Cheque Book Selected!!!");
+                return;
+            }
+
+            $("#SelectedChqBookVerifyConfrimModal").modal("show");
+        });
+
+
+        $(document).on('click', '#btnConfirmSelectedVerify', function () {
+
+            remarks = $('#Remarks').val();
+
+            if (!remarks) {
+                toastr.error("Error", "Remarks is Required!!!");
+                return;
+            }
+
+            var checkedCheckboxes = $("#chqbookList input[id*='chkSelect']:checkbox:checked");
+            console.log(checkedCheckboxes);
+            //alert(checkedCheckboxes.length);
+            list = [];
+            checkedCheckboxes.each(function () {
+                data = {
+                    remarks: remarks,
+                    chqNo: $(this).data('chqno'),
+                    cardNo: $(this).data('cardno')
+                }
+                list.push(data);
+            });
+
+            console.log(list);
+
+            $.ajax({
+                url: "/CardChq/VerifyActiveChqBookList",
+                type: "POST",
+                data: { requst: list },
+                success: function (data) {
+                    if (data.status == true) {
+                        toastr.success("message", data.message);
+                        $("#SelectedChqBookVerifyConfrimModal").modal("hide");
+                        $('#Remarks').val('');
+                        ChqBookInfo('submitted');
+                    }
+                    else {
+                        toastr.error("Error", data.message);
+                    }
+                }
+                //,
+                //error: function (jqXHR, textStatus, errorThrown) {
+                //    if (jqXHR.status == 500) {
+                //        toastr.error("Error", 'Internal error: ' + jqXHR.responseText);
+                //    } else {
+                //        toastr.error("Error", 'Unexpected error.' + jqXHR.status);
+                //    }
+                //}
+            });
+
+        });
+
+    </script>
+
+}

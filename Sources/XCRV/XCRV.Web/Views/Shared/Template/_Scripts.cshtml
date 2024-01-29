@@ -1,0 +1,97 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<!-- REQUIRED SCRIPTS -->
+<!-- jQuery -->
+<script src="~/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="~/js/adminlte.min.js"></script>
+
+<!-- Toastr -->
+<script src="~/plugins/toastr/toastr.min.js"></script>
+
+
+<script src="~/plugins/moment/moment.min.js"></script>
+
+<script src="~/js/bootstrap-datepicker.js"></script>
+
+
+
+
+<script>
+   
+
+    $(document).ajaxSend(function (event, xhr, options) {
+
+        $('.spinner').css('display', 'block');
+
+    }).ajaxComplete(function (event, xhr, options) {
+
+        $('.spinner').css('display', 'none');
+
+    }).ajaxError(function (event, jqxhr, settings, exception) {
+
+        $('.spinner').css('display', 'none');
+
+    });
+
+    $(window).on('load', function () {
+        $('.spinner').css('display', 'none');
+    });
+
+
+    // Remove active for all items.
+    $('.page-sidebar-menu li').removeClass('active');
+
+    // highlight submenu item
+    $('li a[href="' + this.location.pathname + '"]').parent().addClass('active');
+
+    // Highlight parent menu item.
+    $('ul a[href="' + this.location.pathname + '"]').parents('li').addClass('active');
+</script>
+
+
+<script>
+    $.ajaxSetup({  // handle ajax errors
+        error: function (jqXHR, exception) {
+
+            console.log(jqXHR);
+
+            if (jqXHR.status === 0) {
+                toastr.error("Error",'Network Problem.');
+            }
+            else if (jqXHR.status == 401) {
+                toastr.error("Error","You have been logged out. Please login again.");
+                window.location = '/Home/Index';
+            }
+            else if (jqXHR.status == 403) {
+                toastr.error("Error","You don't have access of the following action.");
+            }
+
+            else if (jqXHR.status == 404) {
+               toastr.error("Error","Content not found.");
+            }
+             
+            else if (jqXHR.status == 500) {
+               toastr.error("Error","Problem in processing the request."+' Internal error: ' + jqXHR.responseText);
+                 //window.location = '/Home/Index';
+            }
+
+            else if (exception === 'timeout') {
+                toastr.error("Error","Request timed out.");
+            }
+
+            else if (exception === 'abort') {
+                toastr.error("Error","Request aborted.");
+            }
+
+            else {
+                toastr.error("Error", 'Internal error: ' + jqXHR.responseText);
+            }
+        }
+    });
+</script>
+
+

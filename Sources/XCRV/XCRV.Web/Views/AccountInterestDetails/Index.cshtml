@@ -1,0 +1,353 @@
+﻿@using XCRV.Domain.Entities
+
+@model InterestDetails
+@{
+    ViewData["Title"] = "BBL - XCRV360 : Account Interest Details";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Customer</a></li>
+                    <li class="breadcrumb-item active">Account Interest Details</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Interest Details</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-8">
+                        <form asp-controller="AccountInterestDetails" asp-action="Index">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-warning">Account Number</button>
+                                </div>
+                                <!-- /btn-group -->
+                                <input type="text" id="txtAccountNo" name="accno" class="form-control" value="@ViewBag.AccountNo">
+                                <span class="input-group-append">
+                                    <input type="hidden" id="submitted" name="submitted" />
+                                    <button type="submit" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-12" id="accordion">
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        Account Details
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped smallfrontTable">
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Account Number : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.FORACID</td>
+                                                    <th style=" width: 25%; text-align: right;">Name : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.ACCT_NAME</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Currency : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.acct_crncy_code</td>
+                                                    <th style=" width: 25%; text-align: right;">Sol : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.sol_id</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        Interest Details
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            @* <table class="table table-striped smallfrontTable">
+                                                <tr>
+                                                <th style=" width: 25%; text-align: right;"><b>Unclear Balance : </b></th>
+                                                <td style=" width: 25%; text-align: left;">@Model.accrued_upto_date_cr</td>
+                                                <th style=" width: 25%; text-align: right;"><b>Cumulative Int. Paid : </b></th>
+                                                <td style=" width: 25%; text-align: left;">@Model.accrued_upto_date_dr</td>
+                                                </tr>
+
+
+                                                </table>*@
+
+                                            <table class="table tb-SixColumnDetail smallfrontTable" border="0">
+                                                <tr class="tr-SixColumnDetail">
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn" style="padding-left: 100px;">
+                                                        <strong>Payment (Cr)</strong>
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn">
+                                                        <strong>Collected/Applied (Dr)</strong>
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-SixColumnDetail">
+                                                    <td class="td-labelColumnOfSixColumn font-weight-bold">
+                                                        Int. Amount
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 100px;">
+                                                        @Model.nrml_interest_amount_cr
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder">
+                                                        @Model.nrml_interest_amount_dr
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-SixColumnDetail">
+                                                    <td class="td-labelColumnOfSixColumn font-weight-bold">
+                                                        Last Interest Posted Date
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 100px;">
+
+                                                        @Model.interest_calc_upto_date_cr
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder">
+                                                        @Model.interest_calc_upto_date_dr
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn ">
+                                                        &nbsp;
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-SixColumnDetail">
+                                                    <td class="td-labelColumnOfSixColumn font-weight-bold">
+                                                        Last Interest Run Date
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 100px;">
+                                                        @Model.last_interest_run_date_cr
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder">
+                                                        @Model.last_interest_run_date_dr
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn ">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-SixColumnDetail">
+                                                    <td class="td-labelColumnOfSixColumn font-weight-bold">
+                                                        Normal Interest Accured
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 100px;">
+                                                        <asp:Label ID="lblNrmlIntAccrdCr" runat="server">
+                                                        </asp:Label>
+                                                        @Model.nrml_accrued_amount_cr
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder">
+                                                        <asp:Label ID="lblNrmlIntAccrdDr" runat="server">
+                                                        </asp:Label>
+                                                        @Model.nrml_interest_amount_dr
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn ">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-SixColumnDetail">
+                                                    <td class="td-labelColumnOfSixColumn font-weight-bold">
+                                                        Normal Interest Booked
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 100px;">
+                                                        <asp:Label ID="lblNrmsIntBookCR" runat="server">
+                                                        </asp:Label>
+                                                        @Model.nrml_booked_amount_cr
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder">
+
+                                                        <asp:Label ID="lblNrmsIntBookDR" runat="server">
+                                                        </asp:Label>
+                                                        @Model.nrml_booked_amount_dr
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn ">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-SixColumnDetail">
+                                                    <td class="td-labelColumnOfSixColumn font-weight-bold">
+                                                        Last Interest Accrual Date
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 100px;">
+                                                        @Model.accrued_upto_date_cr
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder">
+                                                        @Model.accrued_upto_date_dr
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn ">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-SixColumnDetail">
+                                                    <td class="td-labelColumnOfSixColumn font-weight-bold">
+                                                        Last Accrual Run Date
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 100px;">
+                                                        @Model.last_accrual_run_date_cr
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder">
+                                                        @Model.last_accrual_run_date_dr
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn ">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-SixColumnDetail">
+                                                    <td class="td-labelColumnOfSixColumn font-weight-bold">
+                                                        Last Interest Booked Date
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 100px;">
+                                                        <asp:Label ID="lblLastIntBookDateCr" runat="server">
+                                                        </asp:Label>
+                                                        @Model.booked_upto_date_cr
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder">
+                                                        <asp:Label ID="lblLastIntBookDateDr" runat="server">
+                                                        </asp:Label>
+                                                        @Model.booked_upto_date_dr
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn ">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-SixColumnDetail">
+                                                    <td class="td-labelColumnOfSixColumn font-weight-bold">
+                                                        Last Book Run Date
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 100px;">
+
+                                                        @Model.last_book_run_date_cr
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder">
+
+                                                        @Model.last_book_run_date_dr
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn ">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <!-- /.row -->
+
+
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+        </div>
+    </div>
+
+</div><!-- /.container-fluid -->
+@section ScriptSection
+{
+
+<!-- DataTables  & Plugins -->
+<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/plugins/jszip/jszip.min.js"></script>
+<script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+      @if (TempData.ContainsKey("ErrorMessage"))
+           {
+            @:toastr.error('@TempData["ErrorMessage"]');
+          };
+    });
+   
+</script>
+
+}

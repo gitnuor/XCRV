@@ -1,0 +1,52 @@
+﻿@model XCRV.Domain.Entities.CradProStatementSummary
+
+<div class="card card-primary card-outline">
+    <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+        <div class="card-header">
+            <h4 class="card-title w-100">
+                Basic Info
+            </h4>
+        </div>
+    </a>
+    <div id="collapseOne" class="collapse show" data-parent="#accordion">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-striped">
+                        <tr style="line-height:9px;">
+                            <th style=" width: 68%; text-align: left;font-size:14px;" colspan="4"><b></b></th>
+                            <th style=" width: 16%; text-align: right;font-size:14px;"><b>Stmt Date : </b></th>
+                            <td style=" width: 16%; text-align: left;"><label id="cust_id" class="font-weight-normal"> @Model.StatementDate </label> </td>
+                        </tr>
+                        <tr style="line-height:9px;">
+                            <th style=" width: 16%; text-align: right;font-size:14px;"><b>Basic Card No. : </b></th>
+                            <td style=" width: 16%; text-align: left;"> <label id="acct_name" class="font-weight-normal">@Model.BasicCardNo </label></td>
+                            <th style=" width: 16%; text-align: right;font-size:14px;"><b>Name : </b></th>
+                            <td style=" width: 16%; text-align: left;"><label id="cust_id" class="font-weight-normal">@Model.Name </label> </td>
+                            <th style=" width: 16%; text-align: right;font-size:14px;"><b>Due Date : </b></th>
+                            <td style=" width: 16%; text-align: left;"><label id="cust_id" class="font-weight-normal">@Model.DueDate </label> </td>
+                        </tr>
+                        <tr style="line-height:9px;">
+                            <th style=" width: 16%; text-align: right;font-size:14px;"><b>Credit Limit : </b></th>
+                            <td style=" width: 16%; text-align: left;"> <label id="Account_Type" class="font-weight-normal">@Model.CreditLimit</label> </td>
+                            <th style=" width: 16%; text-align: right;font-size:14px;"><b>Opening Balance : </b></th>
+                            <td style=" width: 16%; text-align: left;"><label id="foracid" class="font-weight-normal">@Model.OpneingBalance </label> </td>
+                            <th style=" width: 16%; text-align: right;font-size:14px;"><b>Debits : </b></th>
+                            <td style=" width: 16%; text-align: left;"><label id="foracid" class="font-weight-normal"> </label> </td>
+                        </tr>
+                        <tr style="line-height:15px;">
+                            <th style=" width: 16%; text-align: right;font-size:14px;"><b>Minimum Payment : </b></th>
+                            <td style=" width: 16%; text-align: left;word-break:break-word!important;font-size:0.9em"><label id="address" class="font-weight-normal">@Model.MinimumPayment </label> </td>
+                            <th style=" width: 16%; text-align: right;font-size:14px;"><b>Current Balance : </b></th>
+                            <td style=" width: 16%; text-align: left;font-size:0.9em"><label id="acct_crncy_code" class="font-weight-normal">@Model.CurrentBalance </label> </td>
+                            <th style=" width: 16%; text-align: right;font-size:14px;"><b>Credits : </b></th>
+                            <td style=" width: 16%; text-align: left;font-size:0.9em"><label id="acct_crncy_code" class="font-weight-normal"> </label> </td>
+                        </tr>
+                                                       
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

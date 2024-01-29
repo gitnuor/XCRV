@@ -1,0 +1,122 @@
+﻿
+@{
+    ViewData["Title"] = "Loan Account Limit";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+
+@using XCRV.Domain.Entities
+
+@model LoanAccountLimit
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Loan</a></li>
+                    <li class="breadcrumb-item active">Loan Account Limit</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Loan Account Limit</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-sm-12 col-md-8">
+                        <form asp-controller="LoanAccount" asp-action="LoanAccountLimit">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-warning">Account Number</button>
+                                </div>
+                                <!-- /btn-group -->
+                                <input type="text" id="txtAccountNo" name="accountNo" class="form-control" value="@ViewBag.AccountNo">
+                                <span class="input-group-append">
+                                    <button type="submit" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <h5>Loan Account Limit</h5>
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <div class="col-12 table-responsive-sm">
+                                <table class="table smallfrontTable">
+                                    <tr>
+                                        <th style="text-align:right;">A/C No : </th>
+                                        <td style="text-align:left;">@Model.Foracid</td>
+                                        <th style="text-align:right;">Name : </th>
+                                        <td style="text-align:left;">@Model.Acct_Name</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:right;">Balance :</th>
+                                        <td style="text-align:left;">@Model.Balance</td>
+                                        <th style="text-align:right;">Limit :</th>
+                                        <td style="text-align:left;">@Model.Sanct_Lim</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:right;">Record Created Date :</th>
+                                        <td style="text-align:left;">@Model.RecCreatedDate</td>
+                                        <th style="text-align:right;">Applicable Date :</th>
+                                        <td style="text-align:left;">@Model.ApplicableDate</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:right;">Expiry Date :</th>
+                                        <td style="text-align:left;">@Model.ExpiryDate</td>
+                                        <th style="text-align:right;">Loan Doc Date :</th>
+                                        <td style="text-align:left;">@Model.LoanDocDate</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:right;">Review Date :</th>
+                                        <td style="text-align:left;">@Model.ReviewDate</td>
+                                        <th style="text-align:right;">Status :</th>
+                                        <td style="text-align:left;">@Model.Status</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+</div><!-- /.contant -->
+
+@section ScriptSection
+{
+    <script>
+    $(document).ready(function () {
+
+    @if (TempData.ContainsKey("ErrorMessage"))
+    {
+        @:toastr.error('@TempData["ErrorMessage"]');
+    };
+    });
+
+    </script>
+}

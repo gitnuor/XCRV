@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="dapper.oracle" Version="2.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Oracle.ManagedDataAccess.core" Version="3.21.61" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XCRV.Application\XCRV.Application.csproj" />
+  </ItemGroup>
+
+</Project>

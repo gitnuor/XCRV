@@ -1,0 +1,18 @@
+﻿
+@using XCRV.Domain.Entities;
+
+@model RewardPoint
+<table class="table table-striped smallfrontTable">
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>Reward Points Earned : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.MonthlyEarned</td>
+        <th style=" width: 25%; text-align: right;"><b>Reward Points Expired : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.MonthlyExpiry</td>
+    </tr>
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>Reward Points Redeemed : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.MonthlyRedeem</td>
+        <th style=" width: 25%; text-align: right;"><b>Reward Points Available : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.AvailableRewardPoint</td>
+    </tr>
+</table>

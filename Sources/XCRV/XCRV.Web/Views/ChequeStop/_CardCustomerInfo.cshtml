@@ -1,0 +1,67 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using XCRV.Domain.Entities;
+@model ChqCustomer
+
+<div class="col-md-12">
+    <input type="hidden" id="errorMessage" value="@ViewBag.ErrorMessage" />
+    <table class="table smallfrontTable">
+        <tr>
+            <th style="text-align:right;">CIF :</th>
+            <td style="text-align:left;">@Model.Cust_Id</td>
+            <th style="text-align:right;">Customer Name :</th>
+            <td style="text-align:left;">@Model.Cust_Name</td>
+        </tr>
+        <tr>
+            <th style="text-align:right;">Communications Address :</th>
+            <td style="text-align:left;" colspan="3">@Model.Commu_Add</td>
+        </tr>
+        <tr>
+            <th style="text-align:right;">Permanent Address :</th>
+            <td style="text-align:left;" colspan="3">@Model.Perm_Add</td>
+        </tr>
+        <tr>
+            <th style="text-align:right;">Account Name :</th>
+            <td style="text-align:left;">@Model.Acct_Name</td>
+            <th style="text-align:right;">Mobile :</th>
+            <td style="text-align:left;">@Model.Mobile</td>
+        </tr>
+        <tr>
+            <th style="text-align:right;">Scheme Type :</th>
+            <td style="text-align:left;">@Model.Schm_Type</td>
+            <th style="text-align:right;">Phone1 :</th>
+            <td style="text-align:left;">@Model.Phone1</td>
+        </tr>
+        <tr>
+            <th style="text-align:right;">DOB :</th>
+            <td style="text-align:left;">@Model.Dateofbirth</td>
+            <th style="text-align:right;">Phone2 :</th>
+            <td style="text-align:left;">@Model.Phone2</td>
+        </tr>
+    </table>
+</div>
+
+<div class="col-md-12">
+    <h5>Cheque Leaf Status</h5>
+    <table class="table table-striped table-bordered smallfrontDataTable" id="chqLeafStatus">
+        <thead>
+            <tr>
+                <th>Chq No</th>
+                <th>Leaf Status</th>               
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ChqStatusList)
+            {
+                <tr>
+                    <td>@item.Chqno</td>
+                    <td>@item.Leaf_Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

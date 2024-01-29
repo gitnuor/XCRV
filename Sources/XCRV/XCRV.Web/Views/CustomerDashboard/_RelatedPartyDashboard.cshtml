@@ -1,0 +1,96 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model IList<RelatedPartyDashboarViewModel>
+
+<div class="row">
+    <div class="col-12" id="accordion">
+        <div class="card card-primary card-outline">
+
+            @foreach(var item in Model)
+            {
+                var fName = "collapse" + item.AccountNumber;
+                
+                <a class="d-block w-100" data-toggle="collapse" href="#@fName">
+                    <div class="card-header">
+                        <h4 class="card-title w-100">
+                            Account Number: @item.AccountNumber
+                        </h4>
+                    </div>
+                </a>
+                <div id="@fName" class="collapse " data-parent="#accordion">
+                    <div class="card-body">
+
+                        @if(!string.IsNullOrEmpty(item.ErrorMessage))
+                        {
+                            <strong style="color: red;">@item.ErrorMessage</strong>
+                        }
+                        else{
+                            <div class="row">
+                                <div class="col-12">
+                                    <table class="table smallfrontTable table-sm">
+                                        <tr>
+                                            <th style=" width: 25%; text-align: right;">Account Number : </th>
+                                            <td style=" width: 25%; text-align: left;">@item.RelatedPartyViewModel.RelatedPartyInfo.FORACID</td>
+                                            <th style=" width: 25%; text-align: right;">Name : </th>
+                                            <td style=" width: 25%; text-align: left;">@item.RelatedPartyViewModel.RelatedPartyInfo.ACCT_NAME</td>
+                                        </tr>
+                                        <tr>
+                                            <th style=" width: 25%; text-align: right;">Balance : </th>
+                                            <td style=" width: 25%; text-align: left;" colspan="3">@item.RelatedPartyViewModel.RelatedPartyInfo.CLR_BAL_AMT</td>          
+                                        </tr>
+                                                   
+                                    </table>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">                                               
+                                    <table class="table table-striped smallfrontDataTable table-sm">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Serial</th>
+                                                <th>Cust. ID</th>
+                                                <th>Name</th>
+                                                <th>Relation Type</th>
+                                                <th>Relation Code</th>
+                                                <th>Amount</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white">
+                                            @foreach (var itemR in item.RelatedPartyViewModel.RelatedPartyDetails)
+                                        {
+                                                <tr style="font-size: 15px;">
+                                                    <td>@itemR.ACCT_POA_AS_SRL_NUM</td>
+
+                                                    <td><i class="fa fa-user"></i><a href="/CustomerGeneralDetails/Index?customerId=@itemR.CUST_ID">@itemR.CUST_ID</a></td>
+
+                                                    <td>@itemR.ACCT_POA_AS_NAME</td>
+                                                    <td>@itemR.ACCT_POA_AS_REC_TYPE</td>
+                                                    <td>@itemR.CUST_RELTN_CODE</td>
+                                                    <td>@itemR.ACCT_POA_AS_AMT_ALWD</td>
+                                                    <td></td>
+                                                </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        }
+
+                        
+
+                        
+                    </div>
+                </div>    
+            }
+            
+        </div>
+        
+    </div>
+</div>

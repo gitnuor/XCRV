@@ -1,0 +1,34 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using XCRV.Domain.Entities
+
+@model IEnumerable<LoanDocument>
+
+<div class="row">
+    <div class="col-12">
+        <table class="table table-striped table-sm " id="tblDocument">
+            <thead>
+                <tr>
+                    <th>Document Code</th>
+                    <th>Description</th>
+                    <th>Received Date</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.document_code</td>
+                        <td>@item.ref_desc</td>
+                        <td>@item.received_date</td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>

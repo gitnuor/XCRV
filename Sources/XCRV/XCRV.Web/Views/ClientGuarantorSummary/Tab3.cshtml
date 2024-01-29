@@ -1,0 +1,46 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using XCRV.Domain.Entities;
+@model ClientBorrowerViewModel
+
+<table id="Tab3" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>A/C No.</th>
+            <th>A/C Name</th>
+            <th>Loan Scheme</th>
+            <th>Live/Closed</th>
+            <th>Sanction Limit</th>
+            <th>Disb. Date</th>
+            <th>Disb. Amount</th>
+            <th>Tenor</th>
+            <th>Emi Amount</th>
+            <th>Outstanding</th>
+            <th>Over Due Amt</th>
+            <th>No Of Phase Disb.</th>
+            <th>Closing Date</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.termLoanDisbursment)
+        {
+            <tr>
+                <td>@item.foracid</td>
+                <td>@item.acct_name</td>
+                <td>@item.schm_desc</td>
+                <td>@item.account_status</td>
+                <td>@item.format_sanction_limit</td>
+                <td>@item.disbursement_dateFormatted</td>
+                <td>@item.format_disbursement_amount</td>
+                <td>@item.tenor</td>
+                <td>@item.format_emi_amount</td>
+                <td>@item.format_outstanding_amount</td>
+                <td>@item.format_overdue_amount</td>
+                <td>@item.number_phase_disbursement</td>
+                <td>@item.closing_dateFormatted</td>
+            </tr>
+        }
+    </tbody>
+</table>

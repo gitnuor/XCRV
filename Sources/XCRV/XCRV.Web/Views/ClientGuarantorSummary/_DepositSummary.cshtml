@@ -1,0 +1,38 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using XCRV.Domain.Entities;
+@model ClientBorrowerViewModel
+
+<table id="DepositTable" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>A/C No.</th>
+            <th>Type Of A/C</th>
+            <th>Face Value</th>
+            <th>Int. Rate</th>
+            <th>Present Value</th>
+            <th>Maturity Value</th>
+            <th>Open Date</th>
+            <th>Maturity Date</th>
+            <th>Lien Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.depostSummary)
+        {
+            <tr>
+                <td>@item.foracid</td>
+                <td>@item.type_of_ac</td>
+                <td>@item.face_value</td>
+                <td>@item.interest_rate</td>
+                <td>@item.present_value</td>
+                <td>@item.maturity_value</td>
+                <td>@item.open_date_Formatted</td>
+                <td>@item.maturity_date_Formatted</td>
+                <td>@item.lien_status</td>
+            </tr>
+        }
+    </tbody>
+</table>

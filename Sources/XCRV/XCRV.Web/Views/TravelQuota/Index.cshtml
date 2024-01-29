@@ -1,0 +1,369 @@
+﻿@using XCRV.Domain.Entities
+@{
+    ViewData["Title"] = ViewBag.Title;
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+@*@model PassportEndorsementDebit*@
+@model CaSaViewModel
+<!-- Content Header (Page header) -->
+<div class="content-header" style="display:none">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"></h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Travel Quota</a></li>
+                    <li class="breadcrumb-item active">Endorsement</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Travel Quota Search</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-8">
+                        <form asp-controller="TravelQuota" asp-action="Index">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-warning">Passport Number</button>
+                                </div>
+                                <!-- /btn-group -->
+                                <input type="text" id="txtPassportNo" name="passportNo" class="form-control" value="@ViewBag.PassportNo">
+                                <span class="input-group-append">
+                                    <button type="button" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    @*<div class="col-sm-12 col-md-4" style="padding-bottom: 20px;">
+
+                        <div class="form-group" style="margin-top:-27px">
+                            <label>&nbsp;</label>
+                            <div class='input-group'>
+                                <input id="tranchk" type="checkbox" value="true" checked name="debit" style="zoom:1.5;" />&nbsp;<b style="font-size: 12px;">Debit System</b>&nbsp;&nbsp;
+                                <input id="tranchk" type="checkbox" value="true" name="Credit" style="zoom:1.5;" />&nbsp;<b style="font-size: 12px;">Credit System</b>
+                                <input type="hidden" value="true" name="debit" />
+                                <input type="hidden" value="false" name="Credit" />
+                            </div>
+                        </div>
+                    </div>*@
+                </div>
+
+                <div class="row">
+                    <div class="col-12" id="accordion">
+
+                         <div class="card card-primary card-outline" style="height:-1px">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        Quota Info
+                                    </h4>
+                                </div>
+                            </a>
+                           
+                             <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                <div class="card-body" style="margin-bottom: -30px;">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped smallfrontTable" style="margin-top: -20px;">
+                                                <tr style="line-height:0">
+                                                    <th style="width: 25%; text-align: right;font-size:14px">Debit Info  </th>
+                                                    <td style=" width: 25%; text-align: left;"></td>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px"> Credit Info </th>
+                                                    <td style=" width: 25%; text-align: left;"></td>
+                                                </tr>
+                                                  <tr style="line-height:0">
+                                                    <th style=" width: 25%; text-align: right; font-size:13px">Passport No: </th>
+                                                    <td style=" width: 25%; text-align: left;font-size:13px"> <label id="PassportNoDr" class="font-weight-normal"> </label> </td>
+                                                    <th style=" width: 25%; text-align: right;font-size:13px">Passport No : </th>
+                                                    <td style=" width: 25%; text-align: left;font-size:13px"><label id="PassportNoCr" class="font-weight-normal"> </label> </td>
+                                                </tr>
+                                                <tr style="line-height:0">
+                                                    <th style=" width: 25%; text-align: right;font-size:13px">Customer Id : </th>
+                                                    <td style=" width: 25%; text-align: left;font-size:13px"> <label id="DebitCustomerId" class="font-weight-normal"> </label></td>
+                                                   
+                                                    <th style=" width: 25%; text-align: right;font-size:13px">Customer Id : </th>
+                                                    <td style=" width: 25%; text-align: left;font-size:13px"><label id="CreditCustomerId" class="font-weight-normal"> </label></td>
+                                                </tr>
+                                                <tr style="line-height:0">
+                                                    <th style=" width: 25%; text-align: right;font-size:13px">Endorsement Type : </th>
+                                                    <td style=" width: 25%; text-align: left;font-size:13px"><label id="travelDr" class="font-weight-normal"> </label></td>
+                                                    <th style=" width: 25%; text-align: right;font-size:13px">Endorsement Type  : </th>
+                                                    <td style=" width: 25%; text-align: left;font-size:13px"><label id="travelCr" class="font-weight-normal"> </label></td>
+                                                </tr>
+                                              
+                                               
+                                               
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        Quota Details
+                                    </h4>
+                                </div>
+                            </a>
+                            
+                             <div id="collapseTwo" class="collapse show" data-parent="#accordion" style="margin-top:-20px">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                           <input type="hidden" id="hdnAccountNo" name="hdnAccountNo" value="" />
+                                             <table class="table tb-SixColumnDetail smallfrontTable" border="0" style="margin-bottom:-20px">
+                                                <tr class="tr-SixColumnDetail">
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn" style="padding-left: 100px;font-size: 14px;">
+                                                        <strong>Debit Card </strong>
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn" style="padding-left: 30px;font-size: 14px;">
+                                                        <strong>Credit Card </strong>
+                                                    </td>
+                                                     <td class="td-SingleColumnOfSixColumn" style="font-size: 14px;">
+                                                        <strong>Total Limit</strong>
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-SixColumnDetail" style="line-height:0">
+                                                    <td class="td-labelColumnOfSixColumn font-weight-bold" style="font-size:13px">
+                                                        Approved Limit :
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 100px;font-size=13px;">
+                                                       @* @Model.qlimit_assigned*@
+                                                        <label id="qlimit_assigned" class="font-weight-normal"> </label>
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 30px;font-size:13px;">
+                                                        <label id="qlimit_assigned_credit" class="font-weight-normal"> </label>
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="font-size:13px">
+                                                        <label id="total_qlimit_assigned" class="font-weight-normal"> </label>
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-SixColumnDetail" style="line-height:0">
+                                                    <td class="td-labelColumnOfSixColumn font-weight-bold" style="font-size:13px;">
+                                                       Usage Limit :
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 100px;font-size:13px;">
+
+                                                        @*@Model.qusagepercentageamount*@
+                                                        <label id="qusagepercentageamount" class="font-weight-normal"> </label>
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 30px;font-size:13px;">
+                                                        <label id="qusagepercentageamount_credit" class="font-weight-normal"> </label>
+                                                    </td>
+                                                     <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="font-size:13px;">
+                                                        <label id="total_qusagepercentageamount" class="font-weight-normal"> </label>
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn ">
+                                                        &nbsp;
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-SixColumnDetail" style="line-height:0">
+                                                    <td class="td-labelColumnOfSixColumn font-weight-bold" style="font-size:13px">
+                                                        Available Limit :
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 100px;font-size:13px;">
+                                                      @* @Model.qlimit_amount*@
+                                                        <label id="qlimit_amount" class="font-weight-normal"> </label>
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 30px;font-size:13px;">
+                                                        <label id="qlimit_amount_credit" class="font-weight-normal"> </label>
+                                                    </td>
+                                                     <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="font-size:13px;">
+                                                        <label id="total_qlimit_amount" class="font-weight-normal"> </label>
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn ">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                               
+                                            </table>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                     
+
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section ScriptSection
+{
+ <!-- DataTables  & Plugins -->
+<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/plugins/jszip/jszip.min.js"></script>
+<script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+@*<script>
+    $(document).ready(function () {
+
+    //@if (TempData.ContainsKey("ErrorMessage"))
+    //{
+    //    @:toastr.error('@TempData["ErrorMessage"]');
+    //};
+    });
+</script>*@
+
+<script>
+
+    $(document).on('click', '#btnSearch', function () {
+        var searchPassport = $('#txtPassportNo').val();
+        if(searchPassport=="")
+          {
+            toastr.error('Passport No cannot be empty!');
+          }
+          else{
+            loadPassportInfo(searchPassport);
+          }   
+    });
+
+     function loadPassportInfo(searchPassport) {
+
+                         $.ajax({
+                             type: 'GET',
+                             url: '/TravelQuota/SearchEndorsementDetail',
+                             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                             data: {searchPassport:searchPassport},
+                             success: function (result) {
+                              if (result.data != null) {
+                                  console.log(result.data);
+                                      $('#DebitCustomerId').text(result.data.customerid);
+                                      $('#PassportNoDr').text(result.data.paramValue);
+                                      $('#travelDr').text(result.data.limit_type);
+                                      $('#qlimit_assigned').text(result.data.qlimit_assigned);
+                                      $('#qusagepercentageamount').text(result.data.qusagepercentageamount);
+                                      $('#qlimit_amount').text(result.data.qlimit_amount);
+
+                                      $('#CreditCustomerId').text(result.data.cb_idno);
+                                      $('#PassportNoCr').text(result.data.cb_passport_no);
+                                      $('#travelCr').text(result.data.limit_type_cr);
+                                      $('#qlimit_assigned_credit').text(result.data.qlimit_assigned_credit);
+                                      $('#qusagepercentageamount_credit').text(result.data.qusagepercentageamount_credit);
+                                      $('#qlimit_amount_credit').text(result.data.qlimit_amount_credit);
+
+                                      $('#total_qlimit_assigned').text((result.data.qlimit_assigned==0? parseInt(0):parseFloat(result.data.qlimit_assigned)) + (result.data.qlimit_assigned_credit==0?parseInt(0):parseFloat(result.data.qlimit_assigned_credit)));
+                                      $('#total_qusagepercentageamount').text((result.data.qusagepercentageamount== 0? parseInt(0):parseFloat(result.data.qusagepercentageamount)) + (result.data.qusagepercentageamount_credit==0 ? parseInt(0):parseFloat(result.data.qusagepercentageamount_credit)));
+                                      $('#total_qlimit_amount').text((result.data.qlimit_amount == 0 ? parseInt(0): parseFloat(result.data.qlimit_amount)) + (result.data.qlimit_amount_credit == 0 ?parseInt(0): parseFloat(result.data.qlimit_amount_credit)));
+
+                                 } else {
+                                     toastr.error('No data found.');
+                                 }
+                             },
+                             error: function () {
+                                 //alert('Reward Point Data :: Failed to receive the Data');
+                                // toastr.error('Reward Point Data :: Failed to receive the Data');
+                                 console.log('Failed ');
+                             }
+
+                    });
+
+            }
+     
+   //function loadPassportInfo(searchPassport) {
+   //   $('#customerInfo').DataTable().destroy();
+   //   $('#customerInfo').DataTable({
+            
+   //         "language": {
+   //             processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+   //         },
+   //         "filter": true, 
+   //         "paging": true,
+   //         "pageLength": 10,
+   //         "lengthChange": false,
+   //         "pagingType": "full_numbers",
+   //         "scrollX": false,
+   //         "autoWidth": true,
+   //         "ajax": {
+   //             "url": "/TravelQuota/SearchEndorsementDetail",
+   //             "dataSrc": function (d) {
+   //                 if (d.data.length === 0) {
+   //                     var settings = $('#customerInfo').DataTable().settings()[0];
+   //                     settings.oLanguage.sEmptyTable = d.message;
+   //                 }
+   //                 return d.data;
+   //             },
+   //             "data": { searchPassport: searchPassport},
+   //             "type": "GET",
+   //             "dataType": "json"
+   //         },
+   //         "columns": [
+                
+   //             { "data": "customerid", "name": "customerid" },
+   //             { "data": "paramvalue", "name": "paramvalue" },
+   //             { "data": "limit_type", "name": "limit_type" },
+   //             { "data": "qlimit_assigned", "name": "qlimit_assigned" },
+   //             { "data": "qusagepercentage", "name": "qusagepercentage" },
+   //             { "data": "qusagepercentageamount", "name": "qusagepercentageamount" },
+   //             { "data": "qlimit_amount", "name": "qlimit_amount" }
+   //         ]
+   //     });
+
+   //     $("#customerInfo").wrap('<div style="overflow:auto;" />');
+
+   //     }
+</script>
+
+}
+

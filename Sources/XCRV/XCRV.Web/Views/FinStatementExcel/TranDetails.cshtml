@@ -1,0 +1,35 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using XCRV.Domain.Entities;
+
+@model IEnumerable<FinStatementDetails>
+
+<table id="TranDetailsTable" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Account ID</th>
+            <th>Account Name</th>
+            <th>Instrument Type</th>
+            <th>Instrument No.</th>
+            <th>Particulars</th>
+            <th>Deposit</th>
+            <th>Withdraw</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.foracid</td>
+                <td>@item.acct_name</td>
+                <td>@item.instrmnt_type</td>
+                <td>@item.instrmnt_num</td>
+                <td>@item.tran_particular</td>
+                <td>@item.deposit</td>
+                <td>@item.Withdrawl</td>              
+            </tr>
+        }
+    </tbody>
+</table>

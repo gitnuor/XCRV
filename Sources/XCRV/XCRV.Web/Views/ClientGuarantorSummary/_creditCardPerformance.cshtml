@@ -1,0 +1,38 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using XCRV.Domain.Entities;
+@model ClientBorrowerViewModel
+
+<table id="creditCardPerformance" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>CUST ID </th>
+            <th>CARD NAME </th>
+            <th>AVG UTILIZATION </th>
+            <th>EOL TIMES</th>
+            <th>COUNT OF 30DPD</th>
+            <th>COUNT OF 60DPD</th>
+            <th>COUNT OF 90DPD</th>
+            <th>COUNT OF 90 PLUS DPD</th>
+            <th>CL STATUS</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.creditPerformance)
+        {
+            <tr>
+                <td>@item.cust_id</td>
+                <td>@item.card_name</td>
+                <td>@item.avg_utilization</td>
+                <td>@item.eol_times</td>
+                <td>@item.count_of_30dpd</td>
+                <td>@item.count_of_60dpd</td>
+                <td>@item.count_of_90dpd</td>
+                <td>@item.count_of_90_plus_dpd</td>
+                <td>@item.cl_status</td>
+            </tr>
+        }
+    </tbody>
+</table>

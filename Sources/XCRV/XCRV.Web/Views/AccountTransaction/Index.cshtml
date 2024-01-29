@@ -1,0 +1,355 @@
+﻿@using XCRV.Domain.Entities
+
+@model TransactionDetails
+@{
+    ViewData["Title"] = "BBL - XCRV360 : Transaction";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+<style>
+    .form-check {
+        padding-left: 0rem !important;
+    }
+
+    .dropdown-menu {
+        /*  position: absolute;
+                                            top: 100%;
+                                            left: 0;*/
+        z-index: 1035;
+    }
+
+</style>
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Customer</a></li>
+                    <li class="breadcrumb-item active">Account Transaction</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Account Transaction</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <form class="form-horizontal">
+                    <div class="card-body">
+                        <div class="row" style="margin-top: -25px;">
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Account No</label>
+                                    <div class='input-group'>
+                                        @* <input type="text" id="txtFromDate" class="form-control singledate" />*@
+                                        <input type="text" class="form-control" id="txtSearchString" value="@ViewBag.Accno" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>From Date</label>
+                                    <div class='input-group' id="inputfrm">
+                                        <input type="text" id="txtFromDate" class="form-control singledate" />
+                                        <div class="input-group-append" id="datepicker1">
+                                            <label for="txtFromDate" class="input-group-text">
+                                                <span class="fa fa-calendar"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>To Date</label>
+                                    <div class='input-group'>
+                                        <input type="text" id="txtToDate" class="form-control singledate" />
+                                        <div class="input-group-append" id="datepicker2">
+                                            <label for="txtToDate" class="input-group-text">
+                                                <span  class="fa fa-calendar"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <div class='input-group'>
+                                        <button id="btnSearch" type="button" class="btn btn-primary" value="Insert"><span id="btnText"> Search</span></button>&nbsp;&nbsp;
+                                        <input id="tranchk" type="checkbox" value="true" name="Live" style="zoom:1.5;" />&nbsp;<b style="font-size: 11px;">Live Transaction</b>
+                                        <input type="hidden" value="false" name="Live" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </form>
+
+                <div class="row h-100 justify-content-left">
+                    <div class="col-md-8">
+                        <div class="form-group row">
+                            <div class="col-12 table-responsive-sm">
+                                <table class="table smallfrontTable" id="custLimitInfo">
+                                    <tr>
+                                        <th>Name :</th>
+                                        <td><label id="cust_name" class="font-weight-normal"></label></td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <th>Current Available Balance :</th>
+                                        <td><label id="aval_balance" class="font-weight-normal"></label></td>
+
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                @*  <div class="row">
+                    <div class="col-md-6 grid-buttons-margin">
+                    <div class="dt-buttons btn-group">
+                    <button id="btnDownload" type="button" class="btn btn-primary"><span id="btnText"> Download Excel</span></button>
+
+                    </div>
+                    </div>
+                    </div>*@
+
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-md-12" id="divtbl">
+                        <table id="customerLimit" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Tran.ID</th>
+                                    <th>Date</th>
+                                    <th>Tran Particular</th>
+                                    <th>Deposit</th>
+                                    <th>Withdraw</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+</div><!-- /.contant -->
+@section ScriptSection
+{
+
+<!-- DataTables  & Plugins -->
+<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/plugins/jszip/jszip.min.js"></script>
+<script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
+
+<script>
+
+                             $(function () {
+                                $('#txtFromDate').datepicker({
+                                    changeMonth: true,
+                                    changeYear: true,
+                                    format: "dd-M-yyyy",
+                                    language: "tr",
+                                    autoclose: true
+                                });
+                            });
+
+                             $(function () {
+                                $('#txtToDate').datepicker({
+                                    changeMonth: true,
+                                    changeYear: true,
+                                    format: "dd-M-yyyy",
+                                    language: "tr",
+                                    autoclose: true
+                                });
+                            });
+
+       $(function(){
+        $("#tranchk").change(function() {
+            if($(this).is(":checked")) {
+                  $("#txtFromDate").datepicker("setDate", new Date());
+                  $("#txtToDate").datepicker("setDate", new Date());
+                  $('#txtFromDate').prop('disabled', true);
+                  $('#txtToDate').prop('disabled', true);
+                  $('#datepicker1').hide();
+                  $('#datepicker2').hide();
+                  
+            }
+            else {
+                 $("#txtFromDate").val('');
+                 $("#txtToDate").val('');
+                 $('#txtFromDate').prop('disabled', false);
+                 $('#txtToDate').prop('disabled', false);
+                 $('#datepicker1').show();
+                 $('#datepicker2').show();
+            }
+           
+        });
+
+    })
+
+                      $(document).on('click', '#btnSearch',  function () {
+
+                                let seachString = $("#txtSearchString").val();
+                                let FromDate = $('#txtFromDate').val();
+                                let ToDate = $('#txtToDate').val();
+                                loadTranDetail(seachString, FromDate,ToDate);
+                                //loadCustometBal(seachString, FromDate,ToDate);
+                                //loadCustometName(seachString, FromDate,ToDate);
+                            });
+
+                      function loadCustometBal(seachString,FromDate,ToDate) {
+
+                            $.ajax({
+                                type: 'GET',
+                                url: '/AccountTransaction/getCustomerBal',
+                                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                                data: {accno:seachString,FromDate:FromDate,ToDate:ToDate},
+                                success: function (result) {
+                                 if (result != null) {
+                                        $('#aval_balance').text(result.data.clr_bal_amt);
+
+                                    } else {
+                                        alert("Something went wrong");
+                                    }
+                                }
+                               // ,
+                               // error: function () {
+                               //     alert('Failed to receive the Data');
+                               //     console.log('Failed ');
+                               //}
+
+                       });
+                       }
+
+
+                       function loadCustometName(seachString,FromDate,ToDate) {
+
+                            $.ajax({
+                                type: 'GET',
+                                url: '/AccountTransaction/getCustomerName',
+                                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                                data: {accno:seachString,FromDate:FromDate,ToDate:ToDate},
+                                success: function (result) {
+                                 if (result != null) {
+                                         $('#cust_name').text(result.data.acct_name);
+
+                                    } else {
+                                        alert("Something went wrong");
+                                    }
+                                }
+                               // ,
+                               // error: function () {
+                               //     alert('Failed to receive the Data');
+                               //     console.log('Failed ');
+                               //}
+
+                       });
+                       }
+
+
+                            $('#customerLimit').DataTable({
+                                "filter": false,
+                                "paging": true,
+                                "pageLength": 10,
+                                "lengthChange": false,
+                                "pagingType": "full_numbers",
+                                "scrollX": true,
+                                "autoWidth": false
+                            });
+
+                       function loadTranDetail(seachString,FromDate,ToDate) {
+                           //debugger;
+                                $('#customerLimit').DataTable().destroy();
+
+                                $('#customerLimit').DataTable({
+                                    "processing": true,
+                                    "language": {
+                                        processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+                                    },
+                                    "filter": false,
+                                    "paging": true,
+                                    "pageLength": 10,
+                                    "lengthChange": false,
+                                    "pagingType": "full_numbers",
+                                    "scrollX": true,
+                                    "autoWidth": false,
+
+                                    "ajax": {
+                                        "url": "/AccountTransaction/getAccountTransactionDetails",
+                                        "dataSrc": function (d) {
+                                               if (d.data.length === 0) {
+                                                 var settings = $('#customerLimit').DataTable().settings()[0];
+                                                 settings.oLanguage.sEmptyTable = d.message;
+                                          }
+                                             return d.data;
+                                        },
+                                        "data": {accno:seachString,FromDate:FromDate,ToDate:ToDate},
+                                        "type": "GET",
+                                        "dataType": "json"
+                                    },
+                                    "columns": [
+                                         { "data": "tran_id", "name": "tran_id" },
+                                        { "data": "tran_date", "name": "tran_date" },
+                                        { "data": "tran_part", "name": "tran_part" },
+                                        { "data": "deposit", "name": "deposit" },
+                                        { "data": "withdraw", "name": "withdraw" },
+
+                                    ]
+                                });
+                                loadCustometBal(seachString, FromDate,ToDate);
+                                loadCustometName(seachString, FromDate,ToDate);
+   }
+
+
+
+</script>
+
+
+}

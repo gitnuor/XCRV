@@ -1,0 +1,78 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using XCRV.Domain.Entities
+
+@model CreditCardInfo
+
+<table class="table table-striped infoTable">
+    <tr class="bg-gradient-info" style="line-height:11px!important">
+        <th colspan="4"><span style="font-weight: bold; font-size:1.2em;">Customer Personal Detail</span></th>
+    </tr>
+    <tr style="min-height:9px!important">
+        <th style=" width: 25%; text-align: right;"><b>Customer ID : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Customer_Id</td>
+        <th style=" width: 25%; text-align: right;"><b>Mobile : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Mobile_No</td>
+    </tr>
+    <tr style="min-height:9px!important">
+        <th style=" width: 25%; text-align: right;"><b>Card No : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Card_No</td>
+        <th style=" width: 25%; text-align: right;"><b>Card Delivery Address : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Delivery_Address</td>
+    </tr>
+    <tr style="min-height:9px!important">
+        <th style=" width: 25%; text-align: right;"><b>Full Name : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Cardholder_Name</td>
+        <th style=" width: 25%; text-align: right;"><b>Occupation : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Occupation</td>
+    </tr>
+    <tr class="bg-gradient-info" style="line-height:11px!important">
+        <th colspan="4"><span style="font-weight: bold; font-size:1.2em;">Home Address</span></th>
+    </tr>
+    <tr style="min-height:9px!important">
+        <th style=" width: 25%; text-align: right;"><b>Full address : </b></th>
+        <td style=" text-align: left;" colspan="3">@Model.Home_Full_Address</td>
+    </tr>
+    <tr style="min-height:9px!important">
+        <th style=" width: 25%; text-align: right;"><b>City : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Home_City</td>
+        <th style=" width: 25%; text-align: right;"><b>Post Code : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Home_Post_Code</td>
+    </tr>
+    <tr style="min-height:9px!important">
+        <th style=" width: 25%; text-align: right;"><b>State : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Home_State</td>
+        <th style=" width: 25%; text-align: right;"><b>Country :</b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Home_Country</td>
+    </tr>
+
+    <tr class="bg-gradient-info" style="line-height:11px!important">
+        <th colspan="4"><span style="font-weight: bold; font-size:1.2em;">Company Address</span></th>
+    </tr>
+    <tr style="min-height:9px!important">
+        <th style=" width: 25%; text-align: right;"><b>Organization	: </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Organization</td>
+        <th style=" width: 25%; text-align: right;"><b>Designation : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Designation</td>
+    </tr>
+    <tr style="min-height:9px!important">
+        <th style=" width: 25%; text-align: right;"><b>Full address : </b></th>
+        <td style=" text-align: left;" colspan="3">@Model.Company_Full_Address</td>
+    </tr>
+    <tr style="min-height:9px!important">
+        <th style=" width: 25%; text-align: right;"><b>City : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Company_City</td>
+        <th style=" width: 25%; text-align: right;"><b>Post Code : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Company_Post_Code</td>
+
+    </tr>
+    <tr style="min-height:9px!important">
+        <th style=" width: 25%; text-align: right;"><b>State : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Company_State</td>
+        <th style=" width: 25%; text-align: right;"><b>Country :</b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Company_Country</td>
+    </tr>
+</table>

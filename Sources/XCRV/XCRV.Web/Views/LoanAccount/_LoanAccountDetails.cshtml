@@ -1,0 +1,130 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model XCRV.Domain.Entities.LoanAccountInfo
+
+<table class="table table-striped smallfrontDataTable">
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>Account Name : </b></th>
+        <td style=" text-align: left;" colspan="3">@Model.Acct_Name</td>
+    </tr>
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>Customer Name : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Cust_Name</td>
+        <th style=" width: 25%; text-align: right;"><b>Customer ID : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Cust_Id</td>
+    </tr>
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>Loan Repayment Account : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Op_Foracid</td>
+        <th style=" width: 25%; text-align: right;"><b>**Scheme Type : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Schm_Type</td>
+    </tr>
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>Scheme Description : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Schm_Desc</td>
+        <th style=" width: 25%; text-align: right;"><b>Interest Rate : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Interest_Rate</td>
+    </tr>
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>Sanction Limit : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Sanct_Lim</td>
+        <th style=" width: 25%; text-align: right;"><b>Open Date : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Acct_Opn_Date</td>
+    </tr>
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>Loan Expire Date : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Ei_Perd_End_Date</td>
+        <th style=" width: 25%; text-align: right;"><b>Outstanding Amount : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Clr_Bal_Amt</td>
+    </tr>
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>Paid Principle Amount : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Paid_Principle</td>
+        <th style=" width: 25%; text-align: right;"><b>Over Due Amount :</b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Loan_Overdue</td>
+    </tr>
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>Accrued Interest : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Nrml_Accrued_Amount_Dr</td>
+        <th style=" width: 25%; text-align: right;"><b>Paid Interest : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Paid_Interest</td>
+    </tr>
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>Book Interest : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Booked_Amt</td>
+        <th style=" width: 25%; text-align: right;"><b>DPD : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Dpd</td>
+    </tr>
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>A/C Status : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Acct_State</td>
+        <th style=" width: 25%; text-align: right;"><b>Account Close Flag : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Acct_Cls_Flg</td>
+    </tr>
+
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>EMI Start Date : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Emi_Start_Date</td>
+        <th style=" width: 25%; text-align: right;"><b>Collateral Amount : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Secu_Value</td>
+    </tr>
+    <tr>
+        <th style=" width: 25%; text-align: right;">PSO Name : </th>
+        <td style=" width: 25%; text-align: left;">@Model.Pso_Name</td>
+        <th style=" width: 25%; text-align: right;"><b>PSO ID :</b> </th>
+        <td style=" width: 25%; text-align: left;">@Model.Pso_Id</td>
+    </tr>
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>MPSO Name : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Mpsoname</td>
+        <th style=" width: 25%; text-align: right;"><b>MPSO ID : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Mpsoid</td>
+    </tr>
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>Unit Office Name : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Unit_Office_Name</td>
+        <th style=" width: 25%; text-align: right;"><b>Cost Center Code : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Cc_Code</td>
+    </tr>
+
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>Sanction Date : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Sanction_Date</td>
+        <th style=" width: 25%; text-align: right;"><b>Disbursement Date : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Disbursement_Date</td>
+    </tr>
+
+
+
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>Disbursement Amount : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Disburseamount</td>
+        <th style=" width: 25%; text-align: right;"><b>Security Value : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Secu_Value</td>
+    </tr>
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>File Ref. No : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Sanct_Ref_Num</td>
+        <th style=" width: 25%; text-align: right;"><b>ATE : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Ate</td>
+    </tr>
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>Classification Status : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Cl_Status</td>
+        <th style=" width: 25%; text-align: right;"><b>Interest Suspense Amount : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Int_Susp_Amt</td>
+    </tr>
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>Tenure : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Tenure</td>
+        <th style=" width: 25%; text-align: right;"><b>Principal Amount : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Principle_Amount</td>
+    </tr>
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>Customer Contact No : </b></th>
+        <td style=" text-align: left;" colspan="3">@Model.Customer_Contact_No</td>
+    </tr>
+</table>

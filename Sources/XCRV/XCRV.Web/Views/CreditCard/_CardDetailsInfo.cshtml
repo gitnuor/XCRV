@@ -1,0 +1,39 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using XCRV.Domain.Entities
+
+@model CreditCardInfo
+
+<table class="table table-striped infoTable">
+    <tr class="bg-gradient-info" style="line-height:11px!important">
+        <th colspan="4"><span style="font-weight: bold; font-size:1.2em;">Card Details</span></th>
+    </tr>
+    <tr style="min-height:9px!important">
+        <th style=" width: 25%; text-align: right;"><b>Card No : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Card_No</td>
+        <th style=" width: 25%; text-align: right;"><b>Card Holder Name : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Cardholder_Name</td>
+    </tr>
+    <tr style="min-height:9px!important">
+        <th style=" width: 25%; text-align: right;"><b>PSO Code : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Pso_Code</td>
+        <th style=" width: 25%; text-align: right;"><b>First Use Date : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.First_Use_Date</td>
+    </tr>
+    <tr style="min-height:9px!important">
+        <th style=" width: 25%; text-align: right;"><b>Card Production Date : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Production_Date</td>
+        <th style=" width: 25%; text-align: right;"><b>Card Limit : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Card_Limit</td>
+    </tr>
+    <tr style="min-height:9px!important">
+        <th style=" width: 25%; text-align: right;"><b>Activation Date : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Activation_Date</td>
+        <th style=" width: 25%; text-align: right;"><b>Current Outstanding : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.Current_Outstanding</td>
+    </tr>
+
+</table>

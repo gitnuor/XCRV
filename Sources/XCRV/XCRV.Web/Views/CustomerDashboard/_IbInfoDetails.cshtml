@@ -1,0 +1,71 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model IbViewModel
+
+<div class="row">
+    <div class="col-12" id="accordion">
+        <table class="table table-sm infoTable">
+            <tr style="min-height:9px!important">
+                <th style=" width: 25%; text-align: right;"><b>Customer Name : </b></th>
+                <td style=" text-align: left;" colspan="3">@Model.CustInfo.MasterAccName</td>
+                
+            </tr>
+            <tr style="line-height:9px!important">
+                <th style=" width: 25%; text-align: right;"><b>Phone : </b></th>
+                <td style=" width: 25%; text-align: left;">@Model.CustInfo.MobileNo</td>
+                <th style=" width: 25%; text-align: right;"><b>Email : </b></th>
+                <td style=" width: 25%; text-align: left;">@Model.CustInfo.EmailAddress</td>               
+            </tr>
+            <tr style="line-height:9px!important">
+                 <th style=" width: 25%; text-align: right;"><b>Last Logon : </b></th>
+                <td style=" width: 25%; text-align: left;">@Model.CustInfo.LastLoginDateTime</td>
+                <th style=" width: 25%; text-align: right;"><b>IB Status : </b></th>
+                <td style=" width: 25%; text-align: left;">@{
+                        var a = "";
+                        if (!string.IsNullOrEmpty(Model.CustInfo.InternetBanking))
+                        {
+                            a =  (Model.CustInfo.InternetBanking == "0" ? "Not Enabled" : "Enabled");
+                        }
+                        @a               
+                    }</td>
+                <th style=" width: 25%; text-align: right;"><b> </b></th>
+                <td style=" width: 25%; text-align: left;"></td>
+            </tr>
+            
+        </table>
+    </div>
+
+    <div class="col-12">
+       <strong>Transaction Details</strong> 
+    </div>
+
+    <div class="col-12">
+      <table id="list-of-account-tbl" class="table table-bordered table-striped table-sm" style="font-size: .7em;">
+            <thead>
+                <tr >
+                    <th>Stan No</th>
+                    <th>To A/C</th>
+                    <th>Time</th>
+                    <th>Particulars</th>
+                    <th>Amount</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach( var item in Model.IbTransactions)
+                {
+                    <tr>
+                        <td>@item.txnStanNo</td>
+                        <td>@item.txnToAcNo</td>
+                        <td>@item.txnTime</td>
+                        <td>@item.txnParticulars</td>
+                        <td class="text-right">@item.txnAmount</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

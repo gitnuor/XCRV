@@ -1,0 +1,210 @@
+﻿
+@{
+    ViewData["Title"] = "BBL - XCRV360 : Individual Transaction";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+@model XCRV.Domain.Entities.IndividualTransaction
+<style>
+    .form-check {
+        padding-left: 0rem !important;
+    }
+
+    .dropdown-menu {
+        z-index: 1035;
+    }
+
+</style>
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"></h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Deposit</a></li>
+                    <li class="breadcrumb-item active">Individual Transaction</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Individual Transaction</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <form class="form-horizontal">
+                    <div class="card-body">
+                        <div class="row" style="margin-top: -25px;">
+                        <input type="hidden" id="hdnAccountNo" name="flag" value="1" />
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Account No</label>
+                                    <div class='input-group'>
+                                        <input type="text" class="form-control" name="accountNo" id="txtAccountNo" value="@ViewBag.AccountNo" />
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Transaction ID</label>
+                                    <div class='input-group'>
+                                        <input type="text" class="form-control" name="tranID" id="txtAccountNo" value="@ViewBag.TranID" />
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Tran Date</label>
+                                    <div class='input-group'>
+                                        <input type="text" id="txtDate" name="date" class="form-control singledate" value="@ViewBag.tranDate" />
+                                        <div class="input-group-append">
+                                            <label for="txtDate" class="input-group-text">
+                                                <span class="fa fa-calendar"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                             <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <div class='input-group'>
+                                        <button id="btnSearch" type="submit" class="btn btn-primary" value="Insert"><span id="btnText"> Search</span></button>                             
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row">
+                    <div class="col-12" id="accordion">
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        Transaction Details
+                                    </h4>
+                                </div>
+                            </a>
+                             <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped smallfrontTable">
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Transaction ID :</th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.tran_id</td>
+                                                    <th style=" width: 25%; text-align: right;">Part Tran Type : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.part_tran_type</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Transaction Date	 : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.tran_date</td>
+                                                    <th style=" width: 25%; text-align: right;">Entry User ID : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.entry_user_id</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Value Date : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.value_date</td>
+                                                    <th style=" width: 25%; text-align: right;">Post User ID :</th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.pstd_user_id</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Transaction Type : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.tran_type</td>
+                                                    <th style=" width: 25%; text-align: right;">Verified User ID :</th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.vfd_user_id</td>
+                                                </tr>
+                                                 <tr>
+                                                    <th style=" width: 25%; text-align: right;">Account No	 : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.foracid</td>
+                                                    <th style=" width: 25%; text-align: right;">Remarks :</th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.TRAN_RMKS</td>
+                                                </tr>
+                                                 <tr>
+                                                    <th style=" width: 25%; text-align: right;">Amount : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.tran_amt</td>
+                                                    <th style=" width: 25%; text-align: right;">SolID :</th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.sol_id</td>
+                                                </tr>
+                                                 <tr>
+                                                    <th style=" width: 25%; text-align: right;">Particulars : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.TRAN_PARTICULAR</td>
+                                                </tr>
+                                               
+                                            </table>
+                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+</div><!-- /.contant -->
+</div>
+
+
+
+
+
+@section ScriptSection
+{
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/plugins/jszip/jszip.min.js"></script>
+<script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="~/js/bootstrap-datepicker.js"></script>
+    <script>
+     $(function () {
+                         $('#txtDate').datepicker({
+                             changeMonth: true,
+                             changeYear: true,
+                             format: "dd-M-yyyy",
+                             language: "tr",
+                             autoclose: true
+                         });
+                     });
+    $(document).ready(function () {
+
+    @if (TempData.ContainsKey("ErrorMessage"))
+    {
+        @:toastr.error('@TempData["ErrorMessage"]');
+    };
+    });
+    </script>
+    
+}

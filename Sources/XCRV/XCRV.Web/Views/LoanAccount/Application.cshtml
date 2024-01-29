@@ -1,0 +1,404 @@
+﻿
+@{
+    ViewData["Title"] = "Digital Loan Application";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+@model LoanApplicationViewModel
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"></h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Loan</a></li>
+                    <li class="breadcrumb-item active">Digital Loan Application</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Digital Loan Application</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 ">
+                        <form asp-controller="LoanAccount" asp-action="Application">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-warning">BUSINESS CIF</button>
+                                </div>
+                                <!-- /btn-group -->
+                                <input type="text" id="txtCustomerId" name="customerId" class="form-control" value="@ViewBag.CustomerId">
+                                <span class="input-group-append">
+                                    <button type="submit" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="btn-group w-100">
+                            <button type="button" class="btn btn-success " id="btnShowPrintable" >
+                                <span>Show Printable</span>
+                            </button>
+                            <a class="btn btn-primary" asp-action="DownloadExcelLoanApplication" 
+                                    asp-controller="LoanAccount" asp-route-customerId="@ViewBag.CustomerId">
+                                <span>Download [Excel]</span>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-5 col-sm-3">
+                        <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
+                            <a class="nav-link active" id="vert-tabs-home-tab" data-toggle="pill" href="#vert-tabs-home" role="tab" aria-controls="vert-tabs-home" aria-selected="true">Basic Information</a>
+                            <a class="nav-link" id="vert-tabs-profile-tab" data-toggle="pill" href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile" aria-selected="false">Customer Relation</a>
+                            <a class="nav-link" id="vert-tabs-messages-tab" data-toggle="pill" href="#vert-tabs-messages" role="tab" aria-controls="vert-tabs-messages" aria-selected="false">Loan Information</a>
+                            <a class="nav-link" id="vert-tabs-settings-tab" data-toggle="pill" href="#vert-tabs-settings" role="tab" aria-controls="vert-tabs-settings" aria-selected="false">Guarantor</a>
+                        </div>
+                    </div>
+                    <div class="col-7 col-sm-9">
+                        <div class="tab-content" id="vert-tabs-tabContent">
+                            <div class="tab-pane text-left fade show active" id="vert-tabs-home" role="tabpanel" aria-labelledby="vert-tabs-home-tab">
+                                <div class="row">
+                                    <div class="col-12 table-responsive-sm">
+                                        <table class="table table-striped infoTable">
+                                            <tr>
+                                                <th>BUSINESS NAME :</th>
+                                                <td>@Model.CustomerBasicInfo.Business_Name</td>
+                                                <th>CIF :</th>
+                                                <td>@Model.CustomerBasicInfo.Cif</td>
+                                            </tr>
+                                            <tr>
+                                                <th>ADDRESS (AS PER TRADE LICENSE) :</th>
+                                                <td colspan="3">@Model.CustomerBasicInfo.Address</td>
+                                            </tr>
+                                            <tr>
+                                                <th>BUSINESS SECTOR :</th>
+                                                <td>@Model.CustomerBasicInfo.Business_Sector</td>
+                                                <th>BBL SEGMENTATION CODE :</th>
+                                                <td>@Model.CustomerBasicInfo.Bbl_Segmentation_Code</td>
+                                            </tr>
+                                            <tr>
+                                                <th>BB SECTOR CODE :</th>
+                                                <td>@Model.CustomerBasicInfo.Bb_Sector_Code</td>
+                                                <th>CONTACT NUMBER :</th>
+                                                <td>@Model.CustomerBasicInfo.Contact_Number</td>
+                                            </tr>
+                                            <tr>
+                                                <th>BUSINESS OWNERSHIP :</th>
+                                                <td>@Model.CustomerBasicInfo.Business_Ownership</td>
+                                                <th>EMAIL ADDRESS :</th>
+                                                <td>@Model.CustomerBasicInfo.Email_Address</td>
+                                            </tr>
+                                            <tr>
+                                                <th>TRADE LICENSE NUMBER :</th>
+                                                <td>@Model.CustomerBasicInfo.Trade_License_Number</td>
+                                                <th>BUSINESS TIN</th>
+                                                <td>@Model.CustomerBasicInfo.Business_Tin</td>
+                                            </tr>
+                                            <tr>
+                                                <th>INCORPRATION DATE :</th>
+                                                <td>@Model.CustomerBasicInfo.Incorpration_Date</td>
+                                                <th>MONTHLY BUSINESS INCOME</th>
+                                                <td>@Model.CustomerBasicInfo.Monthly_Business_Income</td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="vert-tabs-profile" role="tabpanel" aria-labelledby="vert-tabs-profile-tab">
+                                <div class="row">
+                                    <div class="col-12 table-responsive-sm">
+                                        <table class="table table-striped" id="proprietors">
+                                            <thead>
+                                                <tr style="min-height:9px!important;">
+                                                    <th>CIF</th>
+                                                    <th>RELTN CODE</th>
+                                                    <th style="white-space:normal!important;">NAME OF THE PROPRIETOR/PARTNERS/MD/DIRECTOR</th>
+                                                    <th>DATE OF BIRTH</th>
+                                                    <th>FATHER NAME</th>
+                                                    <th>MOTHER NAME</th>
+                                                    <th>MARITAL STATUS</th>
+                                                    <th>SPOUSE NAME</th>
+                                                    <th>PRESENT ADDRESS</th>
+                                                    <th>PERMANENT ADDRESS</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.LoanProprietors)
+                                                {
+                                                    <tr style="min-height:9px!important;">
+                                                        <td>@item.Cif</td>
+                                                        <td>@item.Cust_Reltn_Code</td>
+                                                        <td>@item.Name_Proprietor</td>
+                                                        <td>@item.Date_Of_Birth</td>
+                                                        <td>@item.Father_Name</td>
+                                                        <td>@item.Mother_Name</td>
+                                                        <td>@item.Marital_Status</td>
+                                                        <td>@item.Spouse_Name</td>
+                                                        <td>@item.Present_Address</td>
+                                                        <td>@item.Permanent_Address</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="vert-tabs-messages" role="tabpanel" aria-labelledby="vert-tabs-messages-tab">
+                                <div class="row">
+                                    <div class="col-12 table-responsive-sm">
+                                        <table class="table table-striped infoTable">
+                                            @foreach (var item in Model.LoanAccountInfoList)
+                                            {
+
+                                            <tr>
+                                                <th>EXISTING LOAN PRODUCT :</th>
+                                                <td>@item.Existing_Loan_Product</td>
+                                                <th>UNIT OFFICE/BC CODE :</th>
+                                                <td>@item.Unit_Office_Bc</td>
+
+                                            </tr>
+                                            <tr>
+                                                <th>NATURE OF LOAN :</th>
+                                                <td>@item.Nature_Of_Loan</td>
+                                                <th>MPSO PIN :</th>
+                                                <td>@item.Mpso_Pin</td>
+                                            </tr>
+                                            <tr>
+                                                <th>CUSTOMER ID :</th>
+                                                <td>@item.Cif_Id</td>
+                                                <th>MPSO NAME :</th>
+                                                <td>@item.Mpso_Name</td>
+                                            </tr>
+                                            <tr>
+                                                <th>OPERATING ACCOUNT :</th>
+                                                <td>@item.Operating_Account</td>
+                                                <th>RELATIONSHIP (FIRST OR SECOND LOAN) :</th>
+                                                <td>@item.Relationship</td>
+                                            </tr>
+                                            <tr>
+                                                <th>OPERATING ACCOUNT BRANCH :</th>
+                                                <td>@item.Operating_Account_Branch</td>
+                                                <th>SECTOR CODE :</th>
+                                                <td>@item.Sector_Code</td>
+                                            </tr>
+                                            <tr>
+                                                <th>LOAN ACCOUNT :</th>
+                                                <td>@item.Loan_Account</td>
+                                                <th>ECONOMIC PURPOSE CODE :</th>
+                                                <td>@item.Economic_Purpose_Code</td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>LOAN ACCOUNT BRANCH :</th>
+                                                <td>@item.Loan_Account_Branch</td>
+                                                <th>SECURITY CODE</th>
+                                                <td>@item.Security_Code</td>
+                                            </tr>
+                                            <tr>
+                                                <th>UNIT OFFICE/BC :</th>
+                                                <td colspan="3">@item.Unit_Office_Bc</td>
+                                            </tr>
+                                            }
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="vert-tabs-settings" role="tabpanel" aria-labelledby="vert-tabs-settings-tab">
+                                <div class="row">
+                                    <div class="col-12 table-responsive-sm">
+                                        <table class="table table-striped" id="guarantors">
+                                            <thead>
+                                                <tr style="min-height:9px!important;">
+                                                    <th>SRL</th>
+                                                    <th>CIF</th>
+                                                    <th>NAME</th>
+                                                    <th>DATE OF BIRTH</th>
+                                                    <th>FATHER NAME</th>
+                                                    <th>MOTHER NAME</th>
+                                                    <th>SPOUSE NAME</th>
+                                                    <th>PRESENT ADDRESS</th>
+                                                    <th>PERMANENT ADDRESS</th>
+                                                    <th>NID</th>
+                                                    <th>CONTACT NUMBER</th>
+                                                    <th>PROFESSION & DESIGNATION</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.Guarantors)
+                                                {
+                                                    <tr style="min-height:9px!important;">
+                                                        <td>@item.srl</td>
+                                                        <td>@item.g_cif_id</td>
+                                                        <td>@item.g_name</td>
+                                                        <td>@item.date_of_birth</td>
+                                                        <td>@item.father_name</td>
+                                                        <td>@item.mother_name</td>
+                                                        <td>@item.spouse_name</td>
+                                                        <td>@item.present_adress</td>
+                                                        <td>@item.permanent_adress</td>
+                                                        <td>@item.nid</td>
+                                                        <td>@item.contact_no</td>
+                                                        <td>@item.profession</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+
+</div>
+<!-- /.content -->
+
+
+<div class="modal fade" id="printableModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-info">
+                <h4 class="modal-title">Loan Application</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="align-content: center;">
+                <div id="divPintable" style="width: 690px;">
+                    <div id="printForm">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="JavaScript:printPartOfPage('divPintable');">Print</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+@section ScriptSection
+{
+    <!-- DataTables  & Plugins -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/plugins/jszip/jszip.min.js"></script>
+    <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
+
+    <script>
+
+        $('#guarantors').DataTable({
+            "filter": false, // this is for disable filter (search box)
+            "paging": false,
+            "lengthChange": false,
+            "pagingType": "full_numbers",
+            "autoWidth": false,
+            "ordering": false,
+            "initComplete": function (settings, json) {
+                $("#guarantors").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+            },
+        });
+
+        $('#proprietors').DataTable({
+            "filter": false, // this is for disable filter (search box)
+            "paging": false,
+            "lengthChange": false,
+            "pagingType": "full_numbers",
+            "autoWidth": false,
+            "ordering": false,
+            "initComplete": function (settings, json) {
+                $("#proprietors").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+            },
+        });
+
+
+
+        $(document).ready(function () {
+
+        @if (TempData.ContainsKey("ErrorMessage"))
+        {
+            @:toastr.error('@TempData["ErrorMessage"]');
+        };
+        });
+
+
+        $(document).on('click', '#btnShowPrintable', function () {
+            var customerId = $('#txtCustomerId').val();
+            if (customerId) {
+                $.ajax({
+                    url: "@Url.Action("ShowPrintableApplication", "LoanAccount")",
+                    data: { customerId: customerId },
+                    success: function (data) {
+                        $("#printableModal #printForm").html(data);
+                        $("#printableModal").modal("show");
+                    }
+                });
+            }
+            else {
+                toastr.error('Sorry!!! Business CIF is required!!!!');
+            }
+        });
+
+        function printPartOfPage(elementId) {
+            var printContent = document.getElementById(elementId);
+            var windowUrl = '';
+            var uniqueName = new Date();
+            var windowName = '';  //'Print' + uniqueName.getTime();
+            var printWindow = window.open(windowUrl, windowName, 'left=50000,top=50000,width=0,height=0');
+            //add for va   printWindow.opener = null;-- 10-01-21
+            printWindow.opener = null;
+            printWindow.document.write(printContent.innerHTML);
+            printWindow.document.close();
+            printWindow.focus();
+            printWindow.print();
+            printWindow.close();
+        }
+
+    </script>
+
+}
+

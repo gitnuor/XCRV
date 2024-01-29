@@ -1,0 +1,244 @@
+﻿
+@model CustomerMatrixViewModel
+
+@{
+    ViewData["Title"] = "Customer Accounts";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"></h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Customer</a></li>
+                    <li class="breadcrumb-item active">Customer Accounts</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Customer Accounts</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-controller="CustomerMatrix" asp-action="Index">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-warning">Customer Id</button>
+                                </div>
+                                <!-- /btn-group -->
+                                <input type="text" id="txtCustomerId" name="customerId" class="form-control" value="@ViewBag.CustomerId">
+                                <span class="input-group-append">
+                                    <button type="submit" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12" id="accordion">
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        1. Customer Age Classification <span style="font-weight: normal;">
+                                            ( 30 <=Young, 30>and
+                                            40<=MidAge, 40>and 70<=Elder, 70>Old. )
+                                        </span>
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <th style=" width: 25%" align="right"><b>DOB: </b></th>
+                                                    <td style=" width: 25%" align="left">@Model.AgeClassification.date_of_birth</td>
+                                                    <th style=" width: 25%" align="right"><b>Age Class: </b></th>
+                                                    <td style=" width: 25%" align="left">@Model.AgeClassification.age_classification</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        2. Term Deposit Information &nbsp;&nbsp;<span class="badge bg-info">@ViewBag.termDepositAccount</span>
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    @await Html.PartialAsync("_TermDepositAccount", Model.TermDepositAccount)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseThree">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        3. Loan Account Information &nbsp;&nbsp;<span class="badge bg-info">@ViewBag.LoanAccount</span> 
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseThree" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    @await Html.PartialAsync("_LoanAccounts", Model.LoanAccount)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-warning card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseFour">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        4. Saving Account Information &nbsp;&nbsp;<span class="badge bg-info">@ViewBag.savingAccount</span> 
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseFour" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    @await Html.PartialAsync("_CasaAccounts", Model.SavingAccount)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-warning card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseFive">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        5. Over Draft Account Information &nbsp;&nbsp;<span class="badge bg-info">@ViewBag.odAccount</span> 
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseFive" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    @await Html.PartialAsync("_OverDraftAccouts", Model.OdAccount)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-warning card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseSix">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        6. Last Month's Transaction Frequency <span style="font-weight: normal;">
+                                            ( Frequent = Ten
+                                            and Above Transaction )&nbsp;&nbsp;<span class="badge bg-info">@ViewBag.transactionFrequencies</span> 
+                                        </span>
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseSix" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <table id="freqTable" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Account No</th>
+                                                <th>Frequency</th>                                               
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.TransactionFrequency)
+                                            {
+                                                <tr>
+                                                    <td>@item.foracid</td>
+                                                    <td>@item.flag</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+@section ScriptSection
+{
+
+    <!-- DataTables  & Plugins -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/plugins/jszip/jszip.min.js"></script>
+    <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <script>
+
+        $("#tdaTable").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#tdaTable_wrapper .col-md-6:eq(0)');
+
+        $("#laaTable").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#laaTable_wrapper .col-md-6:eq(0)');
+
+        $("#sbaTable").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#sbaTable_wrapper .col-md-6:eq(0)');
+
+        $("#caaTable").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#caaTable_wrapper .col-md-6:eq(0)');
+
+        $("#freqTable").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#freqTable_wrapper .col-md-6:eq(0)');
+
+
+       $(document).ready(function () {
+
+        @if (TempData.ContainsKey("ErrorMessage"))
+        {
+            @:toastr.error('@TempData["ErrorMessage"]');
+        };
+        });
+
+
+    </script>
+
+}

@@ -1,0 +1,33 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.vs
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+
+/Sources/XCRV/XCRV.Domain/bin/Debug/netcoreapp3.1
+/Sources/XCRV/XCRV.Domain/obj
+/Sources/XCRV/XCRV.Application/bin/Debug/netcoreapp3.1
+/Sources/XCRV/XCRV.Application/obj
+/Sources/XCRV/XCRV.OracleInfrastructure/bin/Debug/netcoreapp3.1
+/Sources/XCRV/XCRV.OracleInfrastructure/obj
+/Sources/XCRV/XCRV.Infrastructure/bin/Debug/netcoreapp3.1
+/Sources/XCRV/XCRV.Infrastructure/obj
+/Sources/XCRV/XCRV.Web/bin/Debug/netcoreapp3.1
+/Sources/XCRV/XCRV.Web/obj

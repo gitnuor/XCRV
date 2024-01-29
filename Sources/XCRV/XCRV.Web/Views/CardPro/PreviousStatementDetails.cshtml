@@ -1,0 +1,127 @@
+﻿@using XCRV.Domain.Entities
+
+@model TransactionDetails
+@{
+    ViewData["Title"] = "Card PRO | Previous Statement Details";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+<style>
+    .form-check {
+        padding-left: 0rem !important;
+    }
+
+    .dropdown-menu {
+        z-index: 1035;
+    }
+
+</style>
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Card Pro</a></li>
+                    <li class="breadcrumb-item active">Previous Statement Details</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Card PRO | Previous Statement Details</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <form class="form-horizontal">
+                    <div class="card-body">
+                        <div class="row" style="margin-top: -25px;">
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Card Number</label>
+                                    <div class='input-group'>
+                                        <input type="text" class="form-control form-control-sm" id="txtSearchString" value="@ViewBag.Accno" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Month</label>
+                                    <div class='input-group'>
+                                        <select class="form-control form-control-sm" aria-label="Select A Month" asp-items="ViewBag.Months">
+                                          <option selected>Select A Month</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Year</label>
+                                    <div class='input-group'>
+                                        <select class="form-control form-control-sm" aria-label="Select A Year" asp-items="ViewBag.Years">
+                                          <option selected>Select A Year</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Account Type</label>
+                                    <div class='input-group'>
+                                        <select class="form-control form-control-sm" aria-label="Select Account Type">
+                                          <option selected>Select Account Type</option>
+                                          <option value="1">Local Currency</option>
+                                          <option value="2">Foreign Currency</option>                                          
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <div class='input-group'>
+                                        <button id="btnSearch" type="button" class="btn btn-primary btn-sm" value="Insert"><span id="btnText"> Search</span></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 grid-buttons-margin">
+                                <div class="dt-buttons btn-group">
+                                    <button id="btnDownload" type="button" style="border:none;background:none"><img src="~/img/Exl.gif" alt="Excel" height="31px" /></button>
+                                    <button id="btnDownload" type="button" style="border:none;background:none"><img src="~/img/pdf2.gif" alt="Excel" height="31px" /></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            
+                        </div>
+                    </div>  
+                </form>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+</div><!-- /.contant -->

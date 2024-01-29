@@ -1,0 +1,172 @@
+﻿
+@{
+    ViewData["Title"] = "Debit Card Details";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"> </h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Other</a></li>
+                    <li class="breadcrumb-item active">Debit Card Details</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Debit Card Details</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <button type="button" id="btnSearchAction" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" style="min-width: 200px!important;">
+                                    Search By
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-item"><a href="#">Debit Card No</a></li>
+                                    <li class="dropdown-item"><a href="#">Account No</a></li>
+                                </ul>
+                            </div>
+                            <!-- /btn-group -->
+                            <input type="text" id="txtSearchString" class="form-control" value="@ViewBag.CardNo">
+                            <span class="input-group-append">
+                                <button type="button" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-md-12" id="details">
+
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+</div>
+
+
+@section ScriptSection
+{
+    <!-- DataTables  & Plugins -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/plugins/jszip/jszip.min.js"></script>
+    <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <script type="text/javascript">
+    $('.dropdown-menu').on('click', 'a', function () {
+        var text = $(this).html();
+        var htmlText = text;
+        $(this).closest('.input-group-prepend').find('.dropdown-toggle').html(htmlText);
+    });
+
+     $(document).ready(function () {
+        @if (TempData.ContainsKey("ErrorMessage"))
+        {
+            
+            @:toastr.error('@TempData["ErrorMessage"]');
+        };
+    });
+    </script>
+
+    <script>
+
+
+    $(document).on('click', '#btnSearch',  function () {
+        type = $('#btnSearchAction').text();
+        searchString = $('#txtSearchString').val();
+
+        var searchType = '';
+        switch (type) {
+            case "Account No":
+                searchType = "AccountNo";
+                break;
+            case "Debit Card No":
+                searchType = "DebitCardNo";
+                break;
+            default:
+                searchType = type;
+                break;
+        }
+
+        if (searchType || searchString) {
+                $.ajax({
+                    url: "@Url.Action("ShowDebitCardDetails", "DebitCard")",
+                    data: { seachType: searchType, searchString: searchString },
+                    success: function (data) {
+                        $("#details").html(data);
+                    }
+                });
+            }
+            else {
+                toastr.error('Sorry!!! Invalid Input!!!!');
+            }
+    });
+
+    $(document).on('click', '.cardNoInfo',  function (e) {
+        searchString = $(this).data('card_number');
+        maskedCardNo = $(this).data('masked_card_number');
+
+        var searchType = '';        
+        searchType = "DebitCardNo";
+
+        if (searchType || searchString) {
+                $.ajax({
+                    url: "@Url.Action("ShowDebitCardDetails", "DebitCard")",
+                    data: { seachType: searchType, searchString: searchString, maskedCardNo: maskedCardNo },
+                    success: function (data) {
+                        $("#details").html(data);
+
+                        $('#txtSearchString').val(maskedCardNo);
+                        $('#btnSearchAction').text("Debit Card No");
+                    }
+                });
+            }
+            else {
+                toastr.error('Sorry!!! Invalid Input!!!!');
+            }
+    });
+
+
+
+
+
+
+    </script>
+
+}

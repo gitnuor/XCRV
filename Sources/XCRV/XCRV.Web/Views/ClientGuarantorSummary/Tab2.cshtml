@@ -1,0 +1,29 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using XCRV.Domain.Entities;
+@*@model IEnumerable<CustomerGurantorStaticData>*@
+ @model ClientBorrowerViewModel
+
+<table id="Tab2" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>AccountNo</th>
+            <th>Credit Sum</th>
+            <th>Average Balance</th>
+            <th>Account Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.currentAccSummary)
+        {
+            <tr>
+                <td>@item.foracid</td>
+                <td>@item.format_credit_sum</td>
+                <td>@item.format_average_balance</td>
+                <td>@item.account_status</td>
+            </tr>
+        }
+    </tbody>
+</table>

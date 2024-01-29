@@ -1,0 +1,65 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model DebitCardInfoViewModel
+
+<table class="table table-sm infoTable">
+    <tr style="min-height:9px!important">
+        <th style=" width: 25%; text-align: right;"><b>Customer Name : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.DebitCardDetail.Emboss_Name</td>
+        <th style=" width: 25%; text-align: right;"><b>Card Daily Limit : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.DebitCardDetail.Daily_Card_Limit</td>
+    </tr>
+    <tr style="line-height:9px!important">
+        <th style=" width: 25%; text-align: right;"><b>Customer ID : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.DebitCardDetail.Customer_Id</td>
+        <th style=" width: 25%; text-align: right;"><b>POS Limit : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.DebitCardDetail.Pos_Purchase_Limit</td>
+    </tr>
+    <tr style="line-height:9px!important">
+        <th style=" width: 25%; text-align: right;"><b>Card Type : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.DebitCardDetail.CardType</td>
+        <th style=" width: 25%; text-align: right;"><b>Issue Date : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.DebitCardDetail.IssueDate</td>
+    </tr>
+    <tr style="line-height:9px!important">
+        <th style=" width: 25%; text-align: right;"><b>Expiry Date : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.DebitCardDetail.ExpiryDate</td>
+        <th style=" width: 25%; text-align: right;"><b>Customer DOB : </b></th>
+        <td style=" width: 25%; text-align: left;">@Model.DebitCardDetail.CustomerDOB</td>
+    </tr>
+    <tr style="line-height:9px!important">
+        <th style=" width: 25%; text-align: right;"><b>Customer Address : </b></th>
+        <td style=" text-align: left;" colspan="3">@Model.DebitCardDetail.Address</td>        
+    </tr>
+</table>
+
+<div class="col-12">
+    <span style="font-weight: bold; font-size:1.2em;">
+        Last 10 Transactions
+    </span>
+    <table id="transactionTbl" class="table table-bordered table-striped smallfrontDataTable table-sm">
+        <thead>
+            <tr>
+                <th style="width:20%">Card No</th>
+                <th style="width:20%">Trans Date</th>
+                <th style="width:20%">Amount</th>
+                <th style="width:40%">ATM/POS Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.DebitCardTransactions)
+            {
+            <tr>
+                <td>@item.Card_No</td>
+                <td>@item.Tran_Date</td>
+                <td>@item.Tran_Amt</td>
+                <td>@item.Tran_Particular</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

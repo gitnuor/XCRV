@@ -1,0 +1,417 @@
+﻿<style>
+    .text {
+        mso-number-format: \@;
+    }
+</style>
+<table border='0' cellpadding='0' cellspacing='0' width='100%'>
+    <tr>
+        <td style='padding: 5px 2px 5px 2px; font-family:Verdana; font-size:9pt; font-weight: bold;' colspan='4'>
+            <p style='padding-bottom: 5px; text-align:left;'>DIGITAL LOAN APPLICATION FORM</p>
+        </td>
+    </tr>
+    <tr>
+        <td style='padding: 5px 2px 5px 2px; font-family:Verdana; font-size:8pt; font-weight: bold;' colspan='4'>
+            <hr />
+            <p style='text-align:center;'>BORROWER DETAILS</p>
+            <hr />
+            <br />
+        </td>
+    </tr>
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            BUSINESS NAME
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{CustomerBasicInfo.Business_Name}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            CIF
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{CustomerBasicInfo.Cif}}
+        </td>
+    </tr>
+    {% for proprietor in LoanProprietors -%}
+
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            NAME OF THE PROPRIETOR/PARTNERS /MD /DIRECTOR
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{proprietor.Name_Proprietor}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            DATE OF BIRTH
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{proprietor.Date_Of_Birth}}
+        </td>
+    </tr>
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            FATHER NAME
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{proprietor.Father_Name}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            MOTHER NAME
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{proprietor.Mother_Name}}
+        </td>
+    </tr>
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            MARITAL STATUS
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{proprietor.Marital_Status}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            SPOUSE NAME
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{proprietor.Spouse_Name}}
+        </td>
+    </tr>
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            PRESENT ADDRESS
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{proprietor.Present_Address}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            PERMANENT ADDRESS
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{proprietor.Permanent_Address}}
+        </td>
+    </tr>
+    <tr>
+        <td style='padding-bottom: 15px;' colspan='4'>
+        </td>
+    </tr>
+
+    {% endfor -%}
+
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            ADDRESS (AS PER TRADE LICENSE)
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{CustomerBasicInfo.Address}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+        </td>
+    </tr>
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            BUSINESS SECTOR
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{CustomerBasicInfo.Business_Sector}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            BBL SEGMENTATION CODE
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{CustomerBasicInfo.Bbl_Segmentation_Code}}
+        </td>
+    </tr>
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            BB SECTOR CODE
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{CustomerBasicInfo.Bb_Sector_Code}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            CONTACT NUMBER
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{CustomerBasicInfo.Contact_Number}}
+        </td>
+    </tr>
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            BUSINESS OWNERSHIP
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{CustomerBasicInfo.Business_Ownership}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            EMAIL ADDRESS
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{CustomerBasicInfo.Email_Address}}
+        </td>
+    </tr>
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            TRADE LICENSE NUMBER
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{CustomerBasicInfo.Trade_License_Number}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            BUSINESS TIN
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{CustomerBasicInfo.Business_Tin}}
+        </td>
+    </tr>
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            INCORPRATION DATE
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{CustomerBasicInfo.Incorpration_Date}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            MONTHLY BUSINESS INCOME
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{CustomerBasicInfo.Monthly_Business_Income}}
+        </td>
+    </tr>
+    <tr>
+        <td style='padding: 5px 2px 5px 2px; font-family:Verdana; font-size:8pt; font-weight: bold;' colspan='4'>
+            <br /><hr />
+            <p style='text-align:center;'>
+                NEW LOAN APPLICATION
+            </p>
+            <hr />
+            <br />
+        </td>
+    </tr>
+
+    {% for loanInfo in LoanAccountInfoList -%}
+
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            EXISTING LOAN PRODUCT
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{loanInfo.Existing_Loan_Product}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            UNIT OFFICE/BC CODE
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{loanInfo.Unit_Office_Bc_Code}}
+        </td>
+    </tr>
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            NATURE OF LOAN
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{loanInfo.Nature_Of_Loan}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            MPSO PIN
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{loanInfo.Mpso_Pin}}
+        </td>
+    </tr>
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            CUSTOMER ID
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{loanInfo.Cif_Id}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            MPSO Name
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{loanInfo.Mpso_Name}}
+        </td>
+    </tr>
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            OPERATING ACCOUNT
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{loanInfo.Operating_Account}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            RELATIONSHIP (FIRST OR SECOND LOAN)
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{loanInfo.Relationship}}
+        </td>
+    </tr>
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            OPERATING ACCOUNT BRANCH
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{loanInfo.Operating_Account_Branch}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            SECTOR CODE
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{loanInfo.Sector_Code}}
+        </td>
+    </tr>
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            LOAN ACCOUNT
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{loanInfo.Loan_Account}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            ECONOMIC PURPOSE CODE
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{loanInfo.Economic_Purpose_Code}}
+        </td>
+    </tr>
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            LOAN ACCOUNT BRANCH
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{loanInfo.Loan_Account_Branch}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            SECURITY CODE
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{loanInfo.Security_Code}}
+        </td>
+    </tr>
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            UNIT OFFICE/BC
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{loanInfo.Unit_Office_Bc}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+        </td>
+    </tr>
+
+    {% endfor -%}
+
+    <tr>
+        <td style='padding: 5px 2px 5px 2px; font-family:Verdana; font-size:8pt; font-weight: bold;' colspan='4'>
+            <br />
+            <hr />
+            <p style='text-align:center;'>
+                GUARANTOR(S)
+            </p>
+            <hr />
+            <br />
+        </td>
+    </tr>
+
+
+
+    {% for guarantor in Guarantors -%}
+
+
+
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            GUARANTOR DETAILS {{guarantor.srl}}
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{guarantor.g_cif_id}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            NAME OF THE GUARANTOR
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{guarantor.g_name}}
+        </td>
+    </tr>
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            FATHER NAME
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{guarantor.father_name}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            MOTHER NAME
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{guarantor.mother_name}}
+        </td>
+    </tr>
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            DATE OF BIRTH
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{guarantor.date_of_birth}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            SPOUSE NAME
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{guarantor.spouse_name}}
+        </td>
+    </tr>
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            NID
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{guarantor.nid}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            CONTACT NUMBER
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{guarantor.contact_no}}
+        </td>
+    </tr>
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            PRESENT ADDRESS
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{guarantor.present_adress}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            PERMANENT ADDRESS
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{guarantor.permanent_adress}}
+        </td>
+    </tr>
+    <tr>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt; font-weight: bold; background-color:#F2F2F2;'>
+            PROFESSION & DESIGNATION
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+            {{guarantor.profession}}
+        </td>
+        <td width='20%' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+        </td>
+        <td width='30%' class='text' style='border: 0.25px dotted; padding: 5px 6px 5px 6px; font-family:Verdana; font-size:7pt;'>
+        </td>
+    </tr>
+
+    {% if forloop.last == false %}
+    <tr>
+        <td style='padding-bottom: 15px;' colspan='4'>
+        </td>
+    </tr>
+    {% endif %}
+
+    {% endfor -%}
+
+</table>

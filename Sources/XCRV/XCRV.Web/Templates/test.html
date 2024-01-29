@@ -1,0 +1,145 @@
+﻿<style>
+    .text {
+        mso-number-format: \@;
+    }
+</style>
+<div class="modal fade" id="PayoffModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-info">
+                <h4 class="modal-title">Account Statement</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+
+                <div class="row">
+                    <div class="col-12">
+                        <table class="smallfrontTable">
+                            <tbody>
+                                <tr style="line-height:16px;">
+                                    <td style=" width: 25%; text-align: left;font-size:14px;"><label id="p_acct_name" class="font-weight-normal"> </label></td>
+                                    <td style=" width: 25%; text-align: left;"> <label id="name" class="font-weight-normal"> </label></td>
+                                    <th style=" width: 35%; text-align: right;font-size:12px;padding-right:44px;">Customer Id </th>
+                                    <td style=" width: 25%; text-align: left;"><label id="p_cust_id" class="font-weight-normal" style="font-size:11px;margin-bottom: 0rem;"> </label> </td>
+                                </tr>
+                                <tr style="line-height:16px;">
+                                    <th style=" width: 25%; text-align: right;font-size:14px;"></th>
+                                    <td style=" width: 25%; text-align: left;"> <label id="p_Account_Type" class="font-weight-normal"></label> </td>
+                                    <th style=" width: 25%; text-align: right;font-size:12px;padding-right:45px;">Account No </th>
+                                    <td style=" width: 25%; text-align: left;"><label id="P_foracid" class="font-weight-normal" style="font-size:11px;margin-bottom: 0rem;"> </label> </td>
+                                </tr>
+                                <tr style="line-height:16px;">
+                                    <td style=" width: 25%; text-align: right;font-size:14px;"><label id="p_address" class="font-weight-normal" /></td>
+                                    <td style=" width: 25%; text-align: left;"> <label id="Account_Type" class="font-weight-normal"></label> </td>
+                                    <th style=" width: 25%; text-align: right;font-size:12px;padding-right:33px;">Account Type</th>
+                                    <td style=" width: 25%; text-align: left;"><label id="p_type" class="font-weight-normal" style="font-size:11px;margin-bottom: 0rem;"> </label> </td>
+                                </tr>
+                                <tr style="line-height:16px;">
+                                    <th style=" width: 25%; text-align: right;font-size:14px;"></th>
+                                    <td style=" width: 25%; text-align: left;word-break:break-word!important;font-size:0.9em"><label id="address" class="font-weight-normal"> </label> </td>
+                                    <th style=" width: 25%; text-align: right;font-size:12px;padding-right:58px;">Currency </th>
+                                    <td style=" width: 25%; text-align: left;"><label id="p_acct_crncy_code" class="font-weight-normal" style="font-size:11px;margin-bottom: 0rem;"> </label> </td>
+                                </tr>
+                                <tr style="line-height:16px;">
+                                    <th style=" width: 25%; text-align: right;font-size:14px;visibility:hidden;"><b class="__web-inspector-hide-shortcut__">Current Available Balance : </b></th>
+                                    <td style=" width: 25%; text-align: left;"> <label id="aval_balance" class="font-weight-normal"></label></td>
+                                    <th style=" width: 25%; text-align: right;font-size:12px;padding-right:17px;">Current Balance</th>
+                                    <td style=" width: 25%; text-align: left;"><label id="p_cur_balance" class="font-weight-normal" style="font-size:11px;margin-bottom: 0rem;"></label> </td>
+                                </tr>
+                                <tr style="line-height:16px;">
+                                    <th style=" width: 25%; text-align: right;font-size:13px;visibility:hidden;"><b class="__web-inspector-hide-shortcut__">Current Available Balance : </b></th>
+                                    <td style=" width: 25%; text-align: left;"> <label id="aval_balance" class="font-weight-normal"></label></td>
+                                    <th style=" width: 25%; text-align: right;font-size:12px;padding-right:10px;">Effective Balance </th>
+                                    <td style=" width: 25%; text-align: left;"><label id="p_effect_balance" class="font-weight-normal" style="font-size:11px;margin-bottom: 0rem;"></label> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <span id="p_effect_balance" class="font-weight-normal" style="font-size:13px;padding-left: 10px;"> Statement generarate for the month of <label id="fdate"></label>&nbsp;To&nbsp;<label id="tdate"></label> </span>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-12">
+                        <table id="TranTblPopUp" class="table table-bordered table-striped">
+                            <thead>
+                                <tr style="line-height:9px;">
+
+                                    <th>Date</th>
+                                    <th>Tran Particulars</th>
+                                    <th>Inst No.</th>
+                                    <th>Withdraw</th>
+                                    <th>Deposit</th>
+                                    <th>Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <span id="p_effect_balance" class="font-weight-normal" style="font-size:12px;padding-left: 10px;"> This is a computer-generated statement and does not require any signature.</span>
+                </div>
+                &nbsp;&nbsp;
+                <div class="row h-100 justify-content-center align-items-center">
+                    <div class="col-md-8">
+                        <div class="form-group row">
+                            <div class="col-12 table-responsive-sm">
+                                <table class="table smallfrontTable" id="custLimitInfo" style="border: inset;">
+                                    <tr style="line-height:1px">
+                                        <th style="width: 25%;text-align: right;font-size:12px;padding-right:33px;">Reward Points Earned :</th>
+                                        <td style="width: 25%;"><label id="p_rwd_earned" class="font-weight-normal" style="font-size:11px;margin-bottom: 0rem;">100 </label> </td>
+                                        @*
+                                        <th>Reward Points Earned :</th>
+                                        <td><label id="p_rwd_earned" class="font-weight-normal"></label></td>*@
+
+                                    </tr>
+                                    <tr style="line-height:1px">
+                                        <th style="width: 25%; text-align: right;font-size:12px;padding-right:33px;">Reward Points Expired:</th>
+                                        <td style="width: 25%; text-align: left;"><label id="p_rwd_expired" class="font-weight-normal" style="font-size:11px;margin-bottom: 0rem;">0 </label> </td>
+
+                                    </tr>
+                                    <tr style="line-height:1px">
+                                        <th style="width: 25%; text-align: right;font-size:12px;padding-right:33px;">Reward Points Available:</th>
+                                        <td style="width: 25%; text-align: left;"><label id="p_rwd_available" class="font-weight-normal" style="font-size:11px;margin-bottom: 0rem;">100 </label> </td>
+
+                                    </tr>
+                                    <tr style="line-height:1px">
+                                        <th style="width: 25%; text-align: right;font-size:12px;padding-right:33px;">Reward Points Redeemed:</th>
+                                        <td style="width: 25%; text-align: left;"><label id="p_rwd_redeemed" class="font-weight-normal" style="font-size:11px;margin-bottom: 0rem;">567 </label> </td>
+
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row row h-100 justify-content-center align-items-center">
+                    <span id="p_effect_balance" class="font-weight-normal align-items-center" style="font-size:12px;padding-left: 10px;">  **** END OF STATEMENT ****</span>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 payoffViewer">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

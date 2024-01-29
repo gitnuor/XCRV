@@ -1,0 +1,164 @@
+﻿
+@{
+    ViewData["Title"] = "Card Customer General Details";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+@using XCRV.Domain.Entities
+
+@model IEnumerable<CreditCardInfo>
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Credit Card</a></li>
+                    <li class="breadcrumb-item active">Card Related Information</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Customer Card <small>Related Information</small></h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <form asp-controller="CreditCard" asp-action="CardRelatedInformation">
+                    <div class="row">
+
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label>Customer Id</label>
+                                <input type="text" class="form-control" id="CustomerId" name="customerId" value="@ViewBag.CustomerId" />
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label>Card No</label>
+                                <input type="text" class="form-control" id="CardNo" name="cardNo" value="@ViewBag.CardNo" />
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label>Mobile No</label>
+                                <input type="text" class="form-control" id="MobileNo" name="mobileNo" value="@ViewBag.MobileNo" />
+                                <input type="hidden" class="form-control" id="type" name="type" value="submit" />
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group">
+                                <label>&nbsp;</label>
+                                <button id="btnSearch" type="submit" class="btn btn-primary form-control" value="Search"><span id="btnText"> Search</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <h5>Customer Card Info</h5>
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-md-12">
+                        <table class="table table-striped smallfrontDataTable " id="tblDocument">
+                            <thead>
+                                <tr>
+                                    <th>Customer ID</th>
+                                    <th>Card No</th>
+                                    <th>Card Holder Name</th>
+                                    <th>Mobile No</th>
+                                    <th>Delivery Address</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.Customer_Id
+                                        </td>
+                                        <td><a href="#" onclick="showCardDetails(@item.Customer_Id, @item.Customer_Id)">@item.Card_No</a></td>
+                                        <td>@item.Cardholder_Name</td>
+                                        <td>@item.Mobile_No</td>
+                                        <td>@item.Delivery_Address</td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+
+
+    <div class="modal fade" id="cardDetailsInfoModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <h4 class="modal-title">Card Details Info</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+</div><!-- /.contant -->
+
+@section ScriptSection
+{
+    <script>
+    $(document).ready(function () {
+
+    @if (TempData.ContainsKey("ErrorMessage"))
+    {
+        @:toastr.error('@TempData["ErrorMessage"]');
+    };
+    });
+
+
+        function showCardDetails(customerId, cardNo ) {
+            if (cardNo) {
+                $.ajax({
+                    url: "@Url.Action("CardInfoDetails", "CreditCard")",
+                    data: { customerId: customerId, cardNo },
+                    success: function (data) {
+                        $("#cardDetailsInfoModal .modal-body").html(data);
+                        $("#cardDetailsInfoModal").modal("show");
+                    }
+                });
+            }
+            else {
+                toastr.error('Sorry!!! Card Number is required!!!!');
+            }
+    }
+
+    </script>
+}

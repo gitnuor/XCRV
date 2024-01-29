@@ -1,0 +1,42 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using XCRV.Domain.Entities;
+@model ClientBorrowerViewModel
+
+<table id="NonFundedLoan" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>LC BG NUMBER</th>
+            <th>PRODUCT	</th>
+            <th>ISSUE AMOUNT	</th>
+            <th>Outstanding</th>
+            <th>ISSUE DATE	</th>
+            <th>Expiry Date</th>
+            <th>Adjustment Date</th>
+            <th>Tenor</th>
+            <th>MARGIN	</th>
+            <th>COMMISION AMOUNT	</th>
+            <th>BENEFICIARY NAME</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.nonfundedLoan)
+        {
+            <tr>
+                <td>@item.lc_bg_number</td>
+                <td>@item.product</td>
+                <td>@item.format_issue_amount</td>
+                <td>@item.format_outstanding</td>
+                <td>@item.issue_date_Formatted</td>
+                <td>@item.expiry_date_Formatted</td>
+                <td>@item.adjustment_date_Formatted</td>
+                <td>@item.tenor</td>
+                <td>@item.margin</td>
+                <td>@item.format_commision_amount</td>
+                 <td>@item.beneficiary_name</td>
+            </tr>
+        }
+    </tbody>
+</table>

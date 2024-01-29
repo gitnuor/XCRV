@@ -1,0 +1,442 @@
+﻿
+@{
+    ViewData["Title"] = "Card Cheque Cancel Verify";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+
+<style>
+    .form-check {
+        padding-left: 0rem !important;
+    }
+
+    .dropdown-menu {
+        /*  position: absolute;
+                top: 100%;
+                left: 0;*/
+        z-index: 1035;
+    }
+</style>
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Queue Management</a></li>
+                    <li class="breadcrumb-item active">Card Cheque Cancel Verify</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Card Cheque Cancel Verify</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row" style="display:none">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>Card Number</label>
+                            <input type="text" class="form-control" id="CardNo" name="CardNo" value="@ViewBag.CardNo" />
+                        </div>
+                    </div>                   
+                    <div class="col-md-4 col-sm-6" style="display:none">
+                        <div class="form-group">
+                            <label>Maker User</label>
+                            <select class="form-control" id="ddlMakerUser">
+                                <option value="">Select..</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>From Date</label>
+                            <div class='input-group'>
+                                <input type="text" id="fromDate" name="fromDate" class="form-control singledate" value="@ViewBag.FromDate" autocomplete="off" />
+                                <div class="input-group-append">
+                                    <label for="payOffDate" class="input-group-text">
+                                        <span class="fa fa-calendar"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>To Date</label>
+                            <div class='input-group'>
+                                <input type="text" id="toDate" name="toDate" class="form-control singledate" value="@ViewBag.ToDate" autocomplete="off" />
+                                <div class="input-group-append">
+                                    <label for="payOffDate" class="input-group-text">
+                                        <span class="fa fa-calendar"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <div class="btn-group w-100">
+                                <button type="button" class="btn btn-info" id="btnSearch" name="btnSearch">
+                                    <span>Search</span>
+                                </button>
+                                <button type="button" class="btn btn-danger" id="btnShowCheckSelected" name="btnShowCheckSelected">
+                                    <span>Verify</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center align-items-center" id="chqInfo">
+                    <div class="col-md-12">
+                        <h5>Cheque Book Information</h5>
+                        <table class="table table-striped table-bordered smallfrontDataTable" id="chqbookList">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="chkAll" ></th>
+                                    <th>NRIC</th>
+                                    <th>Cus Name</th>
+                                    <th>Card No</th>
+                                    <th>Book Name</th>
+                                    <th>Cheque No</th>
+                                    <th>Payment Status</th>
+                                    <th>Cancel Status</th>
+                                    <th style="width:85px!important">Cancel Remarks</th>
+                                    <th>Cancel Date</th>
+                                    <th>User</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+
+</div><!-- /.contant -->
+
+
+<div class="modal fade" id="SelectedChqBookVerifyConfrimModal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-info">
+                <h4 class="modal-title">Cheque Book Cancel Verify</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <input type="text" class="form-control" id="Remarks" name="Remarks" />
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <h3>Are you sure?</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <button id="btnConfirmSelectedVerify" type="button" class="btn btn-success">Yes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@section ScriptSection
+{
+    <!-- DataTables  & Plugins -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/plugins/jszip/jszip.min.js"></script>
+    <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
+    <script>
+    $(document).ready(function () {
+
+    @if (TempData.ContainsKey("ErrorMessage"))
+    {
+        @:toastr.error('@TempData["ErrorMessage"]');
+    };
+    });
+
+    </script>
+
+
+    <script>
+        $(function () {
+            $('#fromDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                format: "dd-M-yyyy",
+                language: "tr",
+                autoclose: true
+            });
+
+            $('#toDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                format: "dd-M-yyyy",
+                language: "tr",
+                autoclose: true
+            });
+        });
+
+    </script>
+
+
+    <script>
+        var table;
+         function loadUserId() {
+            $.ajax({
+                url: "@Url.Action("GetUserId", "CardChq")",
+                data: { forFullBook: false },
+                success: function (data) {
+                    response = data;
+                    //$('#ddlFinUserId').html('');
+                    var options = '';
+                    options += '';
+                    for (var i = 0; i < response.length; i++) {
+                        options += '<option value="' + response[i].userID + '">' + response[i].userName + '</option>';
+                    }
+                    $('#ddlMakerUser').append(options);
+                }
+            });
+        }
+        loadUserId();
+
+        $('#chqbookList').DataTable({
+            "filter": true, // this is for disable filter (search box)
+            "paging": true,
+            "pageLength": 10,
+            "lengthChange": false,
+            "pagingType": "full_numbers",
+            "scrollX": false,
+            "autoWidth": true,
+            "ordering": false,
+            "initComplete": function (settings, json) {
+                $("#chqbookList").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+            },
+        });
+
+        function GetMakerList() {
+            $.ajax({
+                url: "@Url.Action("GeMakerList", "CardChq")",
+                success: function (data) {
+                    console(data);
+                }
+            });
+        }
+
+         $(document).on('click', '#btnSearch', function () {
+            var frmDate1 = $('#fromDate').val();
+            var todate1 = $('#toDate').val();
+            if(frmDate1=='' || todate1=='')
+            {
+             toastr.error('Date range cannot be empty.');
+            }else{
+              CancelChqBookData();
+            }
+            
+        });
+
+        function CancelChqBookData() {
+            var cardNo = $('#CardNo').val();
+            var userID = $('#ddlMakerUser').val();
+            var frmDate = $('#fromDate').val();
+            var todate = $('#toDate').val();
+            if(frmDate==null || todate==null)
+            {
+             toastr.error('Date range cannot empty.');
+            }else{
+               $.ajax({
+                url: "@Url.Action("ShowPendingCancelChequeBookData", "CardChq")",
+                data: { cardNo: cardNo, userID : userID, frmDate: frmDate, todate:todate  },
+                success: function (res) {
+
+                    data = res.data;
+                    if (data != null) {
+                        
+                        $('#chqbookList').DataTable().destroy();
+
+                        table = $('#chqbookList').DataTable({
+                            "filter": true, // this is for disable filter (search box)
+                            "paging": true,
+                            "pageLength": 10,
+                            "lengthChange": false,
+                            "pagingType": "full_numbers",
+                            "scrollX": false,
+                            "autoWidth": true,
+                            "ordering": false,
+                            "data": data,
+
+                            "initComplete": function (settings, json) {
+                                $("#chqbookList").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                            },
+                            "columns": [
+                                {
+                                    "data": "numChqName", "name": "numChqName", render: function (data, type) {
+                                        if (type === 'display') {
+                                            return '<input type="checkbox"  selectRow="true" class="dt-checkboxes delete_check" id="chkSelect">'
+                                        }
+                                        return data;
+                                    }
+                                },                                
+                                { "data": "nric_number", "name": "nric_number" },
+                                { "data": "strCusName", "name": "strCusName" },
+                                { "data": "strCardNo", "name": "strCardNo" },
+                                { "data": "strChqBookName", "name": "strChqBookName" },
+                                { "data": "numChqName", "name": "numChqName" },
+                                { "data": "chequeStatus", "name": "chequeStatus" },
+                                { "data": "chequeCancelStatus", "name": "chequeCancelStatus" },
+                                { "data": "strCancelRemarks", "name": "strCancelRemarks" },
+                                { "data": "dtCancelDate", "name": "dtCancelDate" },
+                                { "data": "userName", "name": "userName" }
+                            ],
+
+                        });                        
+                    }
+
+                    $(document).on('click', '.delete_check', function () {
+                        var totalCheckboxes = $("#chqbookList input[id*='chkSelect']:checkbox").length;
+
+                        
+                        //Get number of checked checkboxes in list
+                        var checkedCheckboxes = $("#chqbookList input[id*='chkSelect']:checkbox:checked").length;
+
+                       
+                        //Check / Uncheck top checkbox if all the checked boxes in list are checked
+                        console.log($("#chqbookList input[id*='chkAll']"));
+
+                        $("#chqbookList input[id*='chkAll']").attr('checked', totalCheckboxes == checkedCheckboxes);
+                    });
+
+                }
+            });
+            
+            }
+               
+        }
+
+        $('#chkAll').click(function () {
+            if ($(this).is(':checked')) {
+                $('.delete_check').prop('checked', true);
+            } else {
+                $('.delete_check').prop('checked', false);
+            }
+        });
+
+
+
+        $(document).on('click', '#btnShowCheckSelected', function () {
+            var checkedCheckboxes = $("#chqbookList input[id*='chkSelect']:checkbox:checked");
+
+            console.log(checkedCheckboxes);
+
+
+            if (checkedCheckboxes.length == 0) {
+                toastr.error("Error", "No Cheque Book Selected!!!");
+                return;
+            }
+
+            $("#SelectedChqBookVerifyConfrimModal").modal("show");
+        });
+
+
+        $(document).on('click', '#btnConfirmSelectedVerify', function () {
+
+            remarks = $('#Remarks').val();
+
+            if (!remarks) {
+                toastr.error("Error", "Remarks is Required!!!");
+                return;
+            }
+
+            var checkedCheckboxes = $("#chqbookList input[id*='chkSelect']:checkbox:checked");
+            
+            
+            list = [];
+            checkedCheckboxes.each(function () {
+
+                var rowData = table.row($(this).parents('tr')).data();
+
+                data = {
+                    strCancelRemarks: remarks,
+                    numChqBookSL: rowData['numChqBookSL'],
+                    numChqNo: rowData['numChqNo']
+                }
+                list.push(data);
+            });
+
+            console.log(list);
+
+            $.ajax({
+                url: "/CardChq/CancelVerifyCheck",
+                type: "POST",
+                data: { requst: list },
+                success: function (data) {
+                    if (data.status == true) {
+                        toastr.success("message", data.message);
+                        $("#SelectedChqBookVerifyConfrimModal").modal("hide");
+                        $('#Remarks').val('');
+                        CancelChqBookData();
+                    }
+                    else {
+                        toastr.error("Error", data.message);
+                    }
+                }
+                //,
+                //error: function (jqXHR, textStatus, errorThrown) {
+                //    if (jqXHR.status == 500) {
+                //        toastr.error("Error", 'Internal error: ' + jqXHR.responseText);
+                //    } else {
+                //        toastr.error("Error", 'Unexpected error.' + jqXHR.status);
+                //    }
+                //}
+            });
+
+        });
+
+
+    </script>
+
+}
+
+

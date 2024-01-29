@@ -1,0 +1,35 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using XCRV.Domain.Entities
+
+@model IEnumerable<LoanPayOff>
+
+<table class="table table-striped smallfrontDataTable" id="tblPayoff">
+    <thead>
+        <tr>
+            <th>A/C ID</th>
+            <th> A/C Name</th>
+            <th>Outstanding</th>
+            <th>Unpaid Interest</th>
+            <th>Open Date</th>
+            <th>Interest Rate</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.Foracid</td>
+            <td>@item.Acct_Name</td>
+            <td>@item.ostd</td>
+            <td>@item.Unapplied_Interest</td>
+            <td>@item.Date_Open</td>
+            <td>@item.Interest_Rate</td>
+        </tr>
+        }
+    </tbody>
+
+</table>

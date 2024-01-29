@@ -1,0 +1,105 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+@model SmsBankingLogViewModel
+
+<div class="col-12" id="accordion">
+    <div class="card card-primary card-outline">
+        <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+            <div class="card-header">
+                <h4 class="card-title w-100">
+                    1. Account Mobile
+                </h4>
+            </div>
+        </a>
+        <div id="collapseOne" class="collapse show" data-parent="#accordion">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-striped infoTable">
+                            <thead>
+                                <tr>
+                                    <th>A/C No</th>
+                                    <th>Balance</th>
+                                    <th>Phone</th>
+                                    <th>Cust. ID</th>
+                                    <th>Open Date</th>
+                                    <th>Name</th>
+                                    <th>MOP</th>
+                                    <th>Lien.Amt.</th>
+                                    <th>Schm Type</th>
+                                    <th>DOB</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.AcMobiles)
+                                {
+                                    <tr>
+                                        <th>@item.Foracid</th>
+                                        <th>@item.Clr_Bal_Amt</th>
+                                        <th>@item.Cust_Pager_No</th>
+                                        <th>@item.Cust_Id</th>
+                                        <th>@String.Format("{0:dd-MON-yyyy}", item.Act_Opn_Date)</th>
+                                        <th>@item.Acct_Name</th>
+                                        <th>@item.Mop</th>
+                                        <th>@item.Lien_Amt</th>
+                                        <th>@item.Schm_Type</th>
+                                        <th>@item.Date_Of_Birth</th>
+                                    </tr>
+                                }
+                            </tbody>
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-primary card-outline">
+        <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+            <div class="card-header">
+                <h4 class="card-title w-100">
+                    2. SMS Log
+                </h4>
+            </div>
+        </a>
+        <div id="collapseTwo" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-striped infoTable" id="smsLogTbl" >
+                            <thead>
+                                <tr>
+                                    <th>MOB_NO</th>
+                                    <th>Request</th>
+                                    <th>Response</th>
+                                    <th>Request Time</th>
+                                </tr>
+                            </thead>
+                            @foreach (var item in Model.SmsLog)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.MobileNo
+                                    </td>
+                                    <td>
+                                        @item.RequestString
+                                    </td>
+                                    <td>
+                                        @item.ResponseString
+                                    </td>
+                                    <td>
+                                        @String.Format("{0:dd-MMM-yyyy hh:mm tt}", item.RequestTime)
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

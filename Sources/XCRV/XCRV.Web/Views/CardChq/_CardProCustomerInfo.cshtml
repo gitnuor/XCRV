@@ -1,0 +1,128 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+@model CardChqViewModel
+
+<div class="col-md-12">
+    <input type="hidden" id="errorMessage" value="@ViewBag.ErrorMessage" />
+    <table class="table smallfrontTable">
+        <tr>
+            <th style="text-align:right;">Card Number :</th>
+            <td style="text-align:left;">@Model.CardCustomerInformation.CB_CARDHOLDER_NO</td>
+            <th style="text-align:right;" rowspan="6">
+                Photo :
+            </th>
+            <td rowspan="6">
+                <img ID="lmgPhoto" src ="@Model.CardCustomerInformation.PhotoUrl" style="width: 160px; height: 180px;" />
+            </td>
+
+        </tr>
+        <tr>
+            <th style="text-align:right;">Customer Name :</th>
+            <td style="text-align:left;">@Model.CardCustomerInformation.NAME</td>
+
+        </tr>
+        <tr>
+            <th style="text-align:right;">Date of Birth :</th>
+            <td style="text-align:left;">@Model.CardCustomerInformation.CB_DOB</td>
+
+        </tr>
+        <tr>
+            <th style="text-align:right;">Mother Name :</th>
+            <td style="text-align:left;">@Model.CardCustomerInformation.CB_MOTHER_NAME</td>
+        </tr>
+        <tr>
+            <th style="text-align:right;">Phone No :</th>
+            <td style="text-align:left;">@Model.CardCustomerInformation.CB_MOBILE_NO</td>
+        </tr>
+        <tr>
+            <th style="text-align:right;">Credit Limit :</th>
+            <td style="text-align:left;">@Model.CardCustomerInformation.CB_CUST_LIMIT</td>
+        </tr>
+        <tr>
+            <th style="text-align:right;">Customer Status :</th>
+            <td style="text-align:left;">@Model.CardCustomerInformation.STATUS</td>
+            <th style="text-align:right;" rowspan="2">
+                Signature :
+            </th>
+            <td rowspan="2">
+                <img ID="lmgSignature" src="@Model.CardCustomerInformation.SignatureUrl" style="width: 180px; height: 60px;" />
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align:right;">Card Type :</th>
+            <td style="text-align:left;">@Model.CardCustomerInformation.PR_DESC</td>
+        </tr>
+        <tr>
+            <th style="text-align:right;">Center Id :</th>
+            <td style="text-align:left;">@Model.CardCustomerInformation.CB_CENTRE_CD</td>
+            <th style="text-align:right;">Bill Address :</th>
+            <td style="text-align:left;">@Model.CardCustomerInformation.CB_BILL_ADDR_CD</td>
+        </tr>
+        <tr>
+            <th style="text-align:right;">Home Address :</th>
+            <td style="text-align:left;" colspan="3">@Model.CardCustomerInformation.HomeAddress</td>
+        </tr>
+        <tr>
+            <th style="text-align:right;">Company Address :</th>
+            <td style="text-align:left;" colspan="3">@Model.CardCustomerInformation.CompanyAddress</td>
+        </tr>
+    </table>
+</div>
+
+<div class="col-md-12">
+    <input type="hidden" id="ChqBookMessage" value="@ViewBag.ChqBookMessage" />
+    <input type="hidden" id="ChqBookErrorMessage" value="@ViewBag.ChqBookErrorMessage" />
+
+    <h5>Cheque Book Information</h5>
+    <table class="table table-striped table-bordered smallfrontDataTable" id="chqbookList">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Card.No</th>
+                <th>Book.SL.No</th>
+                <th>Cheque.Book.Name</th>
+                <th>No.of.Leaf</th>
+                <th>Prefix</th>
+                <th>Cheque.Start.No</th>
+                <th>Cheque.End.No</th>
+                <th>Issue.Date</th>
+                <th>Book.Status</th>
+                <th>Cheque.Used</th>
+                <th>Cheque.Available</th>                
+                <th>Activation.Date</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ChqBookInfos)
+            {
+            <tr>
+                <td>
+                    <input type="button" id="btnAction" value="Action" class="btn btn-outline-primary"
+                     onclick="ShowModalPopup('@item.strChqBookName','@item.numChqBookSL', '@item.intNumberOfLeaf', '@item.issueDate', '@item.dtActivateDate', '@item.bookStatus', '@(string.IsNullOrEmpty(item.strRemarks)? "" : item.strRemarks.Replace("'","\\'").Replace("&nbsp;", ""))', @item.intApprStatus)" />
+                </td>
+                <td>@item.strCardNo</td>
+                <td>@item.numChqBookSL</td>
+                <td>@item.strChqBookName</td>
+                <td>@item.intNumberOfLeaf</td>
+                <td>@item.strChqPrefix</td>
+                <td>@item.numChqStartNo</td>
+                <td>@item.numChqEndNo</td>
+                <td>@item.issueDate</td>
+                <td>@item.bookStatus</td>
+                <td>@item.chequeUsed</td>
+                <td>
+                    @item.chequeAvailable
+                    <input type="hidden" value="@item.intApprStatus" />
+                </td>
+                
+                <td>@item.dtActivateDate</td>
+                <td>@item.strRemarks</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

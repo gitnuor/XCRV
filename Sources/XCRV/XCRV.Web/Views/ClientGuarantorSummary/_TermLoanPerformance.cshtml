@@ -1,0 +1,43 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using XCRV.Domain.Entities;
+@model ClientBorrowerViewModel
+
+<table id="TermPerformanceTable" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>CURRENT DPD</th>
+            <th>AVG. DELAY IN PAYMENT</th>
+            <th>HIGEST DPD</th>
+            <th>BROKEN EMI[NO]</th>
+            <th>BROKEN EMI[%]</th>
+            <th>COUNT OF 30+ DPD</th>
+            <th>NO. OF EMI DUE</th>
+            <th>NO. OF EMI PAID</th>
+            <th>LAST 01 YEAR INTEREST AMNT</th>
+            <th>PENAL INTEREST AMOUNT</th>
+            <th>CL STATUS</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.termLoanPerformance)
+        {
+            <tr>
+                <td>@item.dpd</td>
+                <td>@item.average_delays_in_payment</td>
+                <td>@item.highest_dpd</td>
+                <td>@item.broken_emi</td>
+                <td>@item.broken_emi_percentage</td>
+                <td>@item.count_30_dpd</td>
+                <td>@item.no_of_emi_due</td>
+                <td>@item.emi_paid</td>
+                <td>@item.interest_amount</td>
+                <td>@item.penal_amount</td>
+                <td>@item.cl_status</td>
+            </tr>
+        }
+    </tbody>
+</table>

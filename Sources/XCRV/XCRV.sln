@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32319.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{A2623CBD-23C5-42E5-B11B-AA4D7BF725FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{9C33C95C-7A4E-4D36-AC89-28EA1F8D886F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{B209F081-84CA-453E-A763-88AFE3D22956}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XCRV.Domain", "XCRV.Domain\XCRV.Domain.csproj", "{684F0001-EA2C-4931-A37E-EDB1E4A840F7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XCRV.Application", "XCRV.Application\XCRV.Application.csproj", "{8E39FFDB-D409-43F8-AF66-AB5EE8416173}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XCRV.Infrastructure", "XCRV.Infrastructure\XCRV.Infrastructure.csproj", "{D30C5FDB-6974-45E7-95C2-59474A9641A9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XCRV.Web", "XCRV.Web\XCRV.Web.csproj", "{4481C080-350C-4E6B-B76F-E0B8BF517660}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XCRV.OracleInfrastructure", "XCRV.OracleInfrastructure\XCRV.OracleInfrastructure.csproj", "{2E745AC4-F465-47C3-BB16-9125C2D0B36D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{684F0001-EA2C-4931-A37E-EDB1E4A840F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{684F0001-EA2C-4931-A37E-EDB1E4A840F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{684F0001-EA2C-4931-A37E-EDB1E4A840F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{684F0001-EA2C-4931-A37E-EDB1E4A840F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E39FFDB-D409-43F8-AF66-AB5EE8416173}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E39FFDB-D409-43F8-AF66-AB5EE8416173}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E39FFDB-D409-43F8-AF66-AB5EE8416173}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E39FFDB-D409-43F8-AF66-AB5EE8416173}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D30C5FDB-6974-45E7-95C2-59474A9641A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D30C5FDB-6974-45E7-95C2-59474A9641A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D30C5FDB-6974-45E7-95C2-59474A9641A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D30C5FDB-6974-45E7-95C2-59474A9641A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4481C080-350C-4E6B-B76F-E0B8BF517660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4481C080-350C-4E6B-B76F-E0B8BF517660}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4481C080-350C-4E6B-B76F-E0B8BF517660}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4481C080-350C-4E6B-B76F-E0B8BF517660}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E745AC4-F465-47C3-BB16-9125C2D0B36D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E745AC4-F465-47C3-BB16-9125C2D0B36D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E745AC4-F465-47C3-BB16-9125C2D0B36D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E745AC4-F465-47C3-BB16-9125C2D0B36D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{684F0001-EA2C-4931-A37E-EDB1E4A840F7} = {9C33C95C-7A4E-4D36-AC89-28EA1F8D886F}
+		{8E39FFDB-D409-43F8-AF66-AB5EE8416173} = {9C33C95C-7A4E-4D36-AC89-28EA1F8D886F}
+		{D30C5FDB-6974-45E7-95C2-59474A9641A9} = {B209F081-84CA-453E-A763-88AFE3D22956}
+		{4481C080-350C-4E6B-B76F-E0B8BF517660} = {A2623CBD-23C5-42E5-B11B-AA4D7BF725FE}
+		{2E745AC4-F465-47C3-BB16-9125C2D0B36D} = {B209F081-84CA-453E-A763-88AFE3D22956}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8C49CC35-0984-4CDC-87FD-04E4F61443B7}
+	EndGlobalSection
+EndGlobal

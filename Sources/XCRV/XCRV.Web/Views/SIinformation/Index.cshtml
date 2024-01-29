@@ -1,0 +1,443 @@
+﻿@using XCRV.Domain.Entities
+
+@model InterestDetails
+@{
+    ViewData["Title"] = "BBL - XCRV360 : Customer SI Information";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Customer</a></li>
+                    <li class="breadcrumb-item active">Customer SI Information</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">SI Information</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                     <div class="col-md-12">
+                      
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-warning">Customer Id</button>
+                                </div>
+                                <!-- /btn-group -->
+                                <input type="text" id="txtCustomerId" name="customerId" class="form-control" value="@ViewBag.CustomerId">
+                                <span class="input-group-append">
+                                    <button type="button" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                                </span>
+                            </div>
+                        
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="customerInfo" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>             
+                                    <th>Id</th>
+                                    <th>Sol Id</th>
+                                    <th>Account Number</th>
+                                    <th>SI Serial No</th>
+                                    <th>PartTranType</th>
+                                    <th>Amount</th>
+                                    <th>Frequency</th>
+                                    <th>SI Start Date</th>
+                                    <th>Next ExecDATE</th>
+                                    <th>Carry Fw Flg</th>
+                                    <th>Auto Post</th>
+                                    <th>Delete If Not Posted</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @*<div class="row">
+                    <div class="col-12" id="accordion">
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        Account Details
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped smallfrontTable">
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Account Number : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.FORACID</td>
+                                                    <th style=" width: 25%; text-align: right;">Name : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.ACCT_NAME</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Currency : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.acct_crncy_code</td>
+                                                    <th style=" width: 25%; text-align: right;">Sol : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.sol_id</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        Interest Details
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                           
+                                            <table class="table tb-SixColumnDetail smallfrontTable" border="0">
+                                                <tr class="tr-SixColumnDetail">
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn" style="padding-left: 100px;">
+                                                        <strong>Payment (Cr)</strong>
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn">
+                                                        <strong>Collected/Applied (Dr)</strong>
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-SixColumnDetail">
+                                                    <td class="td-labelColumnOfSixColumn font-weight-bold">
+                                                        Int. Amount
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 100px;">
+                                                        @Model.nrml_interest_amount_cr
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder">
+                                                        @Model.nrml_interest_amount_dr
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-SixColumnDetail">
+                                                    <td class="td-labelColumnOfSixColumn font-weight-bold">
+                                                        Last Interest Posted Date
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 100px;">
+
+                                                        @Model.interest_calc_upto_date_cr
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder">
+                                                        @Model.interest_calc_upto_date_dr
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn ">
+                                                        &nbsp;
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-SixColumnDetail">
+                                                    <td class="td-labelColumnOfSixColumn font-weight-bold">
+                                                        Last Interest Run Date
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 100px;">
+                                                        @Model.last_interest_run_date_cr
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder">
+                                                        @Model.last_interest_run_date_dr
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn ">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-SixColumnDetail">
+                                                    <td class="td-labelColumnOfSixColumn font-weight-bold">
+                                                        Normal Interest Accured
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 100px;">
+                                                        <asp:Label ID="lblNrmlIntAccrdCr" runat="server">
+                                                        </asp:Label>
+                                                        @Model.nrml_accrued_amount_cr
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder">
+                                                        <asp:Label ID="lblNrmlIntAccrdDr" runat="server">
+                                                        </asp:Label>
+                                                        @Model.nrml_interest_amount_dr
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn ">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-SixColumnDetail">
+                                                    <td class="td-labelColumnOfSixColumn font-weight-bold">
+                                                        Normal Interest Booked
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 100px;">
+                                                        <asp:Label ID="lblNrmsIntBookCR" runat="server">
+                                                        </asp:Label>
+                                                        @Model.nrml_booked_amount_cr
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder">
+
+                                                        <asp:Label ID="lblNrmsIntBookDR" runat="server">
+                                                        </asp:Label>
+                                                        @Model.nrml_booked_amount_dr
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn ">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-SixColumnDetail">
+                                                    <td class="td-labelColumnOfSixColumn font-weight-bold">
+                                                        Last Interest Accrual Date
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 100px;">
+                                                        @Model.accrued_upto_date_cr
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder">
+                                                        @Model.accrued_upto_date_dr
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn ">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-SixColumnDetail">
+                                                    <td class="td-labelColumnOfSixColumn font-weight-bold">
+                                                        Last Accrual Run Date
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 100px;">
+                                                        @Model.last_accrual_run_date_cr
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder">
+                                                        @Model.last_accrual_run_date_dr
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn ">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-SixColumnDetail">
+                                                    <td class="td-labelColumnOfSixColumn font-weight-bold">
+                                                        Last Interest Booked Date
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 100px;">
+                                                        <asp:Label ID="lblLastIntBookDateCr" runat="server">
+                                                        </asp:Label>
+                                                        @Model.booked_upto_date_cr
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder">
+                                                        <asp:Label ID="lblLastIntBookDateDr" runat="server">
+                                                        </asp:Label>
+                                                        @Model.booked_upto_date_dr
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn ">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-SixColumnDetail">
+                                                    <td class="td-labelColumnOfSixColumn font-weight-bold">
+                                                        Last Book Run Date
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder" style="padding-left: 100px;">
+
+                                                        @Model.last_book_run_date_cr
+                                                    </td>
+                                                    <td class="td-SingleColumnOfSixColumn OnePixBottomBorder">
+
+                                                        @Model.last_book_run_date_dr
+                                                    </td>
+                                                    <td class="td-labelColumnOfSixColumn">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn ">
+                                                    </td>
+                                                    <td class="td-newButtonColumnOfSixColumn">
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+        </div>
+    </div>
+
+</div><!-- /.container-fluid -->
+@section ScriptSection
+{
+
+<!-- DataTables  & Plugins -->
+<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/plugins/jszip/jszip.min.js"></script>
+<script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+      @if (TempData.ContainsKey("ErrorMessage"))
+           {
+            @:toastr.error('@TempData["ErrorMessage"]');
+          };
+    });
+   
+
+    $(document).on('click', '#btnSearch',  function () {
+       
+       let  searchString = $('#txtCustomerId').val();
+       loadSIInfo(searchString );
+    });
+
+    $('#customerInfo').DataTable({
+        "filter": false, // this is for disable filter (search box)
+        "paging": true,
+        "pageLength": 10,
+        "lengthChange": false,
+        "pagingType": "full_numbers",
+        "scrollX": false,
+        "autoWidth": true,
+        "initComplete": function (settings, json) {
+            $("#customerInfo").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+        },
+    });
+
+    function loadSIInfo(searchString) {
+           debugger;
+        $('#customerInfo').DataTable().destroy();
+
+        //$("#customerInfo").DataTable({
+        //    "responsive": true, "lengthChange": false, "autoWidth": false,
+        //    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        //}).buttons().container().appendTo('#customerInfo_wrapper .col-md-6:eq(0)');
+            
+        $('#customerInfo').DataTable({
+            //"processing": true, // for show progress bar
+            "language": {
+                processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+            },
+            "filter": false, // this is for disable filter (search box)
+            "paging": true,
+            "pageLength": 10,
+            "lengthChange": false,
+            "pagingType": "full_numbers",
+            "scrollX": false,
+            "autoWidth": true,
+            "ajax": {
+                "url": "/SIinformation/SearchSIinformation",
+                "dataSrc": function (d) {
+                    if (d.data.length === 0) {
+                        var settings = $('#customerInfo').DataTable().settings()[0];
+                        settings.oLanguage.sEmptyTable = d.message;
+                    }
+                    return d.data;
+                },
+                "data": {seachString: searchString },
+                "type": "GET",
+                "dataType": "json"
+            },
+            "columns": [
+
+                {
+                    "data": "id", "name": "id", render: function (data, type) {
+                        if (type === 'display') {
+                            let link = "/CustomerGeneralDetails/Index?customerId="+data;
+                            return '<i class="fa fa-user"></i><a href="' + link + '">' + data + '</a>';
+                        }
+                        return data;
+                    } },
+                { "data": "sol_id", "name": "sol_id" },
+                { "data": "foracid", "name": "foracid" },
+                { "data": "si_srl_num", "name": "si_srl_num" },
+                { "data": "part_tran_type", "name": "part_tran_type" },
+                { "data": "fixed_amt", "name": "fixed_amt" },
+                { "data": "frequency", "name": "frequency" },
+                { "data": "si_start_date", "name": "si_start_date" },
+                { "data": "nextExecDATE", "name": "NextExecDATE" },
+                { "data": "carry_for_alwd_flg", "name": "carry_for_alwd_flg" },
+                { "data": "auto_pstd_flg", "name": "auto_pstd_flg" },
+                { "data": "deleted", "name": "deleted" },
+            ]
+        });
+
+        $("#customerInfo").wrap('<div style="overflow:auto;" />');
+
+        }
+
+
+</script>
+
+}

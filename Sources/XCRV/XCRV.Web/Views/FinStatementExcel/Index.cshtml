@@ -1,0 +1,1299 @@
+﻿@using XCRV.Domain.Entities
+
+@model FinStatementDetails
+@{
+    ViewData["Title"] = "BBL - XCRV360 : Financial Statement";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+<style>
+    .form-check {
+        padding-left: 0rem !important;
+    }
+
+    .dropdown-menu {
+        z-index: 1035;
+    }
+
+</style>
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Customer</a></li>
+                    <li class="breadcrumb-item active">Account Statement Search</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Account Statement</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <form class="form-horizontal">
+                    <div class="card-body">
+                        <div class="row" style="margin-top: -25px;">
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Account No</label>
+                                    <div class='input-group'>
+                                        @* <input type="text" id="txtFromDate" class="form-control singledate" />*@
+                                        <input type="text" class="form-control" id="txtSearchString" value="@ViewBag.Accno" />
+                                        <input type="hidden" id="hdnAccountNo" name="hdnAccountNo" value="@ViewBag.AccountNo" />
+                                        <input type="hidden" id="hdnFromDate" name="hdnFromDate" value="@ViewBag.FromDate" />
+                                        <input type="hidden" id="hdnToDate" name="hdnToDate" value="@ViewBag.ToDate" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>From Date</label>
+                                    <div class='input-group'>
+                                        <input type="text" id="txtFromDate" class="form-control singledate" />
+                                        <div class="input-group-append">
+                                            <label for="txtFromDate" class="input-group-text">
+                                                <span class="fa fa-calendar"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>To Date</label>
+                                    <div class='input-group'>
+                                        <input type="text" id="txtToDate" class="form-control singledate" />
+                                        <div class="input-group-append">
+                                            <label for="txtToDate" class="input-group-text">
+                                                <span class="fa fa-calendar"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <div class='input-group'>
+                                        <button id="btnSearch" type="button" class="btn btn-primary" value="Insert"><span id="btnText"> Search</span></button>
+                                        &nbsp;&nbsp;
+                                        <button id="btnShowPrint" type="button" class="btn btn-primary" value="Insert"><span id="btnShow"> View</span></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                     <div class="row">
+                        <div class="col-md-6 grid-buttons-margin">
+                            <div class="dt-buttons btn-group">
+                                <button id="btnDownload" type="button" style="border:none;background:none"><img src="~/img/Exl.gif" alt="Excel" height="31px" /></button>
+                                 <button id="btnPdf" type="button" style="border:none;background:none;margin-left:-10px"><img src="~/img/pdf2.GIF" alt="Pdf" height="31px" /></button>
+                                <input type="hidden" id="hdnReport" name="hdnReport" value="@ViewBag.ReportData" />
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+                @* <div class="row h-100 justify-content-center align-items-left">
+                    <div class="col-md-8">
+                    <div class="form-group row">
+                    <div class="col-12 table-responsive-sm">
+                    <table class="table smallfrontTable" id="custLimitInfo">
+                    <tr>
+                    <th>Current available balance is:</th>
+                    <td><label id="aval_balance" class="font-weight-normal"></label></td>
+
+                    </tr>
+
+                    <tr>
+                    <th>Current effective balance is :</th>
+                    <td><label id="effect_balance" class="font-weight-normal"></label></td>
+
+                    </tr>
+                    </table>
+                    </div>
+                    </div>
+                    </div>
+
+                    </div>*@
+                <div class="row">
+                    <div class="col-12" id="accordion">
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        General
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped">
+                                                <tr style="line-height:9px;" class="accdetails">
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Account Name : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"> <label id="acct_name" class="font-weight-normal"> </label></td>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Customer Id : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="cust_id" class="font-weight-normal"> </label> </td>
+                                                </tr>
+                                                <tr style="line-height:9px;" class="accdetails">
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Account Type : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"> <label id="Account_Type" style="font-size:12px!important;" class="font-weight-normal"></label> </td>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Account No : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="foracid" class="font-weight-normal"> </label> </td>
+                                                </tr>
+                                                <tr style="line-height:15px;" class="accdetails">
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Address : </b></th>
+                                                    <td style=" width: 25%; text-align: left;word-break:break-word!important;font-size:0.9em"><label id="address" class="font-weight-normal"> </label> </td>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Currency : </b></th>
+                                                    <td style=" width: 25%; text-align: left;font-size:0.9em"><label id="acct_crncy_code" class="font-weight-normal"> </label> </td>
+                                                </tr>
+                                                <tr style="line-height:9px;">
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Current Available Balance : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"> <label id="aval_balance" class="font-weight-normal" /></td>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Current Effective Balance : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="effect_balance" class="font-weight-normal"></label> </td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        Statement
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table id="customerLimit" class="table table-bordered table-striped">
+                                                <thead>
+                                                    <tr style="line-height:9px;">
+                                                        <th>Tran.ID</th>
+                                                        <th>Date</th>
+                                                        <th>Tran Particulars</th>
+                                                        <th>Inst No.</th>
+                                                        <th>Withdraw</th>
+                                                        <th>Deposit</th>
+                                                        <th>Balance</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-warning card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseFive">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        Reward Points
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseFive" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped smallfrontTable">
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Reward Points Earned : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="rwd_earned" class="font-weight-normal"> </label></td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Reward Points Expired : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="rwd_expired" class="font-weight-normal"> </label></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Reward Points Redeemed : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="rwd_redeemed" class="font-weight-normal"> </label></td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Reward Points Available : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="rwd_available" class="font-weight-normal"> </label></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+
+
+
+                @* <div class="row">
+                    <div class="col-md-6 grid-buttons-margin">
+                    <div class="dt-buttons btn-group">
+                    <button id="btnDownload" type="button" class="btn btn-primary"><span id="btnText"> Download Excel</span></button>
+
+                    </div>
+                    </div>
+                    </div>*@
+
+                <!-- /.row -->
+                @* <div class="row">
+                    <div class="col-md-12">
+                    <table id="customerLimit" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                    <th>Tran.ID</th>
+                    <th>Date</th>
+                    <th>Tran Particular</th>
+                    <th>Deposit</th>
+                    <th>Withdraw</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    </table>
+                    </div>
+                    </div>*@
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+</div><!-- /.contant -->
+
+<div class="modal fade" id="PayoffModal">
+    <div class="modal-dialog modal-lg">
+          
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-info">
+                <h4 class="modal-title">Account Statement</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+          <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" style="visibility:hidden">Close</button>
+                 <button type="button" id="btnPdfDownload" class="btn btn-primary">Print</button>
+            </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <table class="smallfrontTable">
+                            <tbody>
+                                <tr style="line-height:16px;" class="accDetailsPopup">
+                                    <td style=" width: 25%; text-align: left;font-size:13px;"><label id="p_acct_name" class="font-weight-normal"> </label></td>
+                                    <td style=" width: 25%; text-align: left;"> <label id="name" class="font-weight-normal"> </label></td>
+                                    <th style=" width: 35%; text-align: right;font-size:12px;padding-right:44px;">Customer Id </th>
+                                    <td style=" width: 25%; text-align: left;"><label id="p_cust_id" class="font-weight-normal" style="font-size:11px;margin-bottom: 0rem;"> </label> </td>
+                                </tr>
+                                <tr style="line-height:16px;">
+                                    @*<th style=" width: 25%; text-align: right;font-size:14px;"></th>*@
+                                    <td style=" width: 25%; text-align: right;font-size:13px;"><label id="p_address" class="font-weight-normal" /></td>
+                                    <td style=" width: 25%; text-align: left;"> <label id="p_Account_Type" class="font-weight-normal"></label> </td>
+                                    <th style=" width: 25%; text-align: right;font-size:12px;padding-right:45px;">Account No </th>
+                                    <td style=" width: 25%; text-align: left;"><label id="P_foracid" class="font-weight-normal" style="font-size:11px;margin-bottom: 0rem;"> </label> </td>
+                                </tr>
+                                <tr style="line-height:16px;" class="accDetailsPopup">
+                                    <th style=" width: 25%; text-align: right;font-size:14px;"></th>
+                                    <td style=" width: 25%; text-align: left;"> <label id="Account_Type" class="font-weight-normal"></label> </td>
+                                    <th style=" width: 25%; text-align: right;font-size:12px;padding-right:33px;">Account Type</th>
+                                    <td style=" width: 25%; text-align: left;"><label id="p_type" class="font-weight-normal" style="font-size:11px;margin-bottom: 0rem;"> </label> </td>
+                                </tr>
+                                <tr style="line-height:16px;" class="accDetailsPopup">
+                                    <th style=" width: 25%; text-align: right;font-size:14px;"></th>
+                                    <td style=" width: 25%; text-align: left;word-break:break-word!important;font-size:0.9em"><label id="address" class="font-weight-normal"> </label> </td>
+                                    <th style=" width: 25%; text-align: right;font-size:12px;padding-right:58px;">Currency </th>
+                                    <td style=" width: 25%; text-align: left;"><label id="p_acct_crncy_code" class="font-weight-normal" style="font-size:11px;margin-bottom: 0rem;"> </label> </td>
+                                </tr>
+                                <tr style="line-height:16px;">
+                                    <th style=" width: 25%; text-align: right;font-size:14px;visibility:hidden;"><b class="__web-inspector-hide-shortcut__">Current Available Balance : </b></th>
+                                    <td style=" width: 25%; text-align: left;"> <label id="aval_balance" class="font-weight-normal"></label></td>
+                                   
+                                </tr>
+                                <tr style="line-height:16px;">
+                                    <th style=" width: 25%; text-align: right;font-size:13px;visibility:hidden;"><b class="__web-inspector-hide-shortcut__">Current Available Balance : </b></th>
+                                    <td style=" width: 25%; text-align: left;"> <label id="aval_balance" class="font-weight-normal"></label></td>
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <span id="p_effect_balance" class="font-weight-normal" style="font-size:12px;padding-left: 10px;"> STATEMENT OF ACCOUNT FOR THE PERIOD OF <label id="fdate"></label>&nbsp;To&nbsp;<label id="tdate"></label> </span>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-12">
+                        <table id="TranTblPopUp" class="table table-bordered table-striped">
+                            <thead>
+                                <tr style="line-height:9px;">
+
+                                    <th>Date</th>
+                                    <th>Tran Particulars</th>
+                                    <th>Inst No.</th>
+                                    <th>Withdraw</th>
+                                    <th>Deposit</th>
+                                    <th>Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size:14px">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <span id="p_effect_balance" class="font-weight-normal" style="font-size:12px;padding-left: 10px;"> This is a computer-generated statement and does not require any signature.</span>
+                </div>
+               &nbsp;&nbsp;
+                 <div class="row h-100 justify-content-center align-items-center">
+                    <div class="col-md-8">
+                        <div class="form-group row">
+                            <div class="col-12 table-responsive-sm">
+                                <table class="table smallfrontTable" id="custLimitInfo" style="border: inset;">
+                                    <tr style="line-height:1px">
+                                        <th style="width: 25%;text-align: right;font-size:12px;padding-right:33px;">Reward Points Earned :</th>
+                                        <td style="width: 25%;"><label id="p_rwd_earned" class="font-weight-normal" style="font-size:11px;margin-bottom: 0rem;"> </label> </td>
+                                        @*<th>Reward Points Earned :</th>
+                                        <td><label id="p_rwd_earned" class="font-weight-normal"></label></td>*@
+
+                                    </tr>
+                                    <tr style="line-height:1px">
+                                        <th style="width: 25%; text-align: right;font-size:12px;padding-right:33px;">Reward Points Expired:</th>
+                                        <td style="width: 25%; text-align: left;"><label id="p_rwd_expired" class="font-weight-normal" style="font-size:11px;margin-bottom: 0rem;"> </label> </td>
+                                        
+                                    </tr>
+                                     <tr style="line-height:1px">
+                                        <th style="width: 25%; text-align: right;font-size:12px;padding-right:33px;">Reward Points Available:</th>
+                                        <td style="width: 25%; text-align: left;"><label id="p_rwd_available" class="font-weight-normal" style="font-size:11px;margin-bottom: 0rem;"> </label> </td>
+                                      
+                                    </tr>
+                                     <tr style="line-height:1px">
+                                        <th style="width: 25%; text-align: right;font-size:12px;padding-right:33px;">Reward Points Redeemed:</th>
+                                        <td style="width: 25%; text-align: left;"><label id="p_rwd_redeemed" class="font-weight-normal" style="font-size:11px;margin-bottom: 0rem;"> </label> </td>
+       
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row row h-100 justify-content-center align-items-center">
+                    <span id="p_effect_balance" class="font-weight-normal align-items-center" style="font-size:12px;padding-left: 10px;">  **** END OF STATEMENT ****</span>
+                </div>
+               
+                <div class="row">
+                    <div class="col-12 payoffViewer">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                 <button type="button" id="btnPdfDownload" class="btn btn-primary">Print</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+ <div class="modal fade" id="GuarantorIntroducerModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-gradient-info">
+                    <h4 class="modal-title">Transaction Details</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div id='TranDetailModalBody' class="modal-body">
+
+                    <table class="smallfrontTable">
+                            <tbody>
+                                <tr style="line-height:20px;">
+                                    <th style=" width: 35%; text-align: right;font-size:14px;padding-right:44px;">Tran Id :</th>
+                                    <td style=" width: 25%; text-align: left;"> <label id="trn_id" class="font-weight-normal" style="margin-bottom:0px;font-size: 13px;"> </label></td>                                    
+                                </tr>
+                                <tr style="line-height:20px;">
+                                    <th style=" width: 35%; text-align: right;font-size:14px;padding-right:44px;">Tran Date :</th>
+                                    <td style=" width: 25%; text-align: left;"> <label id="val_date" class="font-weight-normal" style="margin-bottom:0px;font-size: 13px;"> </label></td>
+                                </tr>
+                          </tbody>
+                     </table>
+
+                </div>
+
+                <div id='GuarantorIntroducerModalBody' class="modal-body">
+
+                </div>
+                
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+   </div>
+
+@section ScriptSection
+        {
+
+<!-- DataTables  & Plugins -->
+<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/plugins/jszip/jszip.min.js"></script>
+<script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="~/js/bootstrap-datepicker.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+
+<script>
+
+                      $(function () {
+                         $('#txtFromDate').datepicker({
+                             changeMonth: true,
+                             changeYear: true,
+                             format: "dd-M-yyyy",
+                             language: "tr",
+                             autoclose: true
+                         });
+                     });
+
+                      $(function () {
+                         $('#txtToDate').datepicker({
+                             changeMonth: true,
+                             changeYear: true,
+                             format: "dd-M-yyyy",
+                             language: "tr",
+                             autoclose: true
+                         });
+                     });
+
+
+               $(document).on('click', '#btnSearch',  function () {
+
+                         let seachString = $("#txtSearchString").val();
+                         let FromDate = $('#txtFromDate').val();
+                         let ToDate = $('#txtToDate').val();
+
+                         var startDate= $('#txtFromDate').val();
+                         var endDate=$('#txtToDate').val();
+                         var start = new Date(startDate);
+                         var end = new Date(endDate);
+                         var diffDate = Math.abs(end - start) / (1000 * 60 * 60 * 24);
+                         var days = Math.round(diffDate);
+                          if (seachString!=null)
+                          {                                                            
+                             loadGeneralDetails(seachString,FromDate,ToDate);
+                             loadCustometBal(seachString);                        
+                             loadTranDetail(seachString, FromDate,ToDate);
+                             loadRewardPoint(seachString);
+                          }
+                        
+       //var contentType = 'application/vnd.pdf';
+       // var xhr = new XMLHttpRequest();
+       // xhr.open('POST', "/TransactionDetails/ExportMyData", true);
+       // xhr.responseType = 'arraybuffer';
+       // xhr.onload = function (e) {
+       //     if (this.status == 200) {
+       //         var blob = new Blob([this.response], { type: contentType });
+       //         var link = document.createElement('a');
+       //         link.href = window.URL.createObjectURL(blob);
+       //         link.download = "Report_TransactionDetails" + ".pdf";
+       //         link.click();
+       //     }
+       //     else if(this.status == 404) {
+       //         toastr.error('No Data Found!!!');
+       //     }
+       // };
+       // xhr.send(data);
+     });
+
+          $(document).on('click', '#btnShowPrint', function () {
+                 debugger;
+                     //var accountNo = $('#hdnAccountNo').val();
+                     //var frmDate = $('#hdnFromDate').val();
+                     //var tmDate = $('#hdnToDate').val();
+
+                     let accountNo = $("#txtSearchString").val();
+                     let fromDate = $('#txtFromDate').val();
+                     let toDate = $('#txtToDate').val();
+                      $('#fdate').text(fromDate);
+                      $('#tdate').text(toDate);
+
+                         var startDate= $('#txtFromDate').val();
+                         var endDate=$('#txtToDate').val();
+                         var start = new Date(startDate);
+                         var end = new Date(endDate);
+                         var diffDate = Math.abs(end - start) / (1000 * 60 * 60 * 24);
+                         var days = Math.round(diffDate);
+                          if (accountNo!=null)
+                          {                                                            
+                             $("#PayoffModal").modal("show");
+                              //$("#PayoffModal .payoffViewer").html(data);
+                              loadGeneralDetailsPopUp(accountNo,fromDate,toDate);
+                              //loadCustometBalPopUp(accountNo);
+                              loadTranDetailPopUp(accountNo, fromDate,toDate);                                          
+                              loadRewardPointPopUp(accountNo);
+                          }
+                 });
+
+  function loadGeneralDetails(seachString,FromDate,ToDate) {
+
+                     $.ajax({
+                         type: 'GET',
+                         url: '/FinStatementExcel/getCustomerGeneralInfo',
+                         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                         data: {accno:seachString,FromDate:FromDate,ToDate:ToDate},
+                         success: function (result) {
+                          if (result.data != null) {
+                             // if(this.status == 200){
+                                 $('#acct_name').text(result.data.acct_name);
+                                 $('#cust_id').text(result.data.cust_id);
+                                 $('#address').text(result.data.address);
+                                 $('#foracid').text(result.data.foracid);
+                                 $('#Account_Type').text(result.data.account_type);
+                                 $('#acct_crncy_code').text(result.data.acct_crncy_code);
+
+                                 $('.accdetails').show();
+                             }
+                             else {
+                             //else if(this.status == 404) {
+                               // alert("Something went wrong");
+                                 //toastr.error('No Data Found!!!');
+                                 $('#acct_name').text('');
+                                 $('#cust_id').text('');
+                                 $('#address').text('');
+                                 $('#foracid').text('');
+                                 $('#Account_Type').text('');
+                                 $('#acct_crncy_code').text('');
+                                 
+                                 $('.accdetails').hide();
+                             }
+                         }
+                         //,
+                         //error: function () {
+                         //    toastr.error('Account No and Date field can not be empty!');
+                         //   // alert('Failed to receive the Data');
+                         //   // console.log('Failed ');
+                         //}
+
+                });
+                }
+
+               function loadCustometBal(seachString) {
+
+                     $.ajax({
+                         type: 'GET',
+                         url: '/FinStatementExcel/getCustomerBal',
+                         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                         data: {accno:seachString},
+                         success: function (result) {
+                          if (result != null) {
+                                 $('#aval_balance').text(result.data.clr_bal_amt);
+                                 $('#effect_balance').text(result.data.eff_avl_bal);
+
+                             } else {
+                                 toastr.error('No Data Found!!!');
+                             }
+                         }
+                         //,
+                         //error: function () {
+                         //    alert('Failed to receive the Data');
+                         //    console.log('Failed ');
+                         //}
+
+                });
+                }
+
+     function loadGeneralDetailsPopUp(accountNo,fromDate,toDate) {
+                    debugger;
+                     $.ajax({
+                         type: 'GET',
+                         url: '/FinStatementExcel/getCustomerGeneralInfo',
+                         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                         data: {accno:accountNo,FromDate:fromDate,ToDate:toDate},
+                         success: function (result) {
+                          if (result.data != null) {
+                              debugger;
+                              //alert("Something");
+                                 $('#p_acct_name').text(result.data.acct_name);
+                                 $('#p_cust_id').text(result.data.cust_id);
+                                 $('#p_address').text(result.data.address);
+                                 $('#P_foracid').text(result.data.foracid);
+                                 $('#p_type').text(result.data.account_type);
+                                 $('#p_acct_crncy_code').text(result.data.acct_crncy_code);
+                                 $('.accDetailsPopup').show();
+
+                             } 
+                             else {
+                                 //toastr.error('No Data Found!!!');
+                                 //$('#acct_name').text('');
+                                 //$('#cust_id').text('');
+                                 //$('#address').text('');
+                                 //$('#foracid').text('');
+                                 //$('#Account_Type').text('');
+                                 //$('#acct_crncy_code').text('');
+                                 //$('#aval_balance').text('');
+                                 //$('#effect_balance').text('');
+                                 //alert("Something went wrong");
+
+                                 $('#p_acct_name').text('');
+                                 $('#p_cust_id').text('');
+                                 $('#p_address').text('');                                
+                                 $('#p_type').text('');
+                                 $('#p_acct_crncy_code').text('');
+                                 $('#P_foracid').text(accountNo);
+                                $('.accDetailsPopup').hide();
+                             }
+                         }
+                         //,
+                         //error: function () {
+                         //    toastr.error('Account No and Date field can not be empty!');
+                         //}
+
+                });
+                }
+
+      function loadCustometBalPopUp(accountNo) {
+
+                     $.ajax({
+                         type: 'GET',
+                         url: '/FinStatementExcel/getCustomerBal',
+                         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                         data: {accno:accountNo},
+                         success: function (result) {
+                          if (result != null) {
+                                 $('#p_cur_balance').text(result.data.clr_bal_amt);
+                                 $('#p_effect_balance').text(result.data.eff_avl_bal);
+
+                             } else {
+                                 toastr.error('No Data Found!!!');
+                             }
+                         }
+                         ,
+                         //error: function () {
+                         //    alert('Failed to receive the Data');
+                         //    console.log('Failed ');
+                         //}
+
+                });
+                }
+var table;
+             $('#customerLimit').DataTable({
+                 "responsive": false,
+                 "lengthChange": false,
+                 "autoWidth": false,
+                 "ordering": false,
+                 "filter": false,
+                 "paging": true,
+                 "pageLength": 10,
+                 "pagingType": "full_numbers",
+                 "initComplete": function (settings, json) {
+                     $("#customerLimit").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                 },
+                   });
+
+              function loadTranDetail(seachString,FromDate,ToDate) {
+                  //debugger;
+                  $('#customerLimit').DataTable().destroy();
+                  var GlobalDateFormatWithTime = 'DD-MMM-YYYY';
+
+                 table= $('#customerLimit').DataTable({
+                      "responsive": false,
+                      "processing": true,
+                      "language": {
+                          processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+                      },
+                      "filter": false,
+                      "paging": true,
+                      "pageLength": 10,
+                      "lengthChange": false,
+                      "pagingType": "full_numbers",
+                      "autoWidth": false,
+                      "ordering": false,
+                      "ajax": {
+                          "url": "/FinStatementExcel/getFnTransactionDetails",
+                           "dataSrc": function (d) {
+                                               if (d.data.length === 0) {
+                                                 var settings = $('#customerLimit').DataTable().settings()[0];
+                                                 settings.oLanguage.sEmptyTable = d.message;
+                                          }
+                                             return d.data;
+                                        },
+                          "data": { accno: seachString, FromDate: FromDate, ToDate: ToDate },
+                          "type": "GET",
+                          "dataType": "json"
+                      },
+                      "columns": [
+                           {
+                            "data": "tran_id", "name": "tran_id", render: function (data, type) {
+                            if (type === 'display') {
+                            //let link = "/ClientGuarantorSummary/CIFDetails?customerId="+data;
+                            if(data){
+                                                           
+                             return '<i></i><a class="cursor-pointer popup">' + data + '</a>';
+                            }
+                           }
+                          return data;
+                          }
+                          },
+                          {
+                           "data": "value_date",
+                           render: function (d) {
+                               if (d !== null && d !== '' && d !== undefined && d !== '0001-01-01T00:00:00') {
+                                return moment(d).format(GlobalDateFormatWithTime);
+                            } else {
+                            return '';
+                            }
+                           }, "name": "value_date"
+                          },
+                          { "data": "tran_particular", "name": "tran_particular" },
+                          { "data": "instrmnt_num", "name": "instrmnt_num" },
+                          { "data": "withdraw", "name": "withdraw","className": "text-right"  },
+                          { "data": "deposit", "name": "deposit","className": "text-right"  },
+                          { "data": "balance", "name": "balance" ,"className": "text-right" },
+
+                      ]
+                  });
+                 $("#customerLimit").wrap('<div style="overflow:auto;" />');
+              }
+     
+
+    $('#customerLimit').on('click', '.popup', function() {
+        var rowData = table.row($(this).parents('tr')).data();
+        let valDate=rowData['value_date']; 
+         $('#trn_id').text(rowData['tran_id']);
+         $('#val_date').text(rowData['value_date']);
+        console.log(rowData);   
+        $.ajax({
+            url: "/FinStatementExcel/TranDetails",
+            type: "GET",
+            data: { tranId: rowData['tran_id'],valueDate: valDate},
+            success: function (result) {
+                 console.log(result);
+                $("#GuarantorIntroducerModal").modal('show');
+                $("#GuarantorIntroducerModalBody").html(result);
+               
+                $('#TranDetailsTable').DataTable({
+                "filter": false, 
+                "paging": true,
+                "pageLength": 5,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "scrollX": false,
+                "autoWidth": true,
+                "initComplete": function (settings, json) {
+                    $("#TranDetailsTable").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                },
+            });            
+           }
+         });    
+     } )
+
+       function loadTranDetailPopUp(accountNo, fromDate,toDate) {
+                  //debugger;
+                  $('#TranTblPopUp').DataTable().destroy();
+
+                  var GlobalDateFormatWithTime = 'DD-MMM-YYYY';
+
+                  $('#TranTblPopUp').DataTable({
+                      "responsive": false,
+                      "processing": false,
+                      "language": {
+                          processing: '<i class="fa fa-spinner fa-spin fa-1x fa-fw"></i><span class="sr-only">Loading...</span> '
+                      },
+                      "filter": false,
+                      "bInfo" : false,
+                      "paging": false,
+                      "lengthChange": false,
+                      "autoWidth": true,
+                      "scrollX": false,
+                      "ordering": false,
+                      "ajax": {
+                          "url": "/FinStatementExcel/getFnTransactionDetails",
+                          "data": { accno: accountNo, FromDate: fromDate, ToDate: toDate },
+                          "type": "GET",
+                          "dataType": "json"
+                      },
+                      "columns": [
+
+                          //{ "data": "value_date", "name": "value_date" },
+                          {
+                           "data": "value_date",
+                           render: function (d) {
+                               if (d !== null && d !== '' && d !== undefined && d !== '0001-01-01T00:00:00') {
+                                return moment(d).format(GlobalDateFormatWithTime);
+                            } else {
+                            return '';
+                            }
+                           }, "name": "value_date"
+                          },
+                          { "data": "tran_particular", "name": "tran_particular" },
+                          { "data": "instrmnt_num", "name": "instrmnt_num" },
+                          { "data": "withdraw", "name": "withdraw" },
+                          { "data": "deposit", "name": "deposit" },
+                          { "data": "balance", "name": "balance" },
+
+                      ]
+                  });
+                // $("#TranTblPopUp").wrap('<div style="overflow:auto;width:-webkit-fill-available !important" />');
+                 $("#TranTblPopUp").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+
+              }
+
+
+          function loadRewardPoint(seachString) {
+
+                     $.ajax({
+                         type: 'GET',
+                         url: '/FinStatementExcel/getCustomerRewardPoint',
+                         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                         data: {accno:seachString},
+                         success: function (result) {
+                          if (result.data != null) {
+                                 $('#rwd_earned').text(result.data.MonthlyEarned);
+                                 $('#rwd_expired').text(result.data.MonthlyExpiry);
+                                 $('#rwd_redeemed').text(result.data.MonthlyRedeem);
+                                 $('#rwd_available').text(result.data.AvailableBalance);
+
+                             } else {
+                                // toastr.error("Reward data not found!");
+                             }
+                         },
+                         error: function () {
+                             //alert('Reward Point Data :: Failed to receive the Data');
+
+                             toastr.error('Reward Point Data :: Failed to receive the Data');
+                             console.log('Failed ');
+                         }
+
+                });
+                }
+
+          function loadRewardPointPopUp(accountNo) {
+                     $.ajax({
+                         type: 'GET',
+                         url: '/FinStatementExcel/getCustomerRewardPoint',
+                         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                         data: {accno:accountNo},
+                         success: function (result) {
+                          if (result.data != null) {
+                                 $('#p_rwd_earned').text(result.data.MonthlyEarned);
+                                 $('#p_rwd_expired').text(result.data.MonthlyExpiry);
+                                 $('#p_rwd_redeemed').text(result.data.MonthlyRedeem);
+                                 $('#p_rwd_available').text(result.data.AvailableBalance);
+
+                             } else {
+                                 // toastr.error("Reward data not found!");
+                             }
+                         },
+                         error: function () {
+                             //alert('Reward Point Data :: Failed to receive the Data');
+
+                             toastr.error('Reward Point Data :: Failed to receive the Data');
+                             console.log('Failed ');
+                         }
+
+                });
+             }
+
+     $(document).on('click', '#btnDownload', function () {
+           debugger;
+           var obj = new Object();
+           let accno=$('#txtSearchString').val();
+
+           obj.SearchText = $('#txtSearchString').val();
+
+           obj.FromDate = $('#txtFromDate').val();
+           obj.ToDate = $('#txtToDate').val();
+
+
+           var data = new FormData();
+           data.append('accno', obj.SearchText);
+           data.append('FromDate', obj.FromDate);
+           data.append('ToDate', obj.ToDate);
+
+
+           var contentType = 'application/vnd.ms-excel';
+
+           var xhr = new XMLHttpRequest();
+           xhr.open('POST', "/FinStatementExcel/ExportData", true);
+
+           xhr.responseType = 'arraybuffer';
+           xhr.onload = function (e) {
+               if (this.status == 200) {
+                   //debugger;
+                   //alert("test data");
+                   var blob = new Blob([this.response], { type: contentType });
+                   var link = document.createElement('a');
+                   link.href = window.URL.createObjectURL(blob);
+                   link.download = "Acc_Statement_" + accno + ".xls";
+                   link.click();
+               }
+           else if(this.status == 404) {
+               toastr.error('No Data Found!!!');
+                $('#acct_name').text('');
+                                $('#cust_id').text('');
+                                $('#address').text('');
+                                $('#foracid').text('');
+                                $('#Account_Type').text('');
+                                $('#acct_crncy_code').text('');
+                                $('#aval_balance').text('');
+                               $('#customerLimit').DataTable().clear().destroy();
+           }
+           };
+           xhr.send(data);
+
+       });
+
+     $(document).on('click', '#btnPdfDownload', function (e) {
+          
+           var accno = $('#txtSearchString').val();
+           var FromDate = $('#txtFromDate').val();
+           var ToDate = $('#txtToDate').val();
+           if (accno) {
+               $.ajax({
+                   url: "@Url.Action("GetTransactionStatement", "FinStatementExcel")",
+                   data: { accno: accno , FromDate:FromDate,ToDate:ToDate},
+                   success: function (data) {
+
+
+                       console.log(data)
+                       
+                       var customerInfo = data.customer;
+                       var header = data.header;
+                       var externalDataRetrievedFromServer = data.data;
+
+                       if (customerInfo == null) {
+                           customerInfo = {
+                               acct_name: '',
+                               cust_id: '',
+                               address: '',
+                               foracid: accno,
+                               account_type: '',
+                               acct_crncy_code: ''
+                           };
+                       }
+
+                       console.log(externalDataRetrievedFromServer);
+
+                       function buildTableBody(data, columns, columnHeaders) {
+                            var body = [];
+
+                           var header = [];
+                           columnHeaders.forEach(function(h) {
+                                halign = 'left';
+                                if (h == 'Withdraw' || h == 'Deposit' || h == 'Balance' || h=='Inst No.') {
+                                    halign = 'right';
+                                }
+                                header.push({text: h, border: [false, true, false, true], alignment: halign, bold: true,fontSize:10})
+                           })
+
+                           body.push(header);
+
+                           var key=0;
+
+                            data.forEach(function(row) {
+
+                                console.log(row);
+                                var dataRow = [];
+
+                                columns.forEach(function(column) {
+
+                                    align = 'left';
+                                    if (column == 'withdraw' || column == 'deposit' || column == 'balance' || column=='instrmnt_num') {
+                                        align = 'right';
+                                    }
+
+                                    if (Object.is(data.length - 1, key)) {
+                                        dataRow.push({ text: row[column], border: [false, true, false, true], alignment: align, margin: [0,2,0,2]});
+                                    } else {
+                                        dataRow.push({ text: row[column], border: [false, false, false, false], alignment: align,  margin: [0,2,0,2]});
+                                    }                                   
+                                })
+                                body.push(dataRow);
+                                key++;
+
+                            });
+
+                            return body;
+                        }
+
+                        function table(data, columns, columnHeaders) {
+                            return {
+                                table: {
+                                    headerRows: 1,
+                                    widths: [ 65,130, 65, 65, 65,70 ],
+                                    body: buildTableBody(data, columns, columnHeaders)
+                                }
+                            };
+                        }
+
+                       console.log(header);
+                       
+                        var dd = {
+                           
+                            content: [
+                                {
+                                  margin: [0, 87, 0, 0],
+                                  table: {
+                                    // headers are automatically repeated if the table spans over multiple pages
+                                    // you can declare how many rows should be treated as headers
+                                    widths: [ '*', 75, 135 ],
+                                    body: [
+                                        [{ text: customerInfo.acct_name, border: [false, false, false, false], bold: true }, { text: 'Cust ID', border: [ false, false, false, false ], bold: true}, { text: customerInfo.cust_id, border: [ false, false, false, false ] } ],
+                                        [{ text: customerInfo.address, rowSpan: 3, border: [false, false, false, false] }, { text: 'Account No', border: [false, false, false, false] , bold: true }, { text: customerInfo.foracid , border: [ false, false, false, false ] } ],  
+                                        [{}, { text: 'A/C Type', border: [false, false, false, false], bold: true }, { text: customerInfo.account_type, border: [ false, false, false, false ] }] ,  
+                                        [{}, { text: 'Currency', border: [false, false, false, false], bold: true }, { text: customerInfo.acct_crncy_code, border: [ false, false, false, false ] } ]   
+                                    ]
+                                  }
+                                },                                
+                                { text: header, style: 'header', margin: [0, 15, 0, 15], bold: true,fontSize:9 },
+                                table(externalDataRetrievedFromServer, ['value_date','tran_particular', 'instrmnt_num', 'withdraw', 'deposit', 'balance']
+                                    ,['Date','Particular', 'Inst No.', 'Withdraw', 'Deposit', 'Balance']),
+                                { text: "This is a computer-generated statement and does not require any signature.",  fontSize: 8,margin: [0, 15, 0, 15] },
+                                { text: "****END OF STATEMENT****",  fontSize: 10,margin: [0, 20, 0, 15], bold: true, alignment:'center' },
+                            ],
+                            footer: (currentPage, pageCount, pageSize) => {
+                                return [{
+                                    margin: [31, 0, 31],
+                                    layout: {
+                                        hLineColor: (i) => (i === 0) ? 'lightgray' : '',
+                                        vLineWidth: (i) => 0,
+                                        hLineWidth: (i) => (i === 0) ? 1 : 0
+                                    },
+                                    table: {
+                                        widths: ['*'],
+                                        body: [
+                                            [
+                                                
+                                                {text:`Page ${currentPage} of ${pageCount}`, alignment: 'center'},
+                                                
+                                            ]
+                                        ]
+                                    }
+                                }];
+                            },
+                            defaultStyle: {
+                                fontSize: 9,
+                                bold: false
+                            }
+                        }
+
+
+                        pdfMake.createPdf(dd).print();
+                       
+                   }
+               });
+           }
+           else {
+               toastr.error('Sorry!!! Account no is required!!!!');
+           }
+       });
+
+    $(document).on('click', '#btnPdf', function (e) {
+          
+           var accno = $('#txtSearchString').val();
+           var FromDate = $('#txtFromDate').val();
+           var ToDate = $('#txtToDate').val();
+           if (accno) {
+               $.ajax({
+                   url: "@Url.Action("GetTransactionStatement", "FinStatementExcel")",
+                   data: { accno: accno , FromDate:FromDate,ToDate:ToDate},
+                   success: function (data) {
+
+
+                       console.log(data)
+                       
+                       var customerInfo = data.customer;
+                       var header = data.header;
+                       var externalDataRetrievedFromServer = data.data;
+
+                       if (customerInfo == null) {
+                           customerInfo = {
+                               acct_name: '',
+                               cust_id: '',
+                               address: '',
+                               foracid: accno,
+                               account_type: '',
+                               acct_crncy_code: ''
+                           };
+                       }
+
+                       console.log(externalDataRetrievedFromServer);
+
+                       function buildTableBody(data, columns, columnHeaders) {
+                            var body = [];
+
+                           var header = [];
+                           columnHeaders.forEach(function(h) {
+                                halign = 'left';
+                                if (h == 'Withdraw' || h == 'Deposit' || h == 'Balance' || h=='Inst No.') {
+                                    halign = 'right';
+                                }
+                                header.push({text: h, border: [false, true, false, true], alignment: halign, bold: true,fontSize:10})
+                           })
+
+                           body.push(header);
+
+                           var key=0;
+
+                            data.forEach(function(row) {
+
+                                console.log(row);
+                                var dataRow = [];
+
+                                columns.forEach(function(column) {
+
+                                    align = 'left';
+                                    if (column == 'withdraw' || column == 'deposit' || column == 'balance' || column=='instrmnt_num') {
+                                        align = 'right';
+                                    }
+
+                                    if (Object.is(data.length - 1, key)) {
+                                        dataRow.push({ text: row[column], border: [false, true, false, true], alignment: align, margin: [0,2,0,2]});
+                                    } else {
+                                        dataRow.push({ text: row[column], border: [false, false, false, false], alignment: align,  margin: [0,2,0,2]});
+                                    }                                   
+                                })
+                                body.push(dataRow);
+                                key++;
+
+                            });
+
+                            return body;
+                        }
+
+                        function table(data, columns, columnHeaders) {
+                            return {
+                                table: {
+                                    headerRows: 1,
+                                    widths: [ 65,130, 65, 65, 65,70 ],
+                                    body: buildTableBody(data, columns, columnHeaders)
+                                }
+                            };
+                        }
+
+                       console.log(header);
+                       
+                        var dd = {
+                           
+                            content: [
+                                {
+                                  margin: [0, 87, 0, 0],
+                                  table: {
+                                    // headers are automatically repeated if the table spans over multiple pages
+                                    // you can declare how many rows should be treated as headers
+                                    widths: [ '*', 75, 135 ],
+                                    body: [
+                                        [{ text: customerInfo.acct_name, border: [false, false, false, false], bold: true }, { text: 'Cust ID', border: [ false, false, false, false ], bold: true}, { text: customerInfo.cust_id, border: [ false, false, false, false ] } ],
+                                        [{ text: customerInfo.address, rowSpan: 3, border: [false, false, false, false] }, { text: 'Account No', border: [false, false, false, false] , bold: true }, { text: customerInfo.foracid , border: [ false, false, false, false ] } ],  
+                                        [{}, { text: 'A/C Type', border: [false, false, false, false], bold: true }, { text: customerInfo.account_type, border: [ false, false, false, false ] }] ,  
+                                        [{}, { text: 'Currency', border: [false, false, false, false], bold: true }, { text: customerInfo.acct_crncy_code, border: [ false, false, false, false ] } ]   
+                                    ]
+                                  }
+                                },                                
+                                { text: header, style: 'header', margin: [0, 15, 0, 15], bold: true,fontSize:9 },
+                                table(externalDataRetrievedFromServer, ['value_date','tran_particular', 'instrmnt_num', 'withdraw', 'deposit', 'balance']
+                                    ,['Date','Particular', 'Inst No.', 'Withdraw', 'Deposit', 'Balance']),
+                                { text: "This is a computer-generated statement and does not require any signature.",  fontSize: 8,margin: [0, 15, 0, 15] },
+                                { text: "****END OF STATEMENT****",  fontSize: 10,margin: [0, 20, 0, 15], bold: true, alignment:'center' },
+                            ],
+                            footer: (currentPage, pageCount, pageSize) => {
+                                return [{
+                                    margin: [31, 0, 31],
+                                    layout: {
+                                        hLineColor: (i) => (i === 0) ? 'lightgray' : '',
+                                        vLineWidth: (i) => 0,
+                                        hLineWidth: (i) => (i === 0) ? 1 : 0
+                                    },
+                                    table: {
+                                        widths: ['*'],
+                                        body: [
+                                            [
+                                                
+                                                {text:`Page ${currentPage} of ${pageCount}`, alignment: 'center'},
+                                                
+                                            ]
+                                        ]
+                                    }
+                                }];
+                            },
+                            defaultStyle: {
+                                fontSize: 9,
+                                bold: false
+                            }
+                        }
+
+
+                       // pdfMake.createPdf(dd).download('test.pdf');
+                        pdfMake.createPdf(dd).open();
+                        
+                       
+                   }
+               });
+           }
+           else {
+               toastr.error('Sorry!!! Account no is required!!!!');
+           }
+       });
+
+</script>
+
+
+        }

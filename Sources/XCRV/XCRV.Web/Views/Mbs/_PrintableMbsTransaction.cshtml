@@ -1,0 +1,99 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model MbsTransactionViewModel
+
+<table border="0" cellpadding="0" cellspacing="0" style="width: 650px;">
+    <tr>
+        <td>
+            <div style="text-align:center;">
+                <asp:Label ID="lblAccess" runat="server" Visible="False" ForeColor="#CC3300" Font-Bold="True"
+                           Font-Size="14px" style="text-align: center"></asp:Label>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td style="height: 100px;">
+            &nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td>
+
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                    <td width="65%" style="padding-left: 5px; font-weight: bold;">
+                        <span style="font-family: Verdana; font-size:8pt;">@Model.AccountInfo.csaAccountName</span>
+                        
+                    </td>
+                    <td width="15%" style="font-family: Verdana; font-size: 8pt; font-weight: bold;">
+                        Customer ID
+                    </td>
+                    <td width="20%">
+                        <span style="font-family: Verdana; font-size:8pt;">@Model.AccountInfo.csaCustomerId</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="65%" rowspan="2" style="padding-left: 5px;">
+                        <span style="font-family: Verdana; font-size:8pt;">@Model.AccountInfo.csaStatementAdd</span>
+                    </td>
+                    <td width="15%" style="font-family: Verdana; font-size: 8pt; font-weight: bold;">
+                        Account No
+                    </td>
+                    <td width="20%">
+                        <span style="font-family: Verdana; font-size:8pt;">@ViewBag.AccountNo</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="15%" style="font-family: Verdana; font-size: 8pt; font-weight: bold;">
+                        A/C Type
+                    </td>
+                    <td width="20%">
+                        <span style="font-family: Verdana; font-size:8pt;">@Model.AccountInfo.acsAccStatusNotes</span>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="height: 20px;">
+            <span style="font-family: Verdana; font-size:8pt; font-weight: bold">@ViewBag.ReportName</span>
+        </td>
+    </tr>
+    <tr>
+        <td style="height: 20px;">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table id="mbsTransaction" style="border: 1px solid black; border-collapse: collapse;" >
+                <thead>
+                    <tr>
+                        <th style="font-family:Verdana; font-size:8pt; font-weight:bold;border: 1px solid black; border-collapse: collapse;">Tran.No</th>
+                        <th style="font-family:Verdana; font-size:8pt; font-weight:bold;border: 1px solid black; border-collapse: collapse;">Date</th>
+                        <th style="font-family:Verdana; font-size:8pt; font-weight:bold;border: 1px solid black; border-collapse: collapse;">Description</th>
+                        <th style="font-family:Verdana; font-size:8pt; font-weight:bold;border: 1px solid black; border-collapse: collapse;">Withdrawals</th>
+                        <th style="font-family:Verdana; font-size:8pt; font-weight:bold;border: 1px solid black; border-collapse: collapse;">Deposits</th>
+                        <th style="font-family:Verdana; font-size:8pt; font-weight:bold;border: 1px solid black; border-collapse: collapse;">Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        @foreach (var item in Model.MbsTransactions)
+                        {
+                    <tr>
+                        <td style="width: 17%; border: 1px solid black; border-collapse: collapse;"><span style="font-family:Verdana; font-size:8pt;">@item.actTransNo</span></td>
+                        <td style="width: 11%; border: 1px solid black; border-collapse: collapse;"><span style="font-family:Verdana; font-size:8pt;">@item.atotransdate</span></td>
+                        <td style="width: 27%; border: 1px solid black; border-collapse: collapse;"><span style="font-family:Verdana; font-size:8pt;">@item.part</span></td>
+                        <td style="width: 15%; border: 1px solid black; border-collapse: collapse; text-align:right"><span style="font-family:Verdana; font-size:8pt;">@item.dr</span></td>
+                        <td style="width: 15%; border: 1px solid black; border-collapse: collapse; text-align:right"><span style="font-family:Verdana; font-size:8pt;">@item.cr</span></td>
+                        <td style="width: 15%; border: 1px solid black; border-collapse: collapse; text-align:right"><span style="font-family:Verdana; font-size:8pt;">@item.balance</span></td>
+
+                    </tr>
+                        }
+                </tbody>
+            </table>            
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,349 @@
+﻿
+@{
+    ViewData["Title"] = "Cheque Stop Verify";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+<style>
+    .form-check {
+        padding-left: 0rem !important;
+    }
+
+    .dropdown-menu {
+        /*  position: absolute;
+                top: 100%;
+                left: 0;*/
+        z-index: 1035;
+    }
+
+    
+       table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before, table.dataTable.dtr-inline.collapsed>tbody>tr>th.dtr-control:before {
+          /*content: none !important;*/ 
+          
+       }
+
+      
+</style>
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Queue Management</a></li>
+                    <li class="breadcrumb-item active">Cheque Stop Verify</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Cheque Stop Verify</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>Account Number</label>
+                            <input type="text" class="form-control" id="AccountNo" name="AccountNo" value="@ViewBag.AccountNo" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>From Date</label>
+                            <div class='input-group'>
+                                <input type="text" id="fromDate" name="fromDate" class="form-control singledate" value="@ViewBag.FromDate" autocomplete="off" />
+                                <div class="input-group-append">
+                                    <label for="payOffDate" class="input-group-text">
+                                        <span class="fa fa-calendar"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>To Date</label>
+                            <div class='input-group'>
+                                <input type="text" id="toDate" name="toDate" class="form-control singledate" value="@ViewBag.ToDate" autocomplete="off" />
+                                <div class="input-group-append">
+                                    <label for="payOffDate" class="input-group-text">
+                                        <span class="fa fa-calendar"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6" style="display:none">
+                        <div class="form-group">
+                            <label>Maker User</label>
+                            <select class="form-control" id="ddlMakerUser">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                            
+                            <div class="btn-group w-100">
+                                <button type="button" class="btn btn-info" id="btnSearch" name="btnPaymentHistory">
+                                    <span>Search</span>
+                                </button>
+                                <button type="button" class="btn btn-danger" id="btnClear" name="btnDocument">
+                                    <span>Clear</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center align-items-center" id="customerInfo">
+
+                </div>
+                <div class="row" id="buttonDiv">
+                    <div class="col-9"></div>
+                    <div class="col-3">
+                        <button id="btnShowVerify" type="button" class="btn btn-warning form-control" value="Verify"><span> Verify</span></button>
+                    </div>
+                </div>
+                <div class="row" id="chqLogDiv">
+
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+
+</div><!-- /.contant -->
+
+<div class="modal fade" id="ChqVerifyModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-info">
+                <h4 class="modal-title">Cheque Leaf Activation/De-Activation Verify</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">                
+                <div class="form-group">
+                    <label>Remarks</label>
+                    <textarea class="form-control" rows="3" placeholder="Enter ..." id="txtRemarks"></textarea>
+                </div>
+                <div class="form-group">
+                    <label id="msg" style="color: red; font-weight:bold;"></label>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="btnVerify" type="button" class="btn btn-success">Verify</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+@section ScriptSection
+{
+    <!-- DataTables  & Plugins -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/plugins/jszip/jszip.min.js"></script>
+    <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
+    <script>
+    $(document).ready(function () {
+
+    @if (TempData.ContainsKey("ErrorMessage"))
+    {
+        @:toastr.error('@TempData["ErrorMessage"]');
+    };
+    });
+
+    </script>
+
+
+    <script>
+        $(function () {
+            $('#fromDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                format: "dd-M-yyyy",
+                language: "tr",
+                autoclose: true
+            });
+
+            $('#toDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                format: "dd-M-yyyy",
+                language: "tr",
+                autoclose: true
+            });
+        });
+
+    </script>
+
+
+    <script>
+        var table;
+        function ChqCustomerInfo(submited) {
+            var accountNo = $('#AccountNo').val();
+            var frmDate = $('#fromDate').val();
+            var toDate = $('#toDate').val();
+            var makerUserID = $('#makerUserID').val();
+
+            $.ajax({
+                url: "@Url.Action("ShowChqReqLog", "ChequeStop")",
+                data: { accountNo: accountNo, frmDate: frmDate, toDate: toDate, makerUserID: makerUserID, submited: submited },
+                success: function (data) {
+                    $("#customerInfo").html(data);
+
+                    $("#chqLog").DataTable().destroy();
+                    table = $("#chqLog").DataTable({
+                        "language": {
+                              "search": "Search By Maker:"
+                           },
+                        "responsive": false, "autoWidth": true, "filter": true, "ordering": false
+                    });
+                    $("#chqLog").wrap('<div style="overflow:auto;" />');
+
+                    $('#checkall').click(function () {
+                        if ($(this).is(':checked')) {
+                            $('.delete_check').prop('checked', true);
+                        } else {
+                            $('.delete_check').prop('checked', false);
+                        }
+                    });
+
+                    $('.delete_check').click(function () {
+                        var totalCheckboxes = $("#chqLog input[id*='chkSelect']:checkbox").length;
+                        //Get number of checked checkboxes in list
+                        var checkedCheckboxes = $("#chqLog input[id*='chkSelect']:checkbox:checked").length;
+                        //Check / Uncheck top checkbox if all the checked boxes in list are checked
+                        $("#chqLog input[id*='checkall']:checkbox").attr('checked', totalCheckboxes == checkedCheckboxes);
+                    });
+
+                    var message = $('#errorMessage').val();
+                    if (message) {
+                        toastr.error(message)
+                    }
+                }
+            });
+
+        }
+
+        ChqCustomerInfo('');
+
+        $(document).on('click', '#btnSearch', function () {
+            ChqCustomerInfo('submited');
+        });
+
+        
+        $(document).on('click', '#btnClear', function () {
+            $('#AccountNo').val('');
+            $('#fromDate').val('');
+            $('#toDate').val('');
+           // $("#chqLog").DataTable().destroy();
+            $("#chqLog").DataTable().clear().draw();
+
+        });
+
+        $(document).on('click', '#btnShowVerify', function () {
+            $("#ChqVerifyModal").modal("show");
+        });
+
+        $(document).on('click', '#btnVerify', function () {
+
+            remarks = $('#txtRemarks').val();
+
+            if (!remarks) {
+                toastr.error("Error", "Remarks is Required!!!");
+                return;
+            }
+
+            var checkedCheckboxes = $("#chqLog input[id*='chkSelect']:checkbox:checked");
+
+            console.log(checkedCheckboxes);
+            //alert(checkedCheckboxes.length);
+
+            
+
+            list = [];
+
+            checkedCheckboxes.each(function () {
+                var obj = {
+                    foracid: $(this).data('foracid'),
+                    acid: $(this).data('acid'),
+                    frmChqno: $(this).data('frm_chqno'),
+                    toChqno: $(this).data('to_chqno'),
+                    particular: $(this).data('particular'),
+                    isverify: '1',
+                    remarks: remarks,
+                    User_Id: $(this).data('user_id')
+                }
+                list.push(obj);
+            });
+
+            $.ajax({
+                url: "/ChequeStop/VerifyChqStatus",
+                type: "POST",
+                data: { chqStopRangeVerifies: list },
+                success: function (data) {
+
+                    if (data.status == true) {
+                        toastr.success("message", data.message);
+                        $("#ChqVerifyModal").modal("hide");
+                        $('#txtRemarks').val('');
+                        ChqCustomerInfo('submitted');
+                    }
+                    else {
+                        toastr.error("Error", data.message);
+                    }
+                }
+                //,
+                //error: function (jqXHR, textStatus, errorThrown) {
+                //    if (jqXHR.status == 500) {
+                //        toastr.error("Error", 'Internal error: ' + jqXHR.responseText);
+                //    } else {
+                //        toastr.error("Error", 'Unexpected error.' + jqXHR.status);
+                //    }
+                //}
+            });
+
+        });
+
+    </script>
+
+}

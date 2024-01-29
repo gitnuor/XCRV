@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewData["Title"] = "Search MBS/Finacle Account No";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+@using XCRV.Domain.Entities;
+
+@model FinacleMbsMapping;
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"></h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">MBS</a></li>
+                    <li class="breadcrumb-item active">
+                        MBS/Finacle Account No
+                    </li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">MBS Account Buffer</h3>&nbsp;&nbsp;&nbsp;<small>by Account No</small>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-8">
+                        <form asp-controller="Mbs" asp-action="FinacleMbsAccNo">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-warning">Account Number</button>
+                                </div>
+                                <!-- /btn-group -->
+                                <input type="text" id="txtAccountNo" name="accountNo" class="form-control" value="@ViewBag.AccountNo">
+                                <span class="input-group-append">
+                                    <button type="submit" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12" id="accordion">
+                        <table class="table smallfrontTable">
+                            <tr>
+                                <th sytle="text-align: right">Finacle A/C No :</th>
+                                <td sytle="text-align: left"><input type="text" value="@Model.FINAccno" /></td>
+                                <th sytle="text-align: right">MBS A/C No :</th>
+                                <td sytle="text-align: left"><input type="text" value="@Model.MBSAccno" /></td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section ScriptSection
+{
+    <script>
+    $(document).ready(function () {
+
+    @if (TempData.ContainsKey("ErrorMessage"))
+    {
+        @:toastr.error('@TempData["ErrorMessage"]');
+    };
+    });
+    </script>
+}

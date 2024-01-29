@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewData["Title"] = "Browser Issue";
+    Layout = null;
+}
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>    
+  
+    
+    <style type="text/css">
+        *
+        {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        body
+        {
+            padding: 0;
+            margin: 0;
+        }
+        #notfound
+        {
+            position: relative;
+            height: 90vh;
+        }
+        #notfound .notfound
+        {
+            position: absolute;
+            top: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+        .notfound
+        {
+            max-width: 410px;
+            width: 100%;
+            text-align: center;
+        }
+       
+       
+        
+    </style>
+</head>
+<body>
+    <div id="notfound">
+        <div class="notfound">
+          @* <div class="notfound-404">
+                <h1>
+                    Oops!</h1>
+            </div>*@
+            <h2>
+                Browser Issue Occured</h2>
+            <h2 style="color:maroon;font-size:20px">
+                The system encountered some problems in Edge browser. Please try login system with Google Chrome or MozilaFirefox!</h2>
+              
+            
+        </div>
+    </div>
+</body>
+</html>
+
+
+@*<h2>Please Login System With Google Chrome or MozilaFirefox.</h2>*@
+

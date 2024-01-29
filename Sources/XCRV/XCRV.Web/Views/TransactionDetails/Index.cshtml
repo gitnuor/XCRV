@@ -1,0 +1,342 @@
+﻿@using XCRV.Domain.Entities
+
+@model TransactionDetails
+@{
+    ViewData["Title"] = "Transaction Details";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+<style>
+    .form-check {
+    padding-left: 0rem !important;
+}
+
+</style>
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Customer</a></li>
+                    <li class="breadcrumb-item active">Transaction Detail</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Transaction Detail</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                 <form class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Account No</label>
+                    <div class="col-sm-4">
+                       <input type="text" class="form-control"  id="txtSearchString"  />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">From Date</label>
+                    <div class="col-sm-4">
+                        <div class='input-group'>
+                      <input type="text" id="txtFromDate" class="form-control singledate" />
+                                        <div class="input-group-append">
+                                            <label for="txtFromDate" class="input-group-text">
+                                                <span class="fa fa-calendar"></span>
+                                            </label>
+                                        </div>
+                                        </div>
+                    </div>
+                  </div>
+
+                   <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">To Date</label>
+                    <div class="col-sm-4">
+                        <div class='input-group'>
+                      <input type="text" id="txtToDate" class="form-control singledate" />
+                                        <div class="input-group-append">
+                                            <label for="txtToDate" class="input-group-text">
+                                                <span class="fa fa-calendar"></span>
+                                            </label>
+                                        </div>
+                                        </div>
+                    </div>
+                  </div>
+
+
+                  @* <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">To Date</label>
+                    <div class="col-sm-4">
+                       <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"/>
+                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                    </div>
+                  </div>*@
+
+
+
+                  <div class="form-group row">
+                    <div class="offset-sm-2 col-sm-10">
+                      <div class="form-check">
+                          
+                              <button type="button" id="btnSearch" class="btn btn-info">View Transaction</button>
+                         @*<a href="/TransactionDetails/ExportListUsingEPPlus" class="btn btn-primary">Export to excel</a>*@
+                              <button id="btnExportExcel" type="button" class="btn btn-info" value="Export Excel"><span id="btnText"> Export Excel</span></button>
+                          
+                         
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </form>
+                 
+                       @* <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+
+                                    <label for="vendor"> Account No:</label>
+                                    <input type="text" class="form-control" id="txtSearchString" placeholder="">
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>From</label>
+                                    <div class='input-group'>
+                                        <input type="text" id="txtFromDate" class="form-control singledate" />
+                                        <div class="input-group-append">
+                                            <label for="txtFromDate" class="input-group-text">
+                                                <span class="ft-calendar"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>To</label>
+                                    <div class='input-group'>
+                                        <input type="text" id="txtToDate" class="form-control singledate" />
+                                        <div class="input-group-append">
+                                            <label for="txtToDate" class="input-group-text">
+                                                <span class="ft-calendar"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <button type="button" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                                </div>
+                            </div>
+
+                        </div>*@
+
+
+                        
+             
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="customerLimit" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Tran Id</th>
+                                    <th>Tran Particular</th>
+                                    <th>Sol</th>
+                                    <th>Cheque No</th>
+                                    <th>Dr. Amount</th>
+                                    <th>Cr. Amount</th>
+                                    <th>Entry User</th>
+                                    <th>Post User</th>
+                                    <th>Verify User</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+</div><!-- /.contant -->
+@section ScriptSection
+{
+
+<!-- DataTables  & Plugins -->
+<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/plugins/jszip/jszip.min.js"></script>
+<script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="~/js/bootstrap-datepicker.js"></script>
+ 
+
+<script>
+
+     $(function () {
+        $('#txtFromDate').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            format: "dd-M-yyyy",
+            language: "tr"
+        });
+    });
+
+     $(function () {
+        $('#txtToDate').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            format: "dd-M-yyyy",
+            language: "tr"
+        });
+    });
+
+
+    $(document).on('click', '#btnSearch',  function () {
+
+        let seachString = $("#txtSearchString").val();  
+        let FromDate = $('#txtFromDate').val();
+        let ToDate = $('#txtToDate').val();
+        loadCusomerInfo(seachString, FromDate,ToDate);       
+    });
+
+     $(document).on('click', '#btnExportExcel', function () {
+        debugger;
+        var obj = new Object();
+       
+        obj.SearchText = $('#txtSearchString').val();
+
+        obj.FromDate = $('#txtFromDate').val();
+        obj.ToDate = $('#txtToDate').val();
+        
+        var data = new FormData();
+        data.append('seachString', obj.SearchText);
+        data.append('FromDate', obj.FromDate);
+        data.append('ToDate', obj.ToDate);
+                                                   
+        var contentType = 'application/vnd.ms-excel';
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', "/TransactionDetails/ExportMyData", true);
+
+        xhr.responseType = 'arraybuffer';
+        xhr.onload = function (e) {
+            if (this.status == 200) {
+                var blob = new Blob([this.response], { type: contentType });
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = "Report_TransactionDetails" + ".xlsx";
+                link.click();
+            }
+            else if(this.status == 404) {
+                toastr.error('No Data Found!!!');
+            }
+        };
+        xhr.send(data);
+
+    });
+
+
+    $('#customerLimit').DataTable({
+        "filter": false, 
+        "paging": true,
+        "pageLength": 10,
+        "lengthChange": false,
+        "pagingType": "full_numbers",
+        "scrollX": true,
+        "autoWidth": true
+    });
+
+    function loadCusomerInfo(seachString,FromDate,ToDate) {
+
+        $('#customerLimit').DataTable().destroy();
+
+        $('#customerLimit').DataTable({
+            "processing": true, // for show progress bar
+            "language": {
+                processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+            },
+            "filter": false, // this is for disable filter (search box)
+            "paging": true,
+            "pageLength": 10,
+            "lengthChange": false,
+            "pagingType": "full_numbers",
+            "scrollX": true,
+            "autoWidth": true,
+
+            "ajax": {
+               // debugger;
+                //alert("hello");
+                "url": "/TransactionDetails/getTransactionDetails",
+                "dataSrc": function (d) {
+                                               if (d.data.length === 0) {
+                                                 var settings = $('#customerLimit').DataTable().settings()[0];
+                                                 settings.oLanguage.sEmptyTable = d.message;
+                                          }
+                                             return d.data;
+                                        },
+                "data": {seachString:seachString,FromDate:FromDate,ToDate:ToDate},
+                "type": "GET",
+                "dataType": "json"
+            },
+            "columns": [
+                 { "data": "tran_date", "name": "tran_date" },
+                { "data": "tran_id", "name": "tran_id" },
+                { "data": "tran_particular", "name": "tran_particular" },
+                { "data": "init_sol_id", "name": "init_sol_id" },
+                { "data": "cheque_num", "name": "cheque_num" },
+                { "data": "debit_amount", "name": "debit_amount" },
+                { "data": "credit_amount", "name": "credit_amount" },
+                { "data": "entry_user", "name": "entry_user" },
+                { "data": "posted_user", "name": "posted_user" },
+                { "data": "verify_user", "name": "verify_user" },
+
+            ]
+        });
+        
+      
+}
+
+</script>
+
+
+}

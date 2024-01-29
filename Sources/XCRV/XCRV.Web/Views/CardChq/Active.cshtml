@@ -1,0 +1,283 @@
+﻿
+@{
+    ViewData["Title"] = "Card Cheque Active Maker";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Queue Management</a></li>
+                    <li class="breadcrumb-item active">Card Cheque Active Maker</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Card Cheque Active Maker</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">                        
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <button type="button" class="btn btn-warning">Referance Number</button>
+                            </div>
+                            <!-- /btn-group -->
+                            <input type="text" id="refNo" name="refNo" class="form-control" value="@ViewBag.CustomerId">
+                            <span class="input-group-append">
+                                <button type="button" id="btnSearch"  class="btn btn-primary form-control">Search</button>
+                            </span>
+                        </div>                        
+                    </div>
+                </div>
+                <h5>CardPro Customer Information</h5>
+                <div class="row justify-content-center align-items-center" id="customerInfo">
+
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+
+</div><!-- /.contant -->
+
+<div class="modal fade" id="ChqBookActiveModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-info">
+                <h4 class="modal-title">Cheque Book Activation</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table smallfrontTable">
+                    <tr>
+                        <th style="text-align:right;">Cheque Book No :</th>
+                        <td style="text-align:left;">
+                            <span id="txtChqBookNo" />
+                        </td>
+                        <th style="text-align:right;">Cheque Book Serial :</th>
+                        <td style="text-align:left;">
+                            <span id="txtChqSLNo" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:right;">No of Leaf :</th>
+                        <td style="text-align:left;">
+                            <span id="txtNoOfLeaf" />
+                        </td>
+                        <th style="text-align:right;">Issue Date :</th>
+                        <td style="text-align:left;">
+                            <span id="txtIssueDate" />
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <th style="text-align:right;">Active Status :</th>
+                        <td style="text-align:left;">
+                            <span id="txtActiveStatus" />
+                        </td>
+                        <th style="text-align:right;">Activation Date :</th>
+                        <td style="text-align:left;">
+                            <span id="txtActiveDate" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:right;">Remarks :</th>
+                        <td style="text-align:left;" colspan="3">
+                            <textarea class="form-control" rows="3" placeholder="Enter ..." id="txtConfirmRemarks"></textarea>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td colspan="4" style="text-align:center">
+                            <label id="msg" style="color: red; font-weight:bold;"></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="btnChangeStatus" type="button" class="btn btn-success">Change Status</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+@section ScriptSection
+{
+    <!-- DataTables  & Plugins -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/plugins/jszip/jszip.min.js"></script>
+    <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
+    <script>
+    $(document).ready(function () {
+
+    @if (TempData.ContainsKey("ErrorMessage"))
+    {
+        @:toastr.error('@TempData["ErrorMessage"]');
+    };
+    });
+    </script>
+
+
+    <script>
+
+        function ChqCustomerInfo(submited) {
+            var refNo = $('#refNo').val();
+
+
+            $.ajax({
+                url: "@Url.Action("ShowCustomerInfo", "CardChq")",
+                data: { refNo: refNo, submited: submited },
+                success: function (data) {
+                    $("#customerInfo").html(data);
+
+
+                    $("#chqbookList").DataTable().destroy();
+                    var table = $("#chqbookList").DataTable({
+                        "responsive": false, "autoWidth": false, "filter": false, "ordering":false
+                    });
+                    $("#chqbookList").wrap('<div style="overflow:auto;" />');
+
+                    var message = $('#errorMessage').val();
+                    if (message) {
+                        toastr.error(message)
+                    }
+                    var ChqBookErrorMessage = $('#ChqBookErrorMessage').val();
+                    if (ChqBookErrorMessage) {
+                        toastr.error(ChqBookErrorMessage)
+                    }
+                    var ChqBookMessage = $('#ChqBookMessage').val();
+                    if (ChqBookMessage) {
+                        toastr.info(ChqBookMessage)
+                    }
+                }
+            });
+        }
+
+        ChqCustomerInfo('');
+
+        $(document).on('click', '#btnSearch', function () {
+            ChqCustomerInfo('submited');
+        });
+
+        $(document).on('click', '#btnShowChangeStatus', function () {
+            
+        });
+
+        function ShowModalPopup(chqBookName, chqBookSL, numberOfLeaf, issueDate, activateDate, bookStatus, remarks, status) {
+
+            if (status > 1) {
+                toastr.error("Error", 'Already activated!!!');
+                return;
+            }
+
+            $("#ChqBookActiveModal").modal("show");
+
+            $("#txtChqBookNo").text(chqBookName);
+            $("#txtChqSLNo").text(chqBookSL);
+            $("#txtNoOfLeaf").text(numberOfLeaf);
+            $("#txtIssueDate").text(issueDate);
+            $("#txtActiveDate").text(activateDate);
+            $("#txtActiveStatus").text(bookStatus);
+            $("#txtConfirmRemarks").text(remarks);
+        }
+
+        function clearModal() {
+            $("#txtChqBookNo").text('');
+            $("#txtChqSLNo").text('');
+            $("#txtNoOfLeaf").text('');
+            $("#txtIssueDate").text('');
+            $("#txtActiveDate").text('');
+            $("#txtActiveStatus").text('');
+            $("#txtConfirmRemarks").text('');
+        }
+
+
+        $(document).on('click', '#btnChangeStatus', function () {
+
+            if (!$('#txtChqSLNo').text()) {
+                toastr.error("Error", "Please select a Cheque Book first");
+                return;
+            }
+
+            //alert($('#txtConfirmRemarks').val());
+            if (!$('#txtConfirmRemarks').val()) {
+                toastr.error("Error", "Please write a Remarks");
+                return;
+            }
+
+            var memo = {};
+            memo['chqNo'] = $('#txtChqSLNo').text();
+            memo['remarks'] = $('#txtConfirmRemarks').val();
+            memo['opType'] = "2";
+           
+           
+
+            $.ajax({
+                url: "/CardChq/ActivateChqBook",
+                type: "POST",
+                data: { requst: memo },
+                success: function (data) {
+
+                    if (data.status == true) {
+                        toastr.success("message", data.message);
+                        $("#ChqBookActiveModal").modal("hide");
+                        clearModal();
+                        ChqCustomerInfo('recall');
+                    }
+                    else {
+                        toastr.error("Error", data.message);
+                    }
+                }
+                // ,
+                //error: function (jqXHR, textStatus, errorThrown) {
+                //    if (jqXHR.status == 500) {
+                //        toastr.error("Error", 'Internal error: ' + jqXHR.responseText);
+                //    } else {
+                //        toastr.error("Error", 'Unexpected error.' + jqXHR.status);
+                //    }
+                //}
+            });
+        });
+
+    </script>
+
+}

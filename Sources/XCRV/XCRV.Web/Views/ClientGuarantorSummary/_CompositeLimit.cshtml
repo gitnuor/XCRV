@@ -1,0 +1,48 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using XCRV.Domain.Entities;
+@model ClientBorrowerViewModel
+
+<table id="CompositLimit" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>PRODUCT	</th>
+            <th>LIMIT	</th>
+            <th>AMOUNT DISBURSED	</th>
+            <th>AMOUNT ADJUSTED	</th>
+            <th>AMOUNT OUTSTANDING	</th>
+            <th>AMOUNT OVERDUE	</th>
+            <th>NO OF DISBURSED	</th>
+            <th>NO ADJUSTED	</th>
+            <th>NO OF OUTSTANDING	</th>
+            <th>CONTRACT WENT DPD	</th>
+            <th>NO IN OVERDUE	</th>
+            <th>NO 30 PLUS DPD		</th>
+            <th>MAX DPD	</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.compositeLimit)
+        {
+            <tr>
+                <td>@item.product</td>
+                <td>@item.limit</td>
+                <td>@item.format_amount_disbursed</td>
+                <td>@item.format_amount_adjusted</td>
+                <td>@item.format_amount_outstanding</td>
+                <td>@item.format_amount_overdue</td>
+                <td>@item.no_of_disbursed</td>
+                <td>@item.no_adjusted</td>
+                <td>@item.no_of_outstanding</td>
+                <td>@item.contract_went_dpd</td>
+                <td>@item.no_in_overdue</td>
+                <td>@item.no_30_plus_dpd</td>
+                <td>@item.max_dpd</td>
+
+            </tr>
+        }
+    </tbody>
+</table>

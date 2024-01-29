@@ -1,0 +1,230 @@
+﻿@using XCRV.Domain.Entities
+
+@model InterestDetails
+@{
+    ViewData["Title"] = "BBL - XCRV360 : Interest Breakup";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Customer</a></li>
+                    <li class="breadcrumb-item active">Account Interest Breakup</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Interest Breakup</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-8">
+                        <form asp-controller="InterestBreakup" asp-action="Index">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-warning">Account Number</button>
+                                </div>
+                                <!-- /btn-group -->
+                                <input type="text" id="txtAccountNo" name="accno" class="form-control" value="@ViewBag.AccountNo">
+                                <span class="input-group-append">
+                                    <button type="submit" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-12" id="accordion">
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        Account Details
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped smallfrontTable">
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Account Number : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.FORACID</td>
+                                                    <th style=" width: 25%; text-align: right;">Name : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.ACCT_NAME</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Currency : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.acct_crncy_code</td>
+                                                    <th style=" width: 25%; text-align: right;">Sol : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.sol_id</td>
+                                                </tr>
+                                                <tr>
+                                                    
+                                                    <th style=" width: 25%; text-align: right;">Advance Int.Amount : </th>
+                                                    <td style=" width: 25%; text-align: left;">@(Model.ADDNL_INTEREST_AMOUNT_DR==null?"N/A":Model.ADDNL_INTEREST_AMOUNT_DR)</td>
+                                                    <th style=" width: 25%; text-align: right;">Amortized Int.Amount: </th>
+                                                    <td style=" width: 25%; text-align: left;">
+                                                       
+                                                            @Model.NRML_AMORTIZED_AMOUNT_CR
+                                                        
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Normal Int. in Suspense : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.NRML_INT_SUSPENSE_AMT_DR</td>
+                                                    <th style=" width: 25%; text-align: right;">Penal Int. in Suspense : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.PENAL_INT_SUSPENSE_AMT_DR</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        Interest Breakup
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table tb-FourColumnDetail smallfrontTable">
+                                                <tr class="tr-FourColumnDetail">
+                                                    <td class="td-labelColumnOfFourColumn">
+                                                        Interest Type
+                                                    </td>
+                                                    <td class="td-SingleColumnOfFourColumn">
+                                                        <strong>Accrued Amount</strong>
+                                                    </td>
+                                                    <td class="td-SingleColumnOfFourColumn">
+                                                        <strong>Booked Amount</strong>
+                                                    </td>
+                                                    <td class="td-SingleColumnOfFourColumn">
+                                                        <strong>Interest Amount</strong>
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-FourColumnDetail">
+                                                    <td class="td-labelColumnOfFourColumn">
+                                                        Normal (Cr)
+                                                    </td>
+                                                    <td class="td-SingleColumnOfFourColumn">
+                                                        @Model.nrml_accrued_amount_cr
+                                                    </td>
+                                                    <td class="td-SingleColumnOfFourColumn">
+                                                        @Model.nrml_booked_amount_cr
+                                                    </td>
+                                                    <td class="td-SingleColumnOfFourColumn">
+                                                        @Model.nrml_interest_amount_cr
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-FourColumnDetail">
+                                                    <td class="td-labelColumnOfFourColumn">
+                                                        Penal
+                                                    </td>
+                                                    <td class="td-SingleColumnOfFourColumn">
+                                                        @Model.PENAL_ACCRUED_AMOUNT_DR
+                                                    </td>
+                                                    <td class="td-SingleColumnOfFourColumn">
+
+                                                        @Model.PENAL_BOOKED_AMOUNT_DR
+                                                    </td>
+                                                    <td class="td-SingleColumnOfFourColumn">
+
+                                                        @Model.PENAL_INTEREST_AMOUNT_DR
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr-FourColumnDetail">
+                                                    <td class="td-labelColumnOfFourColumn">
+                                                        Additional
+                                                    </td>
+                                                    <td class="td-SingleColumnOfFourColumn">
+
+                                                        @Model.ADDNL_ACCRUED_AMOUNT_DR
+                                                    </td>
+                                                    <td class="td-SingleColumnOfFourColumn">
+
+                                                        @Model.ADDNL_BOOKED_AMOUNT_DR
+                                                    </td>
+                                                    <td class="td-SingleColumnOfFourColumn">
+
+                                                        @Model.ADDNL_INTEREST_AMOUNT_DR
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <!-- /.row -->
+
+
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+        </div>
+    </div>
+
+</div><!-- /.container-fluid -->
+@section ScriptSection
+{
+
+<!-- DataTables  & Plugins -->
+<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/plugins/jszip/jszip.min.js"></script>
+<script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+    @if (TempData.ContainsKey("ErrorMessage"))
+    {
+        @:toastr.error('@TempData["ErrorMessage"]');
+    };
+    });
+</script>
+
+}

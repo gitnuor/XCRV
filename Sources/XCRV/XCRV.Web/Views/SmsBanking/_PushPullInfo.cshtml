@@ -1,0 +1,133 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+@model SmsBankingDetailsViewModel
+
+<div class="col-12" id="accordion">
+    <div class="card card-primary card-outline">
+        <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+            <div class="card-header">
+                <h4 class="card-title w-100">
+                    1. Accounts Mapped <small>with this mobile no.</small>
+                </h4>
+            </div>
+        </a>
+        <div id="collapseOne" class="collapse show" data-parent="#accordion">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-striped infoTable">
+                            @foreach (var item in Model.MobileVsAccounts)
+                            {
+                                <tr>
+                                    <th>
+                                        A/C No:
+                                    </th>
+                                    <td>
+                                        @item.Foracid
+                                    </td>
+                                    <th>
+                                        SMS FACILITY:
+                                    </th>
+                                    <td>
+                                        @item.Sms_Facility
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-primary card-outline">
+        <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+            <div class="card-header">
+                <h4 class="card-title w-100">
+                    2. Top 10 Push SMS <small>against this mobile no. </small>
+                </h4>
+            </div>
+        </a>
+        <div id="collapseTwo" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-striped infoTable">
+                            <thead>
+                                <tr>
+                                    <th>MOB_NO</th>
+                                    <th>BODY</th>
+                                    <th>STATUS</th>
+                                    <th>DATE</th>
+                                </tr>
+                            </thead>
+                            @foreach (var item in Model.SmsPushes)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.Mob_No
+                                    </td>
+                                    <td>
+                                        @item.Body
+                                    </td>
+                                    <td style="width:10%">
+                                        @item.Status
+                                    </td>
+                                    <td>
+                                        @String.Format("{0:dd-MMM-yyyy hh:mm tt}", item.SysDate)
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-primary card-outline">
+        <a class="d-block w-100" data-toggle="collapse" href="#collapseThree">
+            <div class="card-header">
+                <h4 class="card-title w-100">
+                    3. Top 10 Pull SMS <small>against this mobile no. </small>
+                </h4>
+            </div>
+        </a>
+        <div id="collapseThree" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-striped infoTable">
+                            <thead>
+                                <tr>
+                                    <th>MOB_NO</th>
+                                    <th>Request</th>
+                                    <th>Response</th>
+                                    <th>Request Time</th>
+                                </tr>
+                            </thead>
+                            @foreach (var item in Model.SmsPulls)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.MobileNo
+                                    </td>
+                                    <td>
+                                        @item.RequestString
+                                    </td>
+                                    <td>
+                                        @item.ResponseString
+                                    </td>
+                                    <td>
+                                        @String.Format("{0:dd-MMM-yyyy hh:mm tt}", item.RequestTime)
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

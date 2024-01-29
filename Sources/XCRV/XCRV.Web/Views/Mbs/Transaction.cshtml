@@ -1,0 +1,359 @@
+﻿
+@{
+    ViewData["Title"] = "Transaction";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+
+
+
+    <style>
+        .form-check {
+            padding-left: 0rem !important;
+        }
+
+        .dropdown-menu {
+            /*  position: absolute;
+                top: 100%;
+                left: 0;*/
+            z-index: 1035;
+        }
+    </style>
+
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"></h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">MBS</a></li>
+                    <li class="breadcrumb-item active">MBS Transaction</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">MBS Transaction</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="form-horizontal">
+                    <div class="card-body">
+                        <div class="row" style="margin-top: -25px;">
+                            
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Account No</label>
+                                    <input type="text" class="form-control" id="accountNo" name="accountNo" value="@ViewBag.AccountNo" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>From Date</label>
+                                    <div class='input-group'>
+                                        <input type="text" id="fromDate" name="fromDate" class="form-control singledate" value="@ViewBag.FromDate" autocomplete="off" />
+                                        <div class="input-group-append">
+                                            <label for="fromDate" class="input-group-text">
+                                                <span class="fa fa-calendar"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>To Date</label>
+                                    <div class='input-group'>
+                                        <input type="text" id="toDate" name="toDate" class="form-control singledate" value="@ViewBag.ToDate" autocomplete="off" />
+                                        <div class="input-group-append">
+                                            <label for="toDate" class="input-group-text">
+                                                <span class="fa fa-calendar"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    
+                                    <div class="btn-group w-100">
+                                        <button id="btnSearch" type="button" class="btn btn-primary" value="Search"><span id="btnText"> Search</span></button>
+                                        <button type="button" class="btn btn-success " id="btnShowPrintable">
+                                            <span>Show Printable</span>
+                                        </button>                                      
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12" id="details">
+                        <table class="table table-info infoTable">
+                            <tr style="min-height:9px!important">
+                                <th style=" width: 25%; text-align: right;"><b>Account Name	: </b></th>
+                                <td style=" width: 25%; text-align: left;"></td>
+                                <th style=" width: 25%; text-align: right;"><b>Customer ID : </b></th>
+                                <td style=" width: 25%; text-align: left;"></td>
+                            </tr>
+                            <tr style="line-height:9px!important">
+                                <th style=" width: 25%; text-align: right;"><b>Account Type : </b></th>
+                                <td style=" width: 25%; text-align: left;"></td>
+                                <th style=" width: 25%; text-align: right;"><b>Account No : </b></th>
+                                <td style=" width: 25%; text-align: left;"></td>
+                            </tr>
+                            <tr style="line-height:9px!important">
+                                <th style=" width: 25%; text-align: right;"><b>Address	 : </b></th>
+                                <td style=" text-align: left;" colspan="3"></td>                                
+                            </tr>
+                            
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" id="divtbl">
+                        <table id="mbsTransaction" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Tran.No</th>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Withdrawals</th>
+                                    <th>Deposits</th>
+                                    <th>Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+</div><!-- /.contant -->
+
+<div class="modal fade" id="printableModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-info">
+                <h4 class="modal-title">MBS Transaction</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="align-content: center;">
+                <div id="divPintable" style="width: 690px;">
+                    <div id="printForm">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="JavaScript:printPartOfPage('divPintable');">Print</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@section ScriptSection
+{
+    <!-- DataTables  & Plugins -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/plugins/jszip/jszip.min.js"></script>
+    <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <script>
+    $(document).ready(function () {
+
+    @if (TempData.ContainsKey("ErrorMessage"))
+    {
+        @:toastr.error('@TempData["ErrorMessage"]');
+    };
+    });
+
+        $('#mbsTransaction').DataTable({
+            "filter": false, // this is for disable filter (search box)
+            "paging": true,
+            "pageLength": 25,
+            "lengthChange": false,
+            "pagingType": "full_numbers",
+            "scrollX": false,
+            "autoWidth": true,
+            "ordering": false,
+            "initComplete": function (settings, json) {
+                $("#mbsTransaction").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+            },
+        });
+
+
+        function loadTransacionData(accountNo, fromDate, toDate ) {
+            $('#mbsTransaction').DataTable().destroy();
+            $('#mbsTransaction').DataTable({
+                "processing": true,
+                "language": {
+                    processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
+                "filter": false, // this is for disable filter (search box)
+                "paging": true,
+                "pageLength": 25,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "scrollX": false,
+                "autoWidth": true,
+                "ordering": false,
+                "ajax": {
+                    "url": "/Mbs/GetMbsTransaction",
+                    "dataSrc": function (d) {
+                        if (d.data.length === 0) {
+                            var settings = $('#mbsTransaction').DataTable().settings()[0];
+                            settings.oLanguage.sEmptyTable = d.message;
+
+                             toastr.error('Sorry!!! '+d.message+'!!!!');
+                        }
+                        return d.data;
+                    },
+                    "data": { accountNo: accountNo, fromDate: fromDate, toDate: toDate },
+                    "type": "GET",
+                    "dataType": "json"
+                },
+                "columns": [
+
+                    { "data": "actTransNo", "name": "actTransNo" },
+                    { "data": "atotransdate", "name": "atotransdate" },
+                    { "data": "part", "name": "part" },
+                    { "data": "dr", "name": "dr" },
+                    { "data": "cr", "name": "cr" },
+                    { "data": "balance", "name": "balance" },
+                ],
+                "initComplete": function (settings, json) {
+                    $("#mbsTransaction").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                },
+            });
+        }
+
+
+
+        function loadAccountInfo(accountNo) {
+
+            if (accountNo) {
+                $.ajax({
+                    url: "@Url.Action("ShowMbsAccountDetails", "Mbs")",
+                    data: { accountNo: accountNo },
+                    success: function (data) {
+                        $("#details").html(data);
+                    }
+                });
+            }
+            else {
+                toastr.error('Sorry!!! Account Number is required!!!!');
+            }
+        }
+
+        $(document).on('click', '#btnSearch', function () {
+            accountNo = $('#accountNo').val();
+            fromDate = $('#fromDate').val();
+            toDate = $('#toDate').val();
+            loadTransacionData(accountNo, fromDate, toDate);
+            loadAccountInfo(accountNo);
+        });
+
+        $(document).on('click', '#btnShowPrintable', function () {
+
+            accountNo = $('#accountNo').val();
+            fromDate = $('#fromDate').val();
+            toDate = $('#toDate').val();
+
+           
+            if (accountNo && fromDate && toDate ) {
+                $.ajax({
+                    url: "@Url.Action("ShowMbsTransactionPrintable", "Mbs")",
+                    data: { accountNo: accountNo, fromDate: fromDate, toDate: toDate },
+                    success: function (data) {
+                        $("#printableModal #printForm").html(data);
+                        $("#printableModal").modal("show");
+                    }
+                });
+            }
+            else {
+                toastr.error('Sorry!!! Account Number, Form Date and To Date required!!!!');
+            }
+        });
+
+        function printPartOfPage(elementId) {
+            var printContent = document.getElementById(elementId);
+            var windowUrl = '';
+            var uniqueName = new Date();
+            var windowName = '';  //'Print' + uniqueName.getTime();
+            var printWindow = window.open(windowUrl, windowName, 'left=50000,top=50000,width=0,height=0');
+            //add for va   printWindow.opener = null;-- 10-01-21
+            printWindow.opener = null;
+            printWindow.document.write(printContent.innerHTML);
+            printWindow.document.close();
+            printWindow.focus();
+            printWindow.print();
+            printWindow.close();
+        }
+    </script>
+
+    <script>
+        $(function () {
+            $('#fromDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                format: "dd-M-yyyy",
+                language: "tr"
+            });
+        });
+
+         $(function () {
+            $('#toDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                format: "dd-M-yyyy",
+                language: "tr"
+            });
+        });
+
+    </script>
+
+}

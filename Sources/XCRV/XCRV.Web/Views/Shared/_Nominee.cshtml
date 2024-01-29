@@ -1,0 +1,35 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using XCRV.Domain.Entities
+
+@model IEnumerable<Nominee>
+
+
+
+    @foreach (var item in Model)
+    {
+<table class="table table-striped table-bordered smallfrontTable">
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>Nominee Share(%) : </b></th>
+        <td style=" width: 25%; text-align: left;">@item.SharePCNT</td>
+        <th style=" width: 25%; text-align: right;">Nominee Details :</th>
+        <td style=" width: 25%; text-align: left;">@item.Nominee_Details</td>
+    </tr>
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>Father Name : </b></th>
+        <td style=" width: 25%; text-align: left;">@item.FatherName</td>
+        <th style=" width: 25%; text-align: right;"><b>Mother Name : </b></th>
+        <td style=" width: 25%; text-align: left;">@item.Mother_Name</td>
+    </tr>
+    <tr>
+        <th style=" width: 25%; text-align: right;"><b>Spouse Name	 : </b></th>
+        <td style=" width: 25%; text-align: left;">@item.Spouse_Name</td>
+        <th style=" width: 25%; text-align: right;"></th>
+        <td style=" width: 25%; text-align: left;"></td>
+    </tr>
+</table>
+
+    }

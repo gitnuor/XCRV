@@ -1,0 +1,960 @@
+﻿@using XCRV.Domain.Entities
+
+@model CustomerDetails
+@{
+    ViewData["Title"] = "Customer General Details";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"></h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Customer</a></li>
+                    <li class="breadcrumb-item active">Customer General Details</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Customer General Details</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-controller="CustomerGeneralDetails" asp-action="Index">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-warning">Customer Id</button>
+                                </div>
+                                <!-- /btn-group -->
+                                <input type="text" id="txtCustomerId" name="customerId" class="form-control" value="@ViewBag.CustomerId">
+                                <span class="input-group-append">
+                                    <button type="submit" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 ">
+                        <h4>@Model.cust_name</h4>
+                        <input type="hidden" value="@Model.cust_id" id="hdn_cust_id" />
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="btn-group w-100">
+                            <button type="button" class="btn btn-success " onclick="showIntroducerOrGuarantor()"
+                                    data-toggle="modal" data-target="#GuarantorIntroducerModal">
+                                <span>Introducer/Guarantor</span>
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="showStandingInstruction()"
+                                    data-toggle="modal" data-target="#StadingInstructionModal">
+                                <span>Standing Instructions</span>
+                            </button>
+                            <button type="button" class="btn btn-warning" onclick="showCusotmerMemoPad()"
+                                    data-toggle="modal" data-target="#CustomerMemoModal">
+                                <span>Memo Pad</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-5 col-sm-3">
+                        <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
+                            <a class="nav-link active" id="vert-tabs-home-tab" data-toggle="pill" href="#vert-tabs-home" role="tab" aria-controls="vert-tabs-home" aria-selected="true">General Info</a>
+                            <a class="nav-link" id="vert-tabs-profile-tab" data-toggle="pill" href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile" aria-selected="false">Communication Address</a>
+                            <a class="nav-link" id="vert-tabs-messages-tab" data-toggle="pill" href="#vert-tabs-messages" role="tab" aria-controls="vert-tabs-messages" aria-selected="false">Employment Address</a>
+                            <a class="nav-link" id="vert-tabs-settings-tab" data-toggle="pill" href="#vert-tabs-settings" role="tab" aria-controls="vert-tabs-settings" aria-selected="false">Permanent Address</a>
+                            <a class="nav-link" id="vert-tabs-settings-tab1" data-toggle="pill" href="#vert-tabs-settings1" role="tab" aria-controls="vert-tabs-settings1" aria-selected="false">Present Address</a>
+                        </div>
+                    </div>
+                    <div class="col-7 col-sm-9">
+                        <div class="tab-content" id="vert-tabs-tabContent">
+                            <div class="tab-pane text-left fade show active" id="vert-tabs-home" role="tabpanel" aria-labelledby="vert-tabs-home-tab">
+                                <div class="row">
+                                    <div class="col-12 table-responsive-sm">
+                                        <table class="table smallfrontTable">
+                                            <tr>
+                                                <th>Name</th>
+                                                <td>@Model.cust_name</td>
+                                                <th>Account Manager</th>
+                                                <td>@Model.acct_mgr_user_id</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Type</th>
+                                                <td>@Model.cust_type_code</td>
+                                                <th>Suspended</th>
+                                                <td>@Model.party_flg</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Date of Birth</th>
+                                                <td>@Model.date_of_birth</td>
+                                                <th>Minor</th>
+                                                <td>@Model.cust_minor_flg</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Occupation</th>
+                                                <td>@Model.cust_occp_code</td>
+                                                <th>Gender</th>
+                                                <td>@Model.cust_sex</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Constitution</th>
+                                                <td>@Model.cust_const</td>
+                                                <th>National ID</th>
+                                                <td>@Model.nat_id_card_num</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Short Name</th>
+                                                <td>@Model.cust_short_name</td>
+                                                <th>National Language Name</th>
+                                                <td>@Model.native_lang_name</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Passport No</th>
+                                                <td>@Model.psprt_num</td>
+                                                <th>PAN/GIR</th>
+                                                <td>@Model.pan_gir_num</td>
+                                            </tr>
+                                            <tr>
+                                                <th>First A/C Date</th>
+                                                <td>@Model.cust_first_acct_date</td>
+                                                <th>Non Resident</th>
+                                                <td>@Model.cust_nre_flg</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Mobile No</th>
+                                                <td>@Model.cust_pager_no</td>
+                                                <th>Fax No</th>
+                                                <td>@Model.cust_fax_no</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Charge Level Code</th>
+                                                <td>@Model.chrg_level_code</td>
+                                                <th>Cust Health Code</th>
+                                                <td>@Model.cust_hlth_code</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Group</th>
+                                                <td>@Model.cust_grp</td>
+                                                <th>DSA ID</th>
+                                                <td>@Model.dsa_id</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Number Of A/C</th>
+                                                <td>@Model.num_of_accounts</td>
+                                                <th>Primary SOL</th>
+                                                <td>@Model.primary_sol_id</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Intro CIF</th>
+                                                <td>
+                                                    @if (@Model.cust_introd_cust_id != null)
+                                                    {
+                                                        <i class="fa fa-user"></i>
+                                                        @Html.ActionLink(@Model.cust_introd_cust_id, "Index", "CustomerGeneralDetails", new { customerId = @Model.cust_introd_cust_id }, null)
+                                                    }
+                                                </td>
+                                                <th>Address Type</th>
+                                                <td>@Model.address_type</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Sweep Allowed</th>
+                                                <td>@Model.allow_sweeps</td>
+                                                <th>Manager's Opinion</th>
+                                                <td>@Model.cust_mgr_opin</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Father's Name</th>
+                                                <td>@Model.father_name</td>
+                                                <th>Mother's Name</th>
+                                                <td>@Model.mother_name</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Spouse Name</th>
+                                                <td>@Model.spouse_name</td>
+                                                <th></th>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="vert-tabs-profile" role="tabpanel" aria-labelledby="vert-tabs-profile-tab">
+                                <div class="row">
+                                    <div class="col-12 table-responsive-sm">
+                                        <table class="table smallfrontTable">
+                                            <tr>
+                                                <th>Address</th>
+                                                <td colspan="3">@Model.cust_comu_addr1 @Model.cust_comu_addr2</td>
+
+                                            </tr>
+                                            <tr>
+                                                <th>City</th>
+                                                <td>@Model.cust_comu_city_code</td>
+                                                <th>State</th>
+                                                <td>@Model.cust_comu_state_code</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Country</th>
+                                                <td>@Model.cust_comu_cntry_code</td>
+                                                <th>Post Code</th>
+                                                <td>@Model.cust_comu_pin_code</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Phone No</th>
+                                                <td>@Model.cust_comu_phone_num_1</td>
+                                                <th>Telex No</th>
+                                                <td>@Model.cust_comu_telex_num</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Email</th>
+                                                <td colspan="3">@Model.email_id</td>
+
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="vert-tabs-messages" role="tabpanel" aria-labelledby="vert-tabs-messages-tab">
+                                <div class="row">
+                                    <div class="col-12 table-responsive-sm">
+                                        <table class="table smallfrontTable">
+                                            <tr>
+                                                <th>Address</th>
+                                                <td colspan="3">@Model.cust_emp_addr1 @Model.cust_emp_addr2</td>
+
+                                            </tr>
+                                            <tr>
+                                                <th>City</th>
+                                                <td>@Model.cust_emp_city_code</td>
+                                                <th>State</th>
+                                                <td>@Model.cust_emp_state_code</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Country</th>
+                                                <td>@Model.cust_emp_cntry_code</td>
+                                                <th>Post Code</th>
+                                                <td>@Model.cust_emp_pin_code</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Phone No</th>
+                                                <td>@Model.cust_emp_phone_num_1</td>
+                                                <th>Telex No</th>
+                                                <td>@Model.cust_emp_telex_num</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Email</th>
+                                                <td colspan="3">@Model.cust_emp_email_id</td>
+
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="vert-tabs-settings" role="tabpanel" aria-labelledby="vert-tabs-settings-tab">
+                                <div class="row">
+                                    <div class="col-12 table-responsive-sm">
+                                        <table class="table smallfrontTable">
+                                            <tr>
+                                                <th>Address</th>
+                                                <td colspan="3">@Model.cust_perm_addr1 @Model.cust_perm_addr2</td>
+
+                                            </tr>
+                                            <tr>
+                                                <th>City</th>
+                                                <td>@Model.cust_perm_city_code</td>
+                                                <th>State</th>
+                                                <td>@Model.cust_perm_state_code</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Country</th>
+                                                <td>@Model.cust_perm_cntry_code</td>
+                                                <th>Post Code</th>
+                                                <td>@Model.cust_perm_pin_code</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Phone No</th>
+                                                <td>@Model.cust_perm_phone_num</td>
+                                                <th>Telex No</th>
+                                                <td>@Model.cust_perm_telex_num</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Email</th>
+                                                <td colspan="3">@Model.cust_perm_email_id</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="vert-tabs-settings1" role="tabpanel" aria-labelledby="vert-tabs-settings-tab1">
+                                <div class="row">
+                                    <div class="col-12 table-responsive-sm">
+                                        <table class="table smallfrontTable">
+                                            <tr>
+                                                <th>Address</th>
+                                                <td colspan="3">@Model.cust_pesent_addr1 @Model.cust_pesent_addr2</td>
+
+                                            </tr>
+                                            <tr>
+                                                <th>City</th>
+                                                <td>@Model.cust_pesent_city</td>
+                                                <th>State</th>
+                                                <td>@Model.cust_pesent_state</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Country</th>
+                                                <td>@Model.cust_perm_cntry_code</td>
+                                                <th>Post Code</th>
+                                                <td>@Model.cust_pesent_zip</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Phone No</th>
+                                                <td>@Model.cust_perm_phone_num</td>
+                                                <th>Telex No</th>
+                                                <td>@Model.cust_perm_telex_num</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Email</th>
+                                                <td colspan="3">@Model.cust_perm_email_id</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+
+    <div class="modal fade" id="GuarantorIntroducerModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-gradient-info">
+                    <h4 class="modal-title">Guarantors/Introducers</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-warning">Customer Id</button>
+                                </div>
+                                <!-- /btn-group -->
+                                <input type="text" id="txtGuarantorModalCustomerId" name="customerId" class="form-control">
+                                <span class="input-group-append">
+                                    <button type="button" id="btnGuarantorModalSearch" class="btn btn-info btn-flat">Search</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <h4>Guarantor</h4>
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <table class="table table-bordered table-striped" id="guarantors">
+                                <thead>
+                                    <tr>
+                                        <th>Cust ID</th>
+                                        <th>Customer Name</th>
+                                        <th>Guarantor</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <br />
+                    <h4>Introducer</h4>
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-bordered table-striped" id="introducters">
+                                <thead>
+                                    <tr>
+                                        <th>Cust ID</th>
+                                        <th>Customer Name</th>
+                                        <th>Introducer CIF</th>
+                                        <th>Introducer Name</th>
+                                    </tr>
+                                </thead>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="StadingInstructionModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-gradient-info">
+                    <h4 class="modal-title">Standing Instruction</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-warning">Customer Id</button>
+                                </div>
+                                <!-- /btn-group -->
+                                <input type="text" id="txtSIModalCustomerId" name="customerId" class="form-control">
+                                <span class="input-group-append">
+                                    <button type="button" id="btnSIModalSearch" class="btn btn-info btn-flat">Search</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <table class="table table-bordered table-striped" id="standingInstructions">
+                                <thead>
+                                    <tr>
+                                        <th>Cust ID</th>
+                                        <th>Account No</th>
+                                        <th>SOL</th>
+                                        <th>Serial</th>
+                                        <th>Start Date</th>
+                                        <th>Frequency</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+
+    <div class="modal fade" id="CustomerMemoModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-gradient-info">
+                    <h4 class="modal-title">Customer Memo</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Memo</label>
+                                <textarea class="form-control" rows="3" placeholder="Enter ..." id="txtCustomerMemo"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-8">
+                            <input type="hidden" id="hdn_memo_id" />
+                        </div>
+                        <div class="col-sm-6 col-md-4">
+                            <div class="btn-group w-100">
+                                <button type="button" class="btn btn-success" id="saveCustomerMemo">
+                                    <span>Save</span>
+                                </button>
+                                <button type="button" class="btn btn-warning" onclick="cancelCustomerMemoEdit()">
+                                    <span>Cancel</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <table class="table table-bordered table-striped" id="customerMemos">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Date</th>
+                                        <th>Memo</th>
+                                        <th>LastUpdateDate</th>
+                                        <th>UserID</th>
+                                        <th>CustomerID</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</div>
+<!-- /.content -->
+
+@section ScriptSection
+{
+    <!-- DataTables  & Plugins -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/plugins/jszip/jszip.min.js"></script>
+    <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    
+
+    <script>
+
+        $('#guarantors').DataTable({
+            "filter": true, // this is for disable filter (search box)
+            "paging": true,
+            "pageLength": 10,
+            "lengthChange": false,
+            "pagingType": "full_numbers",
+            "autoWidth": false
+        });
+
+        $('#introducters').DataTable({
+            "filter": true, // this is for disable filter (search box)
+            "paging": true,
+            "pageLength": 10,
+            "lengthChange": false,
+            "pagingType": "full_numbers",
+            "autoWidth": false
+        });
+
+        function showIntroducerOrGuarantor() {
+            cif = $('#hdn_cust_id').val();
+            loadGuarantorsInfo(cif);
+            loadIntroducersInfo(cif);
+        }
+
+
+        function loadGuarantorsInfo(searchString) {
+            $('#guarantors').DataTable().destroy();
+            $('#guarantors').DataTable({
+                "processing": true, // for show progress bar
+                "language": {
+                    processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
+                "filter": true, // this is for disable filter (search box)
+                "paging": true,
+                "pageLength": 5,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "autoWidth": false,
+                "ajax": {
+                    "url": "/CustomerGeneralDetails/GetGuarantorByCif",
+                    "dataSrc": function (d) {
+                        if (d.data.length === 0) {
+                            var settings = $('#guarantors').DataTable().settings()[0];
+                            settings.oLanguage.sEmptyTable = d.message;
+                        }
+                        return d.data;
+                    },
+                    "data": { cif: searchString },
+                    "type": "GET",
+                    "dataType": "json"
+                },
+                "columns": [
+
+                    { "data": "cust_id", "name": "cust_id" },
+                    { "data": "cust_name", "name": "cust_name" },
+                    { "data": "guarantor_cif", "name": "guarantor_cif" }
+                ]
+            });
+
+        }
+
+
+        function loadIntroducersInfo(searchString) {
+            $('#introducters').DataTable().destroy();
+            $('#introducters').DataTable({
+                "processing": true, // for show progress bar
+                "language": {
+                    processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
+                "filter": true, // this is for disable filter (search box)
+                "paging": true,
+                "pageLength": 5,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "autoWidth": false,
+                "ajax": {
+                    "url": "/CustomerGeneralDetails/GetIntroducerByCif",
+                    "dataSrc": function (d) {
+                        if (d.data.length === 0) {
+                            var settings = $('#introducters').DataTable().settings()[0];
+                            settings.oLanguage.sEmptyTable = d.message;
+                        }
+                        return d.data;
+                    },
+                    "data": { cif: searchString },
+                    "type": "GET",
+                    "dataType": "json"
+                },
+                "columns": [
+
+                    { "data": "cust_id", "name": "cust_id" },
+                    { "data": "cust_name", "name": "cust_name" },
+                    { "data": "introd_cust_id", "name": "introd_cust_id" },
+                    { "data": "introd_cust_name", "name": "introd_cust_name" }
+                ]
+            });
+
+        }
+
+
+        $(document).on('click', '#btnGuarantorModalSearch', function () {
+            cif = $('#txtGuarantorModalCustomerId').val();
+            loadGuarantorsInfo(cif);
+            loadIntroducersInfo(cif);
+        });
+
+
+        function showStandingInstruction() {
+            cif = $('#hdn_cust_id').val();
+            loadStandingInstructionInfo(cif);
+        }
+
+        $(document).on('click', '#btnSIModalSearch', function () {
+            cif = $('#txtSIModalCustomerId').val();
+            loadStandingInstructionInfo(cif);
+        });
+
+        $('#standingInstructions').DataTable({
+            "filter": true, // this is for disable filter (search box)
+            "paging": true,
+            "pageLength": 10,
+            "lengthChange": false,
+            "pagingType": "full_numbers",
+            "autoWidth": false
+        });
+
+        function loadStandingInstructionInfo(searchString) {
+            $('#standingInstructions').DataTable().destroy();
+            $('#standingInstructions').DataTable({
+                "processing": true, // for show progress bar
+                "language": {
+                    processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
+                "filter": true, // this is for disable filter (search box)
+                "paging": true,
+                "pageLength": 5,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "autoWidth": false,
+                "ajax": {
+                    "url": "/CustomerGeneralDetails/GetStandingInstructionByCif",
+                    "dataSrc": function (d) {
+                        if (d.data.length === 0) {
+                            var settings = $('#standingInstructions').DataTable().settings()[0];
+                            settings.oLanguage.sEmptyTable = d.message;
+                        }
+                        return d.data;
+                    },
+                    "data": { cif: searchString },
+                    "type": "GET",
+                    "dataType": "json"
+                },
+                "columns": [
+
+                    { "data": "id", "name": "id" },
+                    { "data": "foracid", "name": "foracid" },
+                    { "data": "sol_id", "name": "sol_id" },
+                    { "data": "si_srl_num", "name": "si_srl_num" },
+                    { "data": "si_start_date", "name": "si_start_date" },
+                    { "data": "frequency", "name": "frequency" },
+                ]
+            });
+
+        }
+
+
+        $('#customerMemos').DataTable({
+            "filter": true, // this is for disable filter (search box)
+            "paging": true,
+            "pageLength": 10,
+            "lengthChange": false,
+            "pagingType": "full_numbers",
+            "autoWidth": false,
+            "columnDefs": [
+                {
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                },
+                {
+                    "targets": [1],
+                    "width": "25%",
+
+                },
+                {
+                    "targets": [3],
+                    "visible": false,
+                    "searchable": false
+                }
+                ,
+                {
+                    "targets": [4],
+                    "visible": false,
+                    "searchable": false
+                },
+                {
+                    "targets": [5],
+                    "visible": false,
+                    "searchable": false
+                }
+
+            ]
+        });
+
+        function showCusotmerMemoPad() {
+            cif = $('#hdn_cust_id').val();
+            loadCustomerMemos(cif);
+        }
+
+        function loadCustomerMemos(searchString) {
+            $('#customerMemos').DataTable().destroy();
+            $('#customerMemos').DataTable({
+                "processing": true, // for show progress bar
+                "language": {
+                    processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
+                "filter": true, // this is for disable filter (search box)
+                "paging": true,
+                "pageLength": 5,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "autoWidth": false,
+                "ajax": {
+                    "url": "/CustomerGeneralDetails/GetCustomerMemosByCif",
+                    "dataSrc": function (d) {
+                        if (d.data.length === 0) {
+                            var settings = $('#customerMemos').DataTable().settings()[0];
+                            settings.oLanguage.sEmptyTable = d.message;
+                        }
+                        return d.data;
+                    },
+                    "data": { cif: searchString },
+                    "type": "GET",
+                    "dataType": "json"
+                },
+                "columns": [
+
+                    { "data": "id", "name": "id" },
+                    { "data": "entryDate", "name": "entryDate" },
+                    { "data": "memoText", "name": "memoText" },
+                    { "data": "lastUpdateDate", "name": "lastUpdateDate" },
+                    { "data": "userId", "name": "userId" },
+                    { "data": "customerId", "name": "customerId" },
+                    {
+                        "title": "Edit",
+                        "data": "id",
+                        "searchable": false,
+                        "sortable": false,
+                        "render": function (data, type, row) {
+                            return '<a data-id ="' + row.id + '", data-memo_text = "' + row.memoText +'"  class="custMemo">Edit</a>';
+                        }
+                    }
+                ],
+                "columnDefs": [
+                    {
+                        "targets": [0],
+                        "visible": false,
+                        "searchable": false
+                    },
+                    {
+                        "targets": [1],
+                        "width": "25%",
+
+                    },
+                    {
+                        "targets": [3],
+                        "visible": false,
+                        "searchable": false
+                    }
+                    ,
+                    {
+                        "targets": [4],
+                        "visible": false,
+                        "searchable": false
+                    },
+                    {
+                        "targets": [5],
+                        "visible": false,
+                        "searchable": false
+                    },
+                    {
+                        "targets": [6],
+                        "width": "15%",
+                    }
+
+                ]
+            });
+        }
+
+        $(document).on('click', '#saveCustomerMemo', function () {
+            var memo = {};
+            memo['memoText'] = $('#txtCustomerMemo').val();
+            memo['customerId'] = $('#hdn_cust_id').val();
+            memo['id'] = $('#hdn_memo_id').val() == '' ? '0' : $('#hdn_memo_id').val();
+            $.ajax({
+                url: "/CustomerGeneralDetails/SaveCustomerMemo",
+                type: "POST",
+                data: {memo: memo },
+                success: function (data) {
+
+                    if (data.status == 'success') {
+                        toastr.success("message", data.message);
+                        $('#txtCustomerMemo').val("");
+
+                        $('#hdn_memo_id').val("");
+
+                        $('#customerMemos').DataTable().destroy();
+                        $('#customerMemos').DataTable({
+                            "processing": true, // for show progress bar
+                            "language": {
+                                processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+                            },
+                            "filter": true, // this is for disable filter (search box)
+                            "paging": true,
+                            "pageLength": 5,
+                            "lengthChange": false,
+                            "pagingType": "full_numbers",
+                            "autoWidth": false,
+                            "data": data.data,
+                            "columns": [
+                                { "data": "id", "name": "id" },
+                                { "data": "entryDate", "name": "entryDate" },
+                                { "data": "memoText", "name": "memoText" },
+                                { "data": "lastUpdateDate", "name": "lastUpdateDate" },
+                                { "data": "userId", "name": "userId" },
+                                { "data": "customerId", "name": "customerId" },
+                                {
+                                    "title": "Edit",
+                                    "data": "id",
+                                    "searchable": false,
+                                    "sortable": false,
+                                    "render": function (data, type, row) {
+                                        return '<a data-id ="' + row.id + '", data-memo_text = "' + row.memoText + '"  class="custMemo">Edit</a>';
+                                    }
+                                }
+                            ],
+                            "columnDefs": [
+                                {"targets": [0],"visible": false,"searchable": false},
+                                {"targets": [1],"width": "25%",},
+                                {"targets": [3],"visible": false,"searchable": false},
+                                {"targets": [4],"visible": false,"searchable": false},
+                                {"targets": [5], "visible": false, "searchable": false },
+                                {"targets": [6],"width": "15%"}
+                            ]
+                        });
+
+                    }
+                    else if (data.status == 'error') {
+
+                        var error = '<ul>';
+                        for (var i = 0; i < data.errors.length; i++) {
+
+                            error = error + "<li>" + data.errors[i].value[0] + "</li>";
+                        }
+                        error = error + "</ul>";
+
+                        toastr.error("Error", error);
+                    }
+                    else {
+                        toastr.error("Error", data.message);
+                    }
+                }
+                //,
+                //error: function (jqXHR, textStatus, errorThrown) {
+                //    if (jqXHR.status == 500) {
+                //        toastr.error("Error",'Internal error: ' + jqXHR.responseText);
+                //    } else {
+                //        toastr.error("Error",'Unexpected error.' + jqXHR.status);
+                //    }
+                //}
+            });
+        });
+
+        function editCustomerMemo(Id, memoText) {
+            debugger;
+            alert(Id);
+            alert(memoText);
+            $('#txtCustomerMemo').val(memoText);
+            $('#hdn_memo_id').val(Id);
+        }
+
+        $(document).on('click', '.custMemo', function () {
+            id = $(this).data('id');
+            text = $(this).data('memo_text');
+            $('#txtCustomerMemo').val(text);
+            $('#hdn_memo_id').val(id);
+        });
+
+        function cancelCustomerMemoEdit() {
+            $('#txtCustomerMemo').val("");
+            $('#hdn_memo_id').val("");
+        }
+
+
+        $(document).ready(function () {
+
+        @if (TempData.ContainsKey("ErrorMessage"))
+        {
+            @:toastr.error('@TempData["ErrorMessage"]');
+        };
+        });
+
+    </script>
+
+}

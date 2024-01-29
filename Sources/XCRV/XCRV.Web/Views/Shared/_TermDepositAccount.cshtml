@@ -1,0 +1,34 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using XCRV.Domain.Entities
+@model IEnumerable<CustomerMatrix>
+
+<table id="tdaTable" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Account No</th>
+            <th>Schm Desc</th>
+            <th>Currency</th>
+            <th>Balance</th>
+            <th>Maturity Amount</th>
+            <th>Maturity Date</th>
+            <th>Deposit Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><i class="fa fa-user"></i><a href="/TermDepositScheme/Index?accountNo=@item.acno" target="_blank"> @item.acno </a></td>
+                <td>@item.schm_desc</td>
+                <td>@item.acct_crncy_code</td>
+                <td>@item.bal</td>
+                <td>@item.mat_amt</td>
+                <td>@item.mat_date</td>
+                <td>@item.dpst_amt</td>
+            </tr>
+        }
+    </tbody>
+</table>

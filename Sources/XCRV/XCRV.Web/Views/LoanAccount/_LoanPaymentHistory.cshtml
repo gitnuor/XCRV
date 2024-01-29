@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using XCRV.Domain.Entities
+
+@model IEnumerable<RepaymentHistory>
+
+
+<table class="table table-striped smallfrontDataTable" id="paymentHistoryTable">
+     <thead>
+         <tr>
+             <th>SL No</th>
+             <th>Due Date</th>
+             <th>Total Demand Amt</th>
+             <th>Principle</th>
+             <th>Interest</th>
+             <th>Collections</th>
+             <th>Adjusted Date</th>
+         </tr>
+     </thead>
+     <tbody>
+         @foreach (var item in Model)
+         {
+         <tr>
+             <td>@item.Shdl_Num</td>
+             <td>@item.Due_Date</td>
+             <td>@item.Dmd_Amt</td>
+             <td>@item.Principle</td>
+             <td>@item.Interest</td>
+             <td>@item.Collections</td>
+             <td>@item.Last_Adj_Date</td>
+         </tr>
+         }
+     </tbody>
+    
+        
+</table>
+
+

@@ -1,0 +1,398 @@
+﻿
+@{
+    ViewData["Title"] = "Access Code Entry";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"> </h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Others</a></li>
+                    <li class="breadcrumb-item active">Access Code Entry</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Access Code List</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="accessCodeList" class="table table-striped smallfrontDataTable">
+                            <thead>
+                                <tr>                                    
+                                    <th>USER ID</th>
+                                    <th>XCRV USER ID</th>
+                                    <th>ACCT ACCESS CODE</th>
+                                    <th style="width: 10px;"></th>
+                                    <th style="width: 10px;"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content -->
+
+
+<div class="modal fade" id="AccessCodeEntryModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-info">
+                <h4 class="modal-title"><span id="modalTitle"> Access Code Entry</span></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table smallfrontTable">
+
+                    <tr>
+                        <th style="text-align:right;">User ID :</th>
+                        <td style="text-align:left;">
+                            <div class="form-group">
+                                <select class="form-control" id="ddlFinUserId">
+                                    <option value="0">Select..</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:right;"> XCRV USER ID :</th>
+                        <td style="text-align:left;">
+                            <div class="form-group">
+                                <select class="form-control" id="ddlXcrvUser">
+                                    <option value="0">Select..</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:right;"> ACCESS CODE :</th>
+                        <td style="text-align:left;">
+                            <div class="form-group">
+                                <input type="text" id="txtAccessCode" name="txtAccessCode" class="form-control" maxlength="5">
+                                <input type="hidden" id="hdnID" />
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="btnInsertAccessCode" type="button" class="btn btn-success">Save</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+
+
+@section ScriptSection
+{
+    <!-- DataTables  & Plugins -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/plugins/jszip/jszip.min.js"></script>
+    <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
+
+    <script>
+
+        var table;
+        function loadFinacelUserId() {
+            $.ajax({
+                url: "@Url.Action("GetFinacleUserId", "AccessCode")",
+                data: { forFullBook: false },
+                success: function (data) {
+                    response = data;
+                    //$('#ddlFinUserId').html('');
+                    var options = '';
+                    options += '';
+                    for (var i = 0; i < response.length; i++) {
+                        options += '<option value="' + response[i].user_id + '">' + response[i].user_id + '</option>';
+                    }
+                    $('#ddlFinUserId').append(options);
+                }
+            });
+        }
+        loadFinacelUserId();
+
+        function loadXcrvFinacelUserId() {
+            $.ajax({
+                url: "@Url.Action("GetXcrvFinacleUserId", "AccessCode")",
+                data: { forFullBook: false },
+                success: function (data) {
+                    console.log(data);
+                    response = data;
+                    //$('#ddlXcrvUser').html('');
+                    var options = '';
+                    options += '';
+                    for (var i = 0; i < response.length; i++) {
+                        options += '<option value="' + response[i].userName + '">' + response[i].userName + '</option>';
+                    }
+                    $('#ddlXcrvUser').append(options);
+                }
+            });
+        }
+        loadXcrvFinacelUserId();
+
+        function loadAccessCodeList() {
+
+            $('#accessCodeList').DataTable().destroy();
+
+
+            table = $('#accessCodeList').DataTable({
+                //"processing": true, // for show progress bar
+                //"serverSide": true,
+                "language": {
+                    processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
+                "filter": true, // this is for disable filter (search box)
+                "paging": true,
+                "pageLength": 10,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "scrollX": false,
+                "autoWidth": true,
+                "ordering": false,
+                "ajax": {
+                    "url": "/AccessCode/GetAccessCodeList",
+                    "dataSrc": function (d) {
+                        if (d.data.length === 0) {
+                            var settings = $('#accessCodeList').DataTable().settings()[0];
+                            settings.oLanguage.sEmptyTable = d.message;
+                        }
+                        return d.data;
+                    },
+                    "type": "GET",
+                    "dataType": "json"
+                },
+                "columns": [
+                    { "data": "user_id", "name": "user_id" },
+                    { "data": "xcrv_user_id", "name": "xcrv_user_id" },
+                    { "data": "acct_access_code", "name": "acct_access_code" },
+                    {
+                        data: null,
+                        defaultContent: '<i class="fas fa-pencil-alt" style="cursor: pointer;" ></i>',
+                        className: 'row-edit dt-center',
+                        orderable: false
+                    },
+                    {
+                        data: null,
+                        defaultContent: '<i class="fa fa-trash" style="cursor: pointer;" />',
+                        className: 'row-remove dt-center',
+                        orderable: false
+                    },
+                ],
+
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        id:"btnAddNew",
+                        text: 'Add New',
+                        className: 'btn-primary',
+                        action: function (e, dt, node, config) {
+                            clearModal();
+                            $("#AccessCodeEntryModal").modal("show");
+                        }
+                    }
+                ],
+                "initComplete": function (settings, json) {
+                    $("#accessCodeList").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+
+                    var btns = $('.btn-primary');
+                    btns.addClass('btn-sm');
+                    btns.removeClass('btn-secondary');
+                }
+            });
+        }
+        loadAccessCodeList();
+
+        function clearModal() {
+            $('#ddlFinUserId').val('0');
+            $('#ddlXcrvUser').val('0');
+            $('#txtAccessCode').val('');
+            $('#hdnID').val('');
+            $('#modalTitle').text("Access Code Entry");
+        }
+
+
+        $(document).on('click', '#btnInsertAccessCode', function () {
+
+            if (confirm("Are you sure?") == false) {
+                return;
+            }
+
+            if (!$('#ddlFinUserId').val()) {
+                toastr.error("Error", "User ID can not be empty.");
+                return;
+            }
+
+            if ($('#ddlFinUserId').val() == '0') {
+                toastr.error("Error", "User ID can not be empty.");
+                return;
+            }
+
+
+            if (!$('#ddlXcrvUser').val()) {
+                toastr.error("Error", "XCRV User ID can not be empty.");
+                return;
+            }
+
+            if ($('#ddlXcrvUser').val()=='0') {
+                toastr.error("Error", "XCRV User ID can not be empty.");
+                return;
+            }
+
+
+            if (!$('#txtAccessCode').val()) {
+                toastr.error("Error", "Access Code can not be empty.");
+                return;
+            }
+
+            if (!$('#txtAccessCode').val().length >5) {
+                toastr.error("Error", "Access Code length must be 5.");
+                return;
+            }
+
+            var memo = {};
+            memo['user_id'] = $('#ddlFinUserId').val();
+            memo['xcrv_user_id'] = $('#ddlXcrvUser').val();
+            memo['acct_access_code'] = $('#txtAccessCode').val();
+            memo['access_id'] = $('#hdnID').val();
+
+
+
+            $.ajax({
+                url: "/AccessCode/SaveAccessCode",
+                type: "POST",
+                data: { requst: memo },
+                success: function (data) {
+
+                    if (data.status == true) {
+                        toastr.success("message", data.message);
+                        $("#AccessCodeEntryModal").modal("hide");
+                        clearModal();
+                        loadAccessCodeList();
+                    }
+                    else {
+                        toastr.error("Error", data.message);
+                    }
+                }
+                //,
+                //error: function (jqXHR, textStatus, errorThrown) {
+                //    if (jqXHR.status == 500) {
+                //        toastr.error("Error", 'Internal error: ' + jqXHR.responseText);
+                //    } else {
+                //        toastr.error("Error", 'Unexpected error.' + jqXHR.status);
+                //    }
+                //}
+            });
+        });
+
+
+        // Activate an inline edit on click of a table cell
+        $('#accessCodeList').on('click', 'tbody td.row-edit', function (e) {
+
+            var rowData = table.row($(this).parents('tr')).data();
+
+
+            $('#ddlFinUserId').val(rowData['user_id']);
+            $('#ddlXcrvUser').val(rowData['xcrv_user_id']);
+            $('#txtAccessCode').val(rowData['acct_access_code']);
+            $('#hdnID').val(rowData['access_id']);
+            $('#modalTitle').text("Access Code Edit");
+
+            $("#AccessCodeEntryModal").modal("show");
+        });
+
+        // Delete row
+        $('#accessCodeList').on('click', 'tbody td.row-remove', function (e) {
+            if (confirm("Are you sure to delete?") == false) {
+                return;
+            }
+
+            var rowData = table.row($(this).parents('tr')).data();
+
+            var memo = {};
+            memo['user_id'] = rowData['user_id'];
+            memo['xcrv_user_id'] = rowData['xcrv_user_id'];
+            memo['acct_access_code'] = rowData['acct_access_code'];
+            memo['access_id'] = rowData['access_id'];
+
+            $.ajax({
+                url: "/AccessCode/DeleteAccessCode",
+                type: "POST",
+                data: { requst: memo },
+                success: function (data) {
+
+                    if (data.status == true) {
+                        toastr.success("message", data.message);
+                        $("#AccessCodeEntryModal").modal("hide");
+                        clearModal();
+                        loadAccessCodeList();
+                    }
+                    else {
+                        toastr.error("Error", data.message);
+                    }
+                }
+                //,
+                //error: function (jqXHR, textStatus, errorThrown) {
+                //    if (jqXHR.status == 500) {
+                //        toastr.error("Error", 'Internal error: ' + jqXHR.responseText);
+                //    } else {
+                //        toastr.error("Error", 'Unexpected error.' + jqXHR.status);
+                //    }
+                //}
+            });
+
+
+        });
+
+    </script>
+
+}

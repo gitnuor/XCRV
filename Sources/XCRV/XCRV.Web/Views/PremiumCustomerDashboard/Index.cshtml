@@ -1,0 +1,808 @@
+﻿@using XCRV.Domain.Entities
+
+@model CustomerLimit
+@{
+    ViewData["Title"] = "BBL - XCRV360 : Premium Banking Dashboard";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Customer</a></li>
+                    <li class="breadcrumb-item active">Premium Banking Dashboard</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Premium Banking Dashboard</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row h-100 justify-content-center align-items-center">
+                    <div class="col-md-8">
+                        <form asp-controller="" asp-action="Index">
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-warning">Customer Id</button>
+                                </div>
+                                <!-- /btn-group -->
+                                <input type="text" id="txtSearchString" class="form-control">
+                                <span class="input-group-append">
+                                    <button type="button" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                                </span>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-12" id="accordion">
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        Personal Information
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped table-sm">
+                                                <tr style="line-height:9px;">
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Name : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"> <label id="acct_name" class="font-weight-normal"> </label></td>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Date of Birth : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="birth" class="font-weight-normal"> </label> </td>
+                                                </tr>
+                                                <tr style="line-height:9px;">
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Contact No : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"> <label id="contact" class="font-weight-normal"></label> </td>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b> Wedding Anniversary : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="weeding" class="font-weight-normal"> </label> </td>
+                                                </tr>
+                                                <tr style="line-height:15px;">
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Spouse : </b></th>
+                                                    <td style=" width: 25%; text-align: left;word-break:break-word!important;font-size:0.9em"><label id="spouse" class="font-weight-normal"> </label> </td>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Organization : </b></th>
+                                                    <td style=" width: 25%; text-align: left;font-size:0.9em"><label id="organization" class="font-weight-normal"> </label> </td>
+                                                </tr>
+                                                <tr style="line-height:9px;">
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Spouse DOB : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"> <label id="spouseDob" class="font-weight-normal" /></td>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Customer Category : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="custCategory" class="font-weight-normal"></label> </td>
+                                                </tr>
+                                                <tr style="line-height:9px;">
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>NID : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"> <label id="nid" class="font-weight-normal" /></td>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Special Note : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="note" class="font-weight-normal"></label> </td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Father's Name : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"> <label id="father" class="font-weight-normal" /></td>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Mother's Name  : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="mother" class="font-weight-normal"></label> </td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Address : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="address" class="font-weight-normal"></label> </td>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b> Profession : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"> <label id="profession" class="font-weight-normal" /></td>
+
+                                                </tr>
+                                                @* <tr >
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b> Address  : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"> <label id="address" class="font-weight-normal" /></td>
+
+                                                    </tr>*@
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-warning card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseFive">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        Account Totals
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseFive" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped smallfrontTable">
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Total Deposit : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="Deposit" class="font-weight-normal"> </label></td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Total Loan : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="Loan" class="font-weight-normal"> </label></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Total Interest Paid : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="InterestPaid" class="font-weight-normal"> </label></td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Total Interest Received : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="ReceivedRcvd" class="font-weight-normal"> </label></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        Deposits
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table id="customerInfo" class="table table-bordered table-striped">
+                                                <thead>
+                                                    <tr style="line-height:9px;">
+                                                        <th>Account No</th>
+                                                        <th>Schm. Code</th>
+                                                        <th>Schm. Type</th>
+                                                        <th>A/C Opening Date</th>
+                                                        <th>Balance</th>
+                                                        <th style="display:none">Balance</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table  smallfrontTable">
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b style="font-size: 11px;">Current A/C Total : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="lblCATotal" class="font-weight-normal"> </label></td>
+                                                    <th style=" width: 25%; text-align: right;"><b style="font-size: 11px;"> Saving A/C Total : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="lblSATotal" class="font-weight-normal"> </label></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b style="font-size: 11px;"> Term Deposit Total : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="lblTDTotal" class="font-weight-normal"> </label></td>
+                                                    <th style=" width: 25%; text-align: right;"><b style="font-size: 11px;">Deposits Total : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="lblDepositTotal" class="font-weight-normal"> </label></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="card card-warning card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseThree">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        Assets
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseThree" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table id="customerInfos" class="table table-bordered table-striped">
+                                                <thead>
+                                                    <tr style="line-height:9px;">
+                                                        <th>Account No</th>
+                                                        <th>Schm. Code</th>
+                                                        <th>Outstanding</th>
+                                                        <th>Overdue</th>
+                                                        <th>Loan Amount</th>
+                                                        <th>Int. Rate</th>
+                                                        <th>CLS(Sys)</th>
+                                                        <th>CLS(User)</th>
+                                                        <th>Next Inst. Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table  smallfrontTable">
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b style="font-size: 11px;">Home Loan Total : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="lblhomelTotal" class="font-weight-normal"> </label></td>
+                                                    <th style=" width: 25%; text-align: right;"><b style="font-size: 11px;"> Auto Loan Total : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="lblautolTotal" class="font-weight-normal"> </label></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b style="font-size: 11px;"> SL Total : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="lblSLTotal" class="font-weight-normal"> </label></td>
+                                                    <th style=" width: 25%; text-align: right;"><b style="font-size: 11px;"> SOD Total : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="lblSodTotal" class="font-weight-normal"> </label></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b style="font-size: 11px;"> Loan Total : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="lblTotal" class="font-weight-normal"> </label></td>
+
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="card card-warning card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseFour">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        Historical Information
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseFour" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" id="communication-address-tab" data-toggle="pill" href="#communication-address" role="tab" aria-controls="communication-address" aria-selected="true">Last 6 Months AVG Balance</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="employment-address-tab" data-toggle="pill" href="#employment-address" role="tab" aria-controls="employment-address" aria-selected="false">Last 1 Year AVG Balance</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="permanent-address-tab" data-toggle="pill" href="#permanent-address" role="tab" aria-controls="permanent-address" aria-selected="false">Month Wise AVG Balance</a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content" id="custom-content-below-tabContent">
+                                                <div class="tab-pane fade show active" id="communication-address" role="tabpanel" aria-labelledby="communication-address-tab">
+                                                    <div class="row">
+                                                        <div class="col-12 table-responsive-sm">
+                                                            <table class="table smallfrontTable">
+                                                                <tr>
+                                                                    <th style=" width: 25%; text-align: right;"><b style="font-size: 11px;">6 Months avg. balance(CASA+TDA): </b></th>
+                                                                    <td style=" width: 25%; text-align: left;"><label id="6monthavgBal" class="font-weight-normal"> </label></td>
+
+                                                                </tr>
+
+
+
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="employment-address" role="tabpanel" aria-labelledby="employment-address-tab">
+                                                    <div class="row">
+                                                        <div class="col-12 table-responsive-sm">
+                                                            <table class="table smallfrontTable">
+                                                                <tr>
+                                                                    <th style=" width: 25%; text-align: right;"><b style="font-size: 11px;">1 Year avg. balance(CASA+TDA): </b></th>
+                                                                    <td style=" width: 25%; text-align: left;"><label id="1yearavgBal" class="font-weight-normal"> </label></td>
+
+                                                                </tr>
+
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="permanent-address" role="tabpanel" aria-labelledby="permanent-address-tab">
+                                                    <div class="row">
+                                                        <div class="col-12 table-responsive-sm">
+                                                            <table id="customerInfosAvg" class="table table-bordered table-striped">
+                                                                <thead>
+                                                                    <tr style="line-height:9px;">
+                                                                        <th style="font-size: 12px;">@ViewBag.Schm_Code </th>
+                                                                        <th style="font-size: 12px;">@ViewBag.dtCurrentDate1</th>
+                                                                        <th style="font-size: 12px;">@ViewBag.dtCurrentDate2</th>
+                                                                        <th style="font-size: 12px;">@ViewBag.dtCurrentDate3</th>
+                                                                        <th style="font-size: 12px;">@ViewBag.dtCurrentDate4</th>
+                                                                        <th style="font-size: 12px;">@ViewBag.dtCurrentDate5</th>
+                                                                        <th style="font-size: 12px;">@ViewBag.dtCurrentDate6</th>
+                                                                        <th style="font-size: 12px;">@ViewBag.Avgmon</th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                </tbody>
+                                                            </table>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+</div><!-- /.contant -->
+@section ScriptSection
+{
+
+<!-- DataTables  & Plugins -->
+<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/plugins/jszip/jszip.min.js"></script>
+<script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+<script>
+
+               $(document).on('click', '#btnSearch',  function () {
+                 debugger;
+                  let  SearchString = $('#txtSearchString').val();
+                  if(SearchString=="")
+                  {
+                      toastr.error('Customer Id cannot be empty.');
+                  }
+                  else{
+                  valdation(SearchString);
+
+                  }
+               });
+
+            function valdation(SearchString) {
+                   debugger;
+                                $.ajax({
+                                    type: 'GET',
+                                    url: '/PremiumCustomerDashboard/IsPermiumCustomer',
+                                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                                    data: {seachString:SearchString},
+                                    success: function (result) {
+                                     if (result.data == null) {
+                                            toastr.error('Provided Customer ID is not of a premium banking customer!!');
+                                        }
+                                        else {
+                                              loadPremimumPersonelinfo(SearchString);
+                                              loadAccountTotal(SearchString);
+                                              loadDepositAllAccInfo(SearchString);
+                                              loadPremimumDeposits(SearchString);
+                                              loadPremimumAsset(SearchString);
+                                              loadAssetAllAccInfo(SearchString);
+                                              loadHitoricalBal(SearchString);
+                                              loadMonthWiseBal(SearchString);
+                                        }
+                                    }
+                           });
+               }
+
+                function loadPremimumPersonelinfo(SearchString) {
+                   debugger;
+                                $.ajax({
+                                    type: 'GET',
+                                    url: '/PremiumCustomerDashboard/getPersonelInfo',
+                                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                                    data: {seachString:SearchString},
+                                    success: function (result) {
+                                     if (result.data != null) {
+                                            $('#acct_name').text(result.data.cust_name);
+                                            $('#birth').text(result.data.date_of_birth );
+                                            $('#contact').text(result.data.cust_pager_no);
+                                            $('#weeding').text(result.data.weeding_anniversery);
+                                            $('#spouse').text(result.data.spouse_name);
+                                            $('#organization').text(result.data.quantity);
+                                            $('#spouseDob').text(result.data.sol_id);
+                                            $('#custCategory').text(result.data.date_opnd);
+
+                                           $('#nid').text(result.data.nat_id_card_num);
+
+                                           $('#note').text(result.data.open_value);
+                                           $('#father').text(result.data.father_name);
+                                           $('#mother').text(result.data.mother_name);
+                                           $('#profession').text(result.data.cust_occp_code);
+                                           $('#ageclass').text(result.data.last_ship_date);
+                                           $('#address').text(result.data.cust_comu_addr1 + (result.data.cust_comu_addr2==null?"":result.data.cust_comu_addr2) + (result.data.cust_comu_city_code==null?"":"\nCity: " + result.data.cust_comu_city_code)
+                                                 + (result.data.cust_comu_state_code==null?"":" State: " + result.data.cust_comu_state_code) +(result.data.cust_comu_cntry_code==null?"":"\nCountry: " + result.data.cust_comu_cntry_code)+(result.data.cust_comu_pin_code==null?"":"\nPost Code: " + result.data.cust_comu_pin_code));
+
+                                        }
+                                        else {
+                                            toastr.error('No Data Found!!!');
+                                            //$('#acct_name').text('');
+                                            //$('#cust_id').text('');
+                                            //$('#address').text('');
+                                            //$('#foracid').text('');
+                                            //$('#Account_Type').text('');
+                                            //$('#acct_crncy_code').text('');
+                                            //$('#aval_balance').text('');
+                                            //$('#effect_balance').text('');
+                                        }
+                                    }
+                                    //,
+                                    //error: function () {
+                                    //    toastr.error('Account No and Date field can not be empty!');
+                                    //   // alert('Failed to receive the Data');
+                                    //   // console.log('Failed ');
+                                    //}
+
+                           });
+                           }
+
+            function loadAccountTotal(SearchString) {
+                   debugger;
+                                $.ajax({
+                                    type: 'GET',
+                                    url: '/PremiumCustomerDashboard/getAccountTotal',
+                                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                                    data: {seachString:SearchString},
+                                    success: function (result) {
+                                     if (result.data != null) {
+                                            $('#Deposit').text(result.data.tot_balance);
+                                            $('#Loan').text(result.data.total );
+                                            $('#InterestPaid').text(result.data.tot_int_paid);
+                                            $('#ReceivedRcvd').text(result.data.tot_int_rec);
+
+                                        }
+                                        else {
+                                            toastr.error('No Data Found!!!');
+                                            //$('#acct_name').text('');
+                                            //$('#cust_id').text('');
+                                            //$('#address').text('');
+                                            //$('#foracid').text('');
+                                            //$('#Account_Type').text('');
+                                            //$('#acct_crncy_code').text('');
+                                            //$('#aval_balance').text('');
+                                            //$('#effect_balance').text('');
+                                        }
+                                    }
+                                    //,
+                                    //error: function () {
+                                    //    toastr.error('Account No and Date field can not be empty!');
+                                    //   // alert('Failed to receive the Data');
+                                    //   // console.log('Failed ');
+                                    //}
+
+                           });
+                           }
+
+
+               function loadDepositAllAccInfo(SearchString) {
+                   debugger;
+                                $.ajax({
+                                    type: 'GET',
+                                    url: '/PremiumCustomerDashboard/getDepositAllaccinfo',
+                                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                                    data: {seachString:SearchString},
+                                    success: function (result) {
+                                     if (result.data != null) {
+                                            $('#lblCATotal').text(result.data.tot_caa_bal);
+                                            $('#lblSATotal').text(result.data.tot_sba_bal );
+                                            $('#lblTDTotal').text(result.data.tot_tda_bal);
+                                            $('#lblDepositTotal').text(result.data.tot_balance);
+
+                                        }
+                                        else {
+                                            toastr.error('No Data Found!!!');
+                                            //$('#acct_name').text('');
+                                            //$('#cust_id').text('');
+                                            //$('#address').text('');
+                                            //$('#foracid').text('');
+                                            //$('#Account_Type').text('');
+                                            //$('#acct_crncy_code').text('');
+                                            //$('#aval_balance').text('');
+                                            //$('#effect_balance').text('');
+                                        }
+                                    }
+                                    //,
+                                    //error: function () {
+                                    //    toastr.error('Account No and Date field can not be empty!');
+                                    //   // alert('Failed to receive the Data');
+                                    //   // console.log('Failed ');
+                                    //}
+
+                           });
+
+                  // $("#customerInfo").wrap('<div style="overflow:auto;" />');
+
+          }
+
+            $('#customerInfo').DataTable({
+                   "filter": false, // this is for disable filter (search box)
+                   "paging": false,
+                   "pageLength": 50,
+                   "lengthChange": false,
+                   "pagingType": "full_numbers",
+                   "bInfo" : false,
+                   "scrollX": false,
+                   "autoWidth": true,
+                   "initComplete": function (settings, json) {
+                       $("#customerInfo").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                   },
+               });
+
+           function loadPremimumDeposits(searchString) {
+
+               $('#customerInfo').DataTable().destroy();
+               $('#customerInfo').DataTable({
+                   "language": {
+                       processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+                   },
+                   "filter": false, // this is for disable filter (search box)
+                   "paging": false,
+                   "pageLength": 50,
+                   "lengthChange": false,
+                   "pagingType": "full_numbers",
+                   "bInfo" : false,
+                   "scrollX": false,
+                   "autoWidth": true,
+                   "ajax": {
+                        "url": "/PremiumCustomerDashboard/getDeposits",
+                       "dataSrc": function (d) {
+                           if (d.data.length === 0) {
+                               var settings = $('#customerInfo').DataTable().settings()[0];
+                               settings.oLanguage.sEmptyTable = d.message;
+                           }
+                           return d.data;
+                       },
+                       "data": {seachString: searchString },
+                       "type": "GET",
+                       "dataType": "json"
+                   },
+                   "columns": [
+                           { "data": "foracid", "name": "foracid" },
+                           { "data": "schm_code", "name": "schm_code" },
+                           { "data": "schm_type", "name": "schm_type" },
+                           { "data": "acctopendate", "name": "acctopendate" },
+                           { "data": "balance", "name": "balance" }
+
+                       ]
+               });
+
+               $("#customerInfo").wrap('<div style="overflow:auto;" />');
+
+           }
+
+             $('#customerInfos').DataTable({
+                   "filter": false, // this is for disable filter (search box)
+                   "paging": false,
+                   "pageLength": 50,
+                   "lengthChange": false,
+                   "pagingType": "full_numbers",
+                   "bInfo" : false,
+                   "scrollX": false,
+                   "autoWidth": true,
+                   "initComplete": function (settings, json) {
+                       $("#customerInfo").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                   },
+               });
+
+            function loadPremimumAsset(searchString) {
+
+               $('#customerInfos').DataTable().destroy();
+               $('#customerInfos').DataTable({
+                   "language": {
+                       processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+                   },
+                   "filter": false, // this is for disable filter (search box)
+                   "paging": false,
+                   "pageLength": 50,
+                   "lengthChange": false,
+                   "pagingType": "full_numbers",
+                   "bInfo" : false,
+                   "scrollX": false,
+                   "autoWidth": true,
+                   "ajax": {
+                        "url": "/PremiumCustomerDashboard/getAssets",
+                       "dataSrc": function (d) {
+                           if (d.data.length === 0) {
+                               var settings = $('#customerInfos').DataTable().settings()[0];
+                               settings.oLanguage.sEmptyTable = d.message;
+                           }
+                           return d.data;
+                       },
+                       "data": {seachString: searchString },
+                       "type": "GET",
+                       "dataType": "json"
+                   },
+                   "columns": [
+                           { "data": "foracid", "name": "foracid" },
+                           { "data": "schm_code", "name": "schm_code" },
+                           { "data": "bal", "name": "bal" },
+                           { "data": "ovrdu", "name": "ovrdu" },
+                           { "data": "disb_amt", "name": "disb_amt" },
+                           { "data": "int_rate", "name": "int_rate" },
+                           { "data": "sys_classification", "name": "sys_classification" },
+                           { "data": "usr_classification", "name": "usr_classification" },
+                           { "data": "next_int_dmd_date", "name": "next_int_dmd_date" }
+
+                       ]
+               });
+
+               $("#customerInfos").wrap('<div style="overflow:auto;" />');
+           }
+
+            function loadAssetAllAccInfo(SearchString) {
+                   debugger;
+                                $.ajax({
+                                    type: 'GET',
+                                    url: '/PremiumCustomerDashboard/getAssetAllaccinfo',
+                                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                                    data: {seachString:SearchString},
+                                    success: function (result) {
+                                     if (result.data != null) {
+                                            $('#lblhomelTotal').text(result.data.tot_trhom);
+                                            $('#lblautolTotal').text(result.data.tot_trcar );
+                                            $('#lblSLTotal').text(result.data.tot_trsln);
+                                            $('#lblSodTotal').text(result.data.tot_cacla);
+                                            $('#lblTotal').text(result.data.total);
+
+                                        }
+                                        else {
+                                            toastr.error('No Data Found!!!');
+                                            //$('#acct_name').text('');
+                                            //$('#cust_id').text('');
+                                            //$('#address').text('');
+                                            //$('#foracid').text('');
+                                            //$('#Account_Type').text('');
+                                            //$('#acct_crncy_code').text('');
+                                            //$('#aval_balance').text('');
+                                            //$('#effect_balance').text('');
+                                        }
+                                    }
+                                    //,
+                                    //error: function () {
+                                    //    toastr.error('Account No and Date field can not be empty!');
+                                    //   // alert('Failed to receive the Data');
+                                    //   // console.log('Failed ');
+                                    //}
+
+                           });
+
+                  // $("#customerInfo").wrap('<div style="overflow:auto;" />');
+
+          }
+
+       function loadHitoricalBal(SearchString) {
+                   debugger;
+                                $.ajax({
+                                    type: 'GET',
+                                    url: '/PremiumCustomerDashboard/getHistoricalBal',
+                                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                                    data: {seachString:SearchString},
+                                    success: function (result) {
+                                     if (result.data != null) {
+                                            $('#6monthavgBal').text(result.data.avgbalance);
+                                            $('#1yearavgBal').text(result.data.avgbalance2 );
+                                        }
+                                        else {
+                                            toastr.error('No Data Found!!!');
+
+                                        }
+                                    }
+                           });
+                      }
+
+    $('#customerInfosAvg').DataTable({
+                   "filter": false, // this is for disable filter (search box)
+                   "paging": false,
+                   "pageLength": 50,
+                   "lengthChange": false,
+                   "pagingType": "full_numbers",
+                   "bInfo" : false,
+                   "scrollX": false,
+                   "autoWidth": true,
+                   "initComplete": function (settings, json) {
+                       $("#customerInfosAvg").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                   },
+               });
+
+            function loadMonthWiseBal(searchString) {
+
+               $('#customerInfosAvg').DataTable().destroy();
+               $('#customerInfosAvg').DataTable({
+                   "language": {
+                       processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+                   },
+                   "filter": false, // this is for disable filter (search box)
+                   "paging": false,
+                   "pageLength": 50,
+                   "lengthChange": false,
+                   "pagingType": "full_numbers",
+                   "bInfo" : false,
+                   "scrollX": false,
+                   "autoWidth": true,
+                   "ajax": {
+                        "url": "/PremiumCustomerDashboard/getMonthWiseAvgBal",
+                       "dataSrc": function (d) {
+                           if (d.data.length === 0) {
+                               var settings = $('#customerInfosAvg').DataTable().settings()[0];
+                               settings.oLanguage.sEmptyTable = d.message;
+                           }
+                           return d.data;
+                       },
+                       "data": {seachString: searchString },
+                       "type": "GET",
+                       "dataType": "json"
+                   },
+                   "columns": [
+                           { "data": "schm_type", "name": "schm_type" },
+                           { "data": "mon6", "name": "mon6" },
+                           { "data": "mon5", "name": "mon5" },
+                           { "data": "mon4", "name": "mon4" },
+                           { "data": "mon3", "name": "mon3" },
+                           { "data": "mon2", "name": "mon2" },
+                           { "data": "mon1", "name": "mon1" },
+                           { "data": "avgBal", "name": "avgBal" }
+                       ]
+               });
+
+               $("#customerInfosAvg").wrap('<div style="overflow:auto;" />');
+           }
+
+       
+</script>
+
+}

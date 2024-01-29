@@ -1,0 +1,181 @@
+﻿
+@{
+    ViewData["Title"] = "AccountBuffer";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+@model MbsAccountBufferViewModel
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"></h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">MBS</a></li>
+                    <li class="breadcrumb-item active">Account Buffer</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">MBS Account Buffer</h3>&nbsp;&nbsp;&nbsp;<small>by Account No</small>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-8">
+                        <form asp-controller="Mbs" asp-action="AccountBuffer">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-warning">Account Number</button>
+                                </div>
+                                <!-- /btn-group -->
+                                <input type="text" id="txtAccountNo" name="accountNo" class="form-control" value="@ViewBag.AccountNo">
+                                <span class="input-group-append">
+                                    <button type="submit" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12" id="accordion">
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        1. Buffer Charge Amount
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped smallfrontDataTable" id="tblBufferCharge">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Account No</th>
+                                                        <th>Charge Buffered Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.MbsBufferCharges)
+                                                    {
+                                                        <tr>
+                                                            <td>@item.McbAccountNo</td>
+                                                            <td>@String.Format("{0:f2}", item.ChargeBufferedAmount)</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        2. Buffer Interest Related
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped smallfrontDataTable" id="tblBufferInterest">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Account No</th>
+                                                        <th>Due Interest</th>
+                                                        <th>Penal Amount</th>
+                                                        <th>Due Int Provision</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.MbsBufferInterests)
+                                                    {
+                                                        <tr>
+                                                            <td>@item.IpbAccountNo</td>
+                                                            <td>@String.Format("{0:f2}", item.IpbDueInterestOs)</td>
+                                                            <td>@item.IpbPenalAmountOs</td>
+                                                            <td>@String.Format("{0:f2}", item.IpbDueIntProvision)</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section ScriptSection
+{
+
+    <!-- DataTables  & Plugins -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/plugins/jszip/jszip.min.js"></script>
+    <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <script>
+        $("#tblBufferCharge").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "initComplete": function (settings, json) {
+                $("#customerInfo").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+            },
+        });
+
+        $("#tblBufferInterest").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "initComplete": function (settings, json) {
+                $("#customerInfo").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+            },
+        });
+
+    </script>
+
+    <script>
+    $(document).ready(function () {
+
+    @if (TempData.ContainsKey("ErrorMessage"))
+    {
+        @:toastr.error('@TempData["ErrorMessage"]');
+    };
+    });
+    </script>
+
+}

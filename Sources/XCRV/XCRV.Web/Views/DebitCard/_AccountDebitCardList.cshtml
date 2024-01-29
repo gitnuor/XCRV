@@ -1,0 +1,24 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using XCRV.Domain.Entities
+
+@model IEnumerable<DebitCardDetail>
+
+    <table id="customerInfo" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Card No</th>                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a href='javascript:;' class="cardNoInfo" data-card_number ="@item.Card_Number" data-masked_card_number="@item.Masked_Card_Number" > @item.Masked_Card_Number  </a>                        
+                    </td>                    
+                </tr>
+            }
+        </tbody>
+    </table>

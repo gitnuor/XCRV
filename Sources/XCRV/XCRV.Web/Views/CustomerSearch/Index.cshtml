@@ -1,0 +1,261 @@
+﻿@{
+    ViewData["Title"] = "Customer Search";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"> </h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Customer</a></li>
+                    <li class="breadcrumb-item active">Customer Search</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Customer Search</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <button type="button" id="btnSearchAction" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" style="min-width: 200px!important;">
+                                    Search By                                    
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-item"><a href="#">Debit Card No</a></li>
+                                    <li class="dropdown-item"><a href="#">Customer ID</a></li>
+                                    <li class="dropdown-item"><a href="#">Account No</a></li>
+                                    <li class="dropdown-item"><a href="#">Account Name</a></li>
+                                    <li class="dropdown-item"><a href="#">Mobile</a></li>
+                                    <li class="dropdown-item"><a href="#">NID</a></li>
+                                    <li class="dropdown-item"><a href="#">SNID</a></li>
+                                    <li class="dropdown-item"><a href="#">TIN</a></li>
+                                </ul>
+                            </div>
+                            <!-- /btn-group -->
+                            <input type="text" id="txtSearchString" class="form-control">
+                            <span class="input-group-append">
+                                <button type="button" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                            </span>
+                        </div> 
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="customerInfo" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>SOL</th>
+                                    <th>Account No</th>
+                                    <th>Customer Id</th>
+                                    <th>Astha Status</th>
+                                    <th>Account Name</th>
+                                    <th>Short Name</th>
+                                    <th>Mobile</th>
+                                    <th>NID</th>
+                                    <th>SNID</th>
+                                    <th>TIN</th>
+                                    <th>Schm Type</th>
+                                    <th>Schm Description</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">               
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content -->
+
+@section ScriptSection
+{
+<!-- DataTables  & Plugins -->
+<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/plugins/jszip/jszip.min.js"></script>
+<script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+<script type="text/javascript">
+    $('.dropdown-menu').on('click', 'a', function () {
+        var text = $(this).html();
+        var htmlText = text;
+        $(this).closest('.input-group-prepend').find('.dropdown-toggle').html(htmlText);
+    });
+</script>
+
+<script>
+
+
+    $(document).on('click', '#btnSearch',  function () {
+        type = $('#btnSearchAction').text();
+        searchString = $('#txtSearchString').val();
+
+        var searchType = '';
+        switch (type) {
+            case "Account No":
+                searchType = "AccountNo";
+                break;
+            case "Debit Card No":
+                searchType = "DebitCardNo";
+                break;
+            case "Customer ID":
+                searchType = "CustomerID";
+                break;
+            case "Account Name":
+                searchType = "AccountName";
+                break;
+            default:
+                searchType = type;
+                break;
+        }
+
+        loadCusomerInfo(searchType, searchString );
+    });
+
+    $('#customerInfo').DataTable({
+        "filter": true, // this is for disable filter (search box)
+        "paging": true,
+        "pageLength": 10,
+        "lengthChange": false,
+        "pagingType": "full_numbers",
+        "scrollX": false,
+        "autoWidth": true,
+        "initComplete": function (settings, json) {
+            $("#customerInfo").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+        },
+    });
+
+    function loadCusomerInfo(type, searchString) {
+         debugger;
+        $('#customerInfo').DataTable().destroy();
+
+        //$("#customerInfo").DataTable({
+        //    "responsive": true, "lengthChange": false, "autoWidth": false,
+        //    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        //}).buttons().container().appendTo('#customerInfo_wrapper .col-md-6:eq(0)');
+            
+        $('#customerInfo').DataTable({
+            //"processing": true, // for show progress bar
+            "language": {
+                processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+            },
+            "filter": true, // this is for disable filter (search box)
+            "paging": true,
+            "pageLength": 10,
+            "lengthChange": false,
+            "pagingType": "full_numbers",
+            "scrollX": false,
+            "autoWidth": true,
+            "ajax": {
+                "url": "/CustomerSearch/SearchCustomerBySearchCriteria",
+                "dataSrc": function (d) {
+                    if (d.data == 0) {
+                        //var settings = $('#customerInfo').DataTable().settings()[0];
+                        //settings.oLanguage.sEmptyTable = d.message;
+                        toastr.error('YOU ARE NOT AUTHORIZED TO VIEW DATA!!');
+                        //return;
+                    }
+                    return d.data;
+                },
+                "data": { seachType: type, seachString: searchString },
+                "type": "GET",
+                "dataType": "json"
+            },
+            "columns": [
+                
+                { "data": "sol_id", "name": "sol_id" },
+               // { "data": "foracid", "name": "foracid" },
+                {
+                    "data": "foracid", "name": "foracid", render: function (data, type,row) {
+                        var rowvalue = row.schm_type;
+                        if(rowvalue=='SBA' || rowvalue=='CAA'){
+                          let link = "/CaSaAccount/Index?accountNo="+data;
+                          return '<i class="fa fa-user"></i><a href="' + link + '">' + data + '</a>';
+                        }else if(rowvalue=='TDA'){
+                        
+                          let link = "/TermDepositScheme/Index?accountNo="+data;
+                          return '<i class="fa fa-user"></i><a href="' + link + '">' + data + '</a>';
+
+                        }else{
+                          
+                          let link = "/LoanAccount/Index?accountNo="+data;
+                          return '<i class="fa fa-user"></i><a href="' + link + '">' + data + '</a>';
+                        }
+                        return data;
+                    } 
+                 },
+
+
+                {
+                    "data": "cust_id", "name": "cust_id", render: function (data, type) {
+                        if (type === 'display') {
+                            let link = "/CustomerGeneralDetails/Index?customerId="+data;
+                            return '<i class="fa fa-user"></i><a href="' + link + '">' + data + '</a>';
+                        }
+                        return data;
+                    } },
+                { "data": "astha_status", "name": "astha_status" },
+                { "data": "acct_name", "name": "acct_name" },
+                { "data": "acct_short_name", "name": "acct_short_name" },
+                { "data": "mobile_no", "name": "mobile_no" },
+                { "data": "nid", "name": "nid" },
+                { "data": "snid", "name": "snid" },
+                { "data": "tin", "name": "tin" },
+                { "data": "schm_type", "name": "schm_type" },
+                { "data": "schm_desc", "name": "schm_desc" },
+                { "data": "clr_bal_amt", "name": "clr_bal_amt" },
+            ]
+        });
+
+        $("#customerInfo").wrap('<div style="overflow:auto;" />');
+
+        }
+   $(document).ready(function () {
+      @if (TempData.ContainsKey("ErrorMessage"))
+           {
+            @:toastr.error('@TempData["ErrorMessage"]');
+          };
+    });
+   
+</script>
+
+}

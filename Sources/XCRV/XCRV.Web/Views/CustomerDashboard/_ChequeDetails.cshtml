@@ -1,0 +1,122 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+@model IList<ChequeDetailsViewModel>
+
+<div class="row">
+    <div class="col-12" id="accordion">
+        <div class="card card-primary card-outline">
+
+            @foreach(var item in Model)
+            {
+                var fName = "collapse" + item.AccountNumber;
+                
+                <a class="d-block w-100" data-toggle="collapse" href="#@fName">
+                    <div class="card-header">
+                        <h4 class="card-title w-100">
+                            Account Number: @item.AccountNumber
+                        </h4>
+                    </div>
+                </a>
+                <div id="@fName" class="collapse " data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                
+                            @if(!string.IsNullOrEmpty(item.ErrorMessage))
+                            {
+                                <strong style="color: red;">@item.ErrorMessage</strong>
+                            }
+                            else{
+                                <div class="row">
+                                    <div class="col-12">                                               
+                                        <table id="tbl-out-ward" class="table table-striped table-sm">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th colspan="6">
+                                                       <strong>Outward Cheques(Top 20)</strong> 
+                                                    </th>
+                                                </tr>
+                                                <tr style="    line-height: 13px;font-size: 13px;">
+                                                    <th style="width: 12%;">Cheque No</th>
+                                                    <th style="width: 17%;">Zone Code/Date</th>
+                                                    <th>Bank Name/Branch Name</th>
+                                                    <th class="text-right">Inst. Amt</th>
+                                                    <th class="text-center" style="width: 11%;">Status Flg</th>
+                                                    <th style="width: 11%;">Reg. Desc.</th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white">
+                                                @foreach (var itemR in item.OutwardChequeList)
+                                            {
+                                                    <tr style="font-size: 11px;">
+                                                        <td>@itemR.CHEQU_NO</td>
+                                                        <td>@itemR.ZON_CODE_DATE</td>
+                                                        <td>@itemR.BANK_BRANCH_NAME</td>
+                                                        <td class="text-right">@Convert.ToDecimal(itemR.INSTRMNT_AMT).ToString("0.00")</td>
+                                                        <td class="text-center">@itemR.STATUS_FLG</td>
+                                                        <td>@itemR.REJ_TYPE</td>
+                                                        
+                                                    </tr>
+                                            }
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-12">                                               
+                                        <table class="table table-striped smallfrontDataTable table-sm">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th colspan="6">
+                                                       <strong>Inward Cheques(Top 20)</strong> 
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Tran. Date</th>
+                                                    <th>Cheque No</th>
+                                                    <th>Payee Name</th>
+                                                    <th>Value Date</th>
+                                                    <th>SOL</th>
+                                                    <th class="text-right">Amount</th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white">
+                                                @foreach (var itemR in item.InwardChequeList)
+                                            {
+                                                    <tr style="font-size: 11px;">
+                                                        <td>@itemR.TRAN_DATE</td>
+                                                        <td>@itemR.CHQ_NO</td>
+                                                        <td>@itemR.PAYEE_NAME</td>
+                                                        <td>@itemR.VALUE_DATE</td>
+                                                        <td>@itemR.SOL_ID</td>
+                                                        <td class="text-right"> @Convert.ToDecimal(itemR.TRAN_AMT).ToString("0.00")</td>
+                                                        
+                                                    </tr>
+                                            }
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            }
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>    
+            }
+            
+        </div>
+        
+    </div>
+</div>

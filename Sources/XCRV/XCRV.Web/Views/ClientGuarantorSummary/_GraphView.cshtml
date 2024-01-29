@@ -1,0 +1,115 @@
+﻿ 
+
+
+<link rel="stylesheet" type="text/css" href="~/css/Charts/chartist.css">
+<link rel="stylesheet" type="text/css" href="~/css/Charts/chartist-plugin-tooltip.css">
+<link rel="stylesheet" type="text/css" href="~/css/Charts/chartist.min.css">
+<link rel="stylesheet" type="text/css" href="~/css/Charts/palette-gradient.css">
+
+
+<div class="col-lg-12 col-md-12">
+    <div class="row" style="margin-top:30px;">
+        <div class="col-6">
+            <div class="card pull-up bg-gradient-directional-blue">
+                <div class="card-header " style="color: #ffff;">
+                    <h4 class="card-title white" style="float: none; text-align: center;">Asset Summary</h4>
+                </div>
+                <div class="card-content collapse show ">
+                    <div class="card-body" style="padding-top: 5px;">
+                        <div class="media d-flex">
+                            <div class="align-self-center width-100">
+                                <div id="Analytics-donut-chart" class="height-100 donutShadow"></div>
+                            </div>
+
+                            <div class="media-body text-left mt-1">
+                                <h5 style="text-align: left;color: #fff;font-size: 15px;">Active Loan</h5>
+                                  <h6 class="font-large-2 white" id="cardNo1" style="text-align: center;color: #fff;margin-right: 30px;font-size: 12px;"></h6>  
+                            </div>
+
+                             <div class="media-body text-left mt-1">
+                                <h5 style="text-align: right;color: #fff;font-size: 15px;">Outstanding Amount</h5>
+                                  <h6 class="font-large-2 white" id="cardValue1" style="text-align: right;color: #fff;font-size: 12px;"></h6>  
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card pull-up bg-gradient-directional-teal">
+                <div class="card-header" style="color: #ffff;">
+                    <h4 class="card-title white" style="float: none; text-align: center;">Liabilities Summary</h4>
+                </div>
+                <div class="card-content collapse show ">
+                    <div class="card-body" style="padding-top: 5px;">
+                        <div class="media d-flex">
+                            <div class="align-self-center width-100">
+                                <div id="Analytics-donut-chart" class="height-100 donutShadow"></div>
+                            </div>
+                             <div class="media-body text-left mt-1">
+                                <h5 style="text-align: left;color: #fff;font-size: 15px;">Active FDR/DPS</h5>
+                                  <h6 class="font-large-2 white" id="cardno2" style="text-align: center;color: #fff;margin-right: 30px;font-size: 12px;"></h6>  
+                            </div>
+
+                             <div class="media-body text-left mt-1">
+                                <h5 style="text-align: right;color: #fff;font-size: 15px;">Maturity Amount</h5>
+                                  <h6 class="font-large-2 white" id="cardvalue2" style="text-align: right;color: #fff;font-size: 12px;"></h6>  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card pull-up bg-gradient-directional-purple">
+                <div class="card-header" style="color: #ffff;">
+                    <h4 class="card-title white" style="float: none; text-align: center;">Credit Card Summary</h4>
+                </div>
+                <div class="card-content collapse show ">
+                    <div class="card-body" style="padding-top: 5px;">
+                        <div class="media d-flex">
+                            <div class="align-self-center width-100">
+                                <div id="Analytics-donut-chart" class="height-100 donutShadow"></div>
+                            </div>
+                           <div class="media-body text-left mt-1">
+                                <h5 style="text-align: left;color: #fff;font-size: 15px;">Active Card</h5>
+                                  <h6 class="font-large-2 white" id="cardno3" style="text-align: center;color: #fff;margin-right: 30px;font-size: 12px;"></h6>  
+                            </div>
+
+                             <div class="media-body text-left mt-1">
+                                <h5 style="text-align: right;color: #fff;font-size: 15px;">Outstanding Amount</h5>
+                                  <h6 class="font-large-2 white" id="cardvalue3" style="text-align: right;color: #fff;font-size: 12px;"></h6>  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        
+ 
+   @* <div class="row">*@
+        <partial name="~/Views/ClientGuarantorSummary/_NumberOfActiveCustomerPartial.cshtml" />    
+   @* </div>*@
+
+
+    </div>
+
+
+
+</div>
+
+
+
+<!-- Pie charts section start -->
+@*<section id="chartjs-pie-charts">
+   
+</section>*@
+
+
+<script src="~/plugins/jquery/jquery.min.js"></script>
+<script src="~/css/Charts/chart.min.js" type="text/javascript"></script>
+
+
+

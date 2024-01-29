@@ -1,0 +1,33 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model IEnumerable<XCRV.Domain.Entities.CustomerMatrix>
+
+<table id="caaTable" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Account No</th>
+            <th>Schm Desc</th>
+            <th>Currency</th>
+            <th>Outstanding</th>
+            <th>Deposit</th>
+            <th>Withdrawal</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><i class="fa fa-user"></i><a href="/CaSaAccount/Index?accountNo=@item.acid" target="_blank"> @item.acid </a></td>
+                <td>@item.schm_desc</td>
+                <td>@item.acct_crncy_code</td>
+                <td>@item.ostd_amt</td>
+                <td>@item.dpst</td>
+                <td>@item.wtdl</td>
+
+            </tr>
+        }
+    </tbody>
+</table>

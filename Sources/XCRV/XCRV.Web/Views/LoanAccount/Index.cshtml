@@ -1,0 +1,430 @@
+﻿
+@{
+    ViewData["Title"] = ViewBag.Title;
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+@model LoanAccountViewModel
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"></h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Loan</a></li>
+                    <li class="breadcrumb-item active">@ViewBag.Title</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">@ViewBag.Title</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-8">
+                        <form asp-controller="LoanAccount" asp-action="Index">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-warning">Account Number</button>
+                                </div>
+                                <!-- /btn-group -->
+                                <input type="text" id="txtAccountNo" name="accountNo" class="form-control" value="@ViewBag.AccountNo">
+                                <span class="input-group-append">
+                                    <button type="submit" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12" style="padding-bottom: 20px; text-align:right">
+                        <div class="btn-group w-100">
+                            <button type="button" class="btn btn-warning" style="background-color: #39cccc !important" id="btnPaymentHistory" name="btnPaymentHistory">
+                                <span>Payment History</span>
+                            </button>
+                            <button type="button" class="btn btn-default" style="background-color: #6610f2 !important" id="btnDocument" name="btnDocument">
+                                <span>Documents</span>
+                            </button>
+                            <button type="button" class="btn btn-info" id="btnPayOff" name="btnPayOff">
+                                <span>Pay Off</span>
+                            </button>
+                            <button type="button" class="btn btn-warning" id="btnGuarantor" name="btnGuarantor">
+                                <span>Guarantors</span>
+                            </button>
+                            <a class="btn btn-success" asp-controller="FinStatement" asp-action="Index" asp-route-accno="@ViewBag.AccountNo" target="_blank">
+                                <span>Statement</span>
+                            </a>
+                            <a class="btn btn-primary" asp-controller="AccountTransaction" asp-action="Index" asp-route-accno="@ViewBag.AccountNo" target="_blank">
+                                <span>Transaction</span>
+                            </a>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12" id="accordion">
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        1. Loan Account Details
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input type="hidden" id="hdnAccountNo" name="hdnAccountNo" value="@ViewBag.AccountNo" />
+                                            @await Html.PartialAsync("_LoanAccountDetails", Model.LoanAccountInfo)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        2. Loan Details
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            @await Html.PartialAsync("_LoanDetails", Model.LoanAccountDetails)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="PaymentModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-gradient-info">
+                    <h4 class="modal-title">Loan Payment History</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+
+    <div class="modal fade" id="PayoffModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-gradient-info">
+                    <h4 class="modal-title">Loan Payoff</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-md-4 col-sm-6">
+                            <div class="form-group">
+                                <label>Payoff Date</label>
+                                <div class='input-group'>
+                                    <input type="text" id="payOffDate" name="payOffDate" class="form-control singledate" value="@ViewBag.payOffDate" />
+                                    <div class="input-group-append">
+                                        <label for="payOffDate" class="input-group-text">
+                                            <span class="fa fa-calendar"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="form-group">
+                                <label>ES FEE(%)</label>
+                                <input type="text" id="esFee" name="esFee" class="form-control" value="@ViewBag.esFee" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                            <div class="form-group">
+                                <label>&nbsp;</label>
+                                <button id="btnPayloadSearch" type="button" class="btn btn-primary form-control" value="Search"><span id="btnText"> Search</span></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 payoffViewer">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+
+    <div class="modal fade" id="GuarantorModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-gradient-info">
+                    <h4 class="modal-title">Guarantors</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+
+    <div class="modal fade" id="documentModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-gradient-info">
+                    <h4 class="modal-title">Loan Documents</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</div>
+
+
+@section ScriptSection
+{
+
+    <!-- DataTables  & Plugins -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/plugins/jszip/jszip.min.js"></script>
+    <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <script>
+        $("#loanDetailsTable").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+        });
+
+    </script>
+
+    <script>
+    $(document).ready(function () {
+
+    @if (TempData.ContainsKey("ErrorMessage"))
+    {
+        @:toastr.error('@TempData["ErrorMessage"]');
+    };
+    });
+    </script>
+
+    <script>
+        $(function () {
+            $('#payOffDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                format: "dd-M-yyyy",
+                language: "tr",
+                autoclose: true
+            });
+        });
+
+    </script>
+
+
+    <script>
+
+        $(document).on('click', '#btnPaymentHistory', function () {
+            var accountNo = $('#hdnAccountNo').val();
+
+            if (accountNo) {
+                $.ajax({
+                    url: "@Url.Action("ShowLoanPaymentHistory", "LoanAccount")",
+                    data: { accountNo: accountNo },
+                    success: function (data) {
+                        $("#PaymentModal .modal-body").html(data);
+
+                        $("#paymentHistoryTable").DataTable().destroy();
+                        $("#paymentHistoryTable").DataTable({
+                            "responsive": true, "lengthChange": false, "autoWidth": false,
+                        });
+
+                        $("#paymentHistoryTable").wrap('<div style="overflow:auto;" />');
+
+                        $("#PaymentModal").modal("show");
+                    }
+                });
+            }
+            else {
+                toastr.error('Sorry!!! Account Number is required!!!!');
+            }
+
+        });
+
+        $(document).on('click', '#btnPayOff', function () {
+            var accountNo = $('#hdnAccountNo').val();
+
+            if (accountNo) {
+                $.ajax({
+                    url: "@Url.Action("ShowLoanPayoff", "LoanAccount")",
+                    data: { accountNo: accountNo },
+                    success: function (data) {
+                        $("#PayoffModal .payoffViewer").html(data);
+
+
+                        $("#tblPayoff").DataTable().destroy();
+                        $("#tblPayoff").DataTable({
+                            "responsive": true, "lengthChange": false, "autoWidth": false, "filter": false
+                        });
+
+                        $("#tblPayoff").wrap('<div style="overflow:auto;" />');
+
+                        $("#PayoffModal").modal("show");
+                    }
+                });
+            }
+            else {
+                toastr.error('Sorry!!! Account Number is required!!!!');
+            }
+        });
+
+        $(document).on('click', '#btnPayloadSearch', function () {
+            var accountNo = $('#hdnAccountNo').val();
+            payOffDate = $('#payOffDate').val();
+            esFee = $('#esFee').val();
+
+            if (accountNo) {
+                $.ajax({
+                    url: "@Url.Action("ShowLoanPayoff", "LoanAccount")",
+                    data: { accountNo: accountNo, payOffDate: payOffDate, esFee: esFee  },
+                    success: function (data) {
+                        $("#PayoffModal .payoffViewer").html(data);
+
+
+                        $("#tblPayoff").DataTable().destroy();
+                        $("#tblPayoff").DataTable({
+                            "responsive": false, "lengthChange": false, "autoWidth": false, "scrollX": true, "filter": false
+                        });
+
+                        $("#PayoffModal").modal("show");
+                    }
+                });
+            }
+            else {
+                toastr.error('Sorry!!! Account Number is required!!!!');
+            }
+        });
+
+
+        $(document).on('click', '#btnGuarantor', function () {
+            var accountNo = $('#hdnAccountNo').val();
+
+            if (accountNo) {
+                $.ajax({
+                    url: "@Url.Action("ShowLoanGuarantor", "LoanAccount")",
+                    data: { accountNo: accountNo },
+                    success: function (data) {
+                        $("#GuarantorModal .modal-body").html(data);
+                        $("#GuarantorModal").modal("show");
+                    }
+                });
+            }
+            else {
+                toastr.error('Sorry!!! Account Number is required!!!!');
+            }
+        });
+
+        $(document).on('click', '#btnDocument', function () {
+            var accountNo = $('#hdnAccountNo').val();
+
+            if (accountNo) {
+                $.ajax({
+                    url: "@Url.Action("ShowLoanDocument", "LoanAccount")",
+                    data: { accountNo: accountNo },
+                    success: function (data) {
+                        $("#documentModal .modal-body").html(data);
+
+                        $("#tblDocument").DataTable().destroy();
+                        var table = $("#tblDocument").DataTable({
+                            "responsive": true, "autoWidth": false,  "filter": false,
+                        });
+
+                        $("#tblDocument").wrap('<div style="overflow:auto;" />');
+
+                        $("#documentModal").modal("show");
+
+                       
+                    }
+                });
+            }
+            else {
+                toastr.error('Sorry!!! Account Number is required!!!!');
+            }
+        });
+    </script>
+
+}
+

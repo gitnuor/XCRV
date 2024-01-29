@@ -1,0 +1,42 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using XCRV.Domain.Entities;
+@model ClientBorrowerViewModel
+
+<table id="Assetsummary" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ACCOUNT STATUS</th>
+            <th>TOTAL SANCTION LIMIT</th>
+            <th>TOTAL DISBURSEMENT AMOUNT</th>
+            <th>LAST DISBURSEMENT DATE</th>
+            <th>TOTAL INTEREST AMOUNT</th>
+            <th>TOTAL PENAL AMOUNT</th>
+            <th>MAX DPD</th>
+            <th> MAX AVERAGE DELAYS</th>
+            <th>MAX HIGHEST DPD</th>
+            <th>MAX BROKEN EMI</th>
+            <th>MAX BROKEN EMI PERCENTAGE</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.customer360Summary)
+        {
+            <tr>
+                <td>@item.account_status</td>
+                <td>@item.format_total_sanction_limit</td>
+                <td>@item.format_total_disbursement_amount</td>
+                <td>@item.last_disbursement_date_Formatted</td>
+                <td>@item.format_total_interest_amount</td>
+                <td>@item.total_penal_amount</td>
+                <td>@item.max_dpd</td>
+                <td>@item.max_average_delays</td>
+                <td>@item.max_highest_dpd</td>
+                <td>@item.max_broken_emi</td>
+                <td>@item.max_broken_emi_percentage</td>
+            </tr>
+        }
+    </tbody>
+</table>

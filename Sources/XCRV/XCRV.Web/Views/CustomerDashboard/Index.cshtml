@@ -1,0 +1,158 @@
+﻿@using XCRV.Domain.Entities
+
+@model CustomerDetails
+@{
+    ViewData["Title"] = "Customer Dashboard";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"></h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Customer</a></li>
+                    <li class="breadcrumb-item active">Customer Dashboard</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Customer Dashboard</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form asp-controller="CustomerDashboard" asp-action="Index">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-warning">Customer Id</button>
+                                </div>
+                                <!-- /btn-group -->
+                                <input type="text" id="txtCustomerId" name="customerId" class="form-control" value="@ViewBag.CustomerId">
+                                <span class="input-group-append">
+                                    <button type="submit" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-sm-12 col-md-8 ">
+                        <h5>@Model.cust_name</h5>
+                        <input type="hidden" value="@Model.cust_id" id="hdn_cust_id" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-5 col-sm-3">
+                        <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
+                            <a class="nav-link active" id="finacle-details-tab" data-toggle="pill" href="#finacle-details" role="tab" aria-controls="finacle-details" aria-selected="true">Finacle Details</a>
+                            <a class="nav-link" id="list-of-accounts-tab" data-toggle="pill" href="#list-of-accounts" role="tab" aria-controls="list-of-accounts" aria-selected="false" onclick="showAccountList()">List Of Accounts</a>
+                            <a class="nav-link" id="account-details-tab" data-toggle="pill" href="#account-details" role="tab" aria-controls="account-details" aria-selected="false" onclick="showAccountDetails()">Account Details</a>
+                            <a class="nav-link" id="nominee-details-tab" data-toggle="pill" href="#nominee-details" role="tab" aria-controls="nominee-details" aria-selected="false" onclick="showNomineeDetails()">Nominee Details</a>
+                            <a class="nav-link" id="related-party-tab" data-toggle="pill" href="#related-party" role="tab" aria-controls="related-party" aria-selected="false" onclick="showRelatedPartyDetails()">Related Party</a>
+                            <a class="nav-link" id="cheque-details-tab" data-toggle="pill" href="#cheque-details" role="tab" aria-controls="cheque-details" aria-selected="false" onclick="showChequeDetailsDetails()">Cheque Details</a>
+                            <a class="nav-link" id="eft-details-tab" data-toggle="pill" href="#eft-details" role="tab" aria-controls="eft-details" aria-selected="false" onclick="showEftDetails()" style="display:none;">EFT Details</a>
+
+                            <a class="nav-link" id="collected-document-tab" data-toggle="pill" href="#collected-document" role="tab" aria-controls="collected-document" aria-selected="false" onclick="showCollectedDocumentsInfo()">Collected Documents(Loan)</a>
+                            <a class="nav-link" id="debit-card-details-tab" data-toggle="pill" href="#debit-card-details" role="tab" aria-controls="debit-card-details" aria-selected="false" onclick="showDebitCardDetailsInfo()">Debit Card Details</a>
+                            <a class="nav-link" id="ib-details-tab" data-toggle="pill" href="#ib-details" role="tab" aria-controls="ib-details" aria-selected="false" onclick="showIbDetailsInfo()">IB Details(Last 10 Transaction)</a>
+                            <a class="nav-link" id="memo-pad-tab" data-toggle="pill" href="#memo-pad" role="tab" aria-controls="memo-pad" aria-selected="false" onclick="showMemoPadInfo()">Memo Pad</a>
+                        </div>
+                    </div>
+                    <div class="col-7 col-sm-9">
+                        <div class="tab-content" id="vert-tabs-tabContent">
+                            <div class="tab-pane text-left fade show active" id="finacle-details" role="tabpanel" aria-labelledby="finacle-details-tab">
+                                <partial name="_FinacleDetails" model="@Model" />
+                            </div>
+                            <div class="tab-pane fade" id="list-of-accounts" role="tabpanel" aria-labelledby="list-of-accounts-tab">
+                                
+                            </div>
+                            <div class="tab-pane fade" id="account-details" role="tabpanel" aria-labelledby="account-details-tab">
+                                
+                            </div>
+                            <div class="tab-pane fade" id="nominee-details" role="tabpanel" aria-labelledby="nominee-details-tab">
+                                
+                            </div>
+                            <div class="tab-pane fade" id="related-party" role="tabpanel" aria-labelledby="related-party-tab">
+                                
+                            </div>
+                            <div class="tab-pane fade" id="cheque-details" role="tabpanel" aria-labelledby="cheque-details-tab">
+                                
+                            </div>
+                            <div class="tab-pane fade" id="eft-details" role="tabpanel" aria-labelledby="eft-details-tab">
+                                
+                            </div>
+                            <div class="tab-pane fade" id="collected-document" role="tabpanel" aria-labelledby="collected-document-tab">
+                                
+                            </div>
+                            <div class="tab-pane fade" id="debit-card-details" role="tabpanel" aria-labelledby="debit-card-details-tab">
+                                
+                            </div>
+                            <div class="tab-pane1 fade1" id="ib-details" role="tabpanel" aria-labelledby="ib-details-tab">
+                                
+                            </div>
+                            <div class="tab-pane fade" id="memo-pad" role="tabpanel" aria-labelledby="memo-pad-tab">
+                                
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+
+</div>
+<!-- /.content -->
+
+@section ScriptSection
+{
+    <!-- DataTables  & Plugins -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/plugins/jszip/jszip.min.js"></script>
+    <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <script src="~/js/customer-dashboard.js"></script>
+
+    
+
+    <script>
+
+        $(document).ready(function () {
+
+        @if (TempData.ContainsKey("ErrorMessage"))
+        {
+            @:toastr.error('@TempData["ErrorMessage"]');
+        };
+        });
+
+    </script>
+
+}

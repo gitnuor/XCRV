@@ -1,0 +1,27 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using XCRV.Domain.Entities
+@model MbsAccountInfo
+
+
+    <table class="table table-info infoTable">
+        <tr style="min-height:9px!important">
+            <th style=" width: 25%; text-align: right;"><b>Account Name	: </b></th>
+            <td style=" width: 25%; text-align: left;">@Model.csaAccountName</td>
+            <th style=" width: 25%; text-align: right;"><b>Customer ID : </b></th>
+            <td style=" width: 25%; text-align: left;">@Model.csaCustomerId</td>
+        </tr>
+        <tr style="line-height:9px!important">
+            <th style=" width: 25%; text-align: right;"><b>Account Type : </b></th>
+            <td style=" width: 25%; text-align: left;">@Model.acsAccStatusNotes</td>
+            <th style=" width: 25%; text-align: right;"><b>Account No : </b></th>
+            <td style=" width: 25%; text-align: left;">@ViewBag.ACNO</td>
+        </tr>
+        <tr style="line-height:9px!important">
+            <th style=" width: 25%; text-align: right;"><b>Address	 : </b></th>
+            <td style=" text-align: left;" colspan="3">@Model.csaStatementAdd</td>
+        </tr>
+
+    </table>

@@ -1,0 +1,396 @@
+﻿
+@{
+    ViewData["Title"] = "Term Deposit Scheme Information";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+@model XCRV.Domain.Entities.TermDepositScheme
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"></h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Deposit</a></li>
+                    <li class="breadcrumb-item active">Term Deposit Scheme Information</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Term Deposit Scheme</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-8">
+                        <form asp-controller="TermDepositScheme" asp-action="Index">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-warning">Account Number</button>
+                                </div>
+                                <!-- /btn-group -->
+                                <input type="text" id="txtAccountNo" name="accountNo" class="form-control" value="@ViewBag.AccountNo">
+                                <span class="input-group-append">
+                                    <button type="submit" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-sm-12 col-md-4" style="padding-bottom: 20px;">
+                        <div class="btn-group w-100">
+                            <a class="btn btn-success " asp-controller="AccountTransaction" asp-action="Index" asp-route-accno="@ViewBag.AccountNo" target="_blank">
+                                <span>Transaction</span>
+                            </a>
+                            <a class="btn btn-primary" asp-controller="FinStatement" asp-action="Index" asp-route-accno="@ViewBag.AccountNo" target="_blank">
+                                <span>Statement</span>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>                
+                <div class="row">
+                    <div class="col-12" id="accordion">
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        1. General
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped smallfrontTable">
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Account Name : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Acct_Name</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Balance : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Clr_Bal_Amt</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Customer ID : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><i class="fa fa-user"></i><a href="/CustomerGeneralDetails/Index?customerId=@Model.Cust_Id"> @Model.Cust_Id </a></td>
+                                                    <th style=" width: 25%; text-align: right;"><b>GL Subhead : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Gl_Sub_Head_Code</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Scheme Type : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Schm_Type</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Scheme Code : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Schm_Code</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>A/C Status	: </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Acct_Cls_Flg</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>A/C Status Date : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Acct_Cls_Date</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>PSO : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Pso_Id</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>MPSO : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Mpso_Id</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>RPSO : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Rpso_Id</td>
+                                                    <th style=" width: 25%; text-align: right;"></th>
+                                                    <td style=" width: 25%; text-align: left;"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Cost Center Code : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Cc_Code</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Customer Contact No : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Customer_Contact_No</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Interest Paid Flag	: </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Int_Paid_Flg</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Interest Collection Flag : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Int_Coll_Flg</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Interest Rate/Int.Accr.Rate : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Intrate</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Mode of Operation :</b> </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Mode_Of_Oper_Code</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>A/C Manager : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Acct_Mgr_User_Id</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Charge Level Code : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Chrg_Level_Code</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>A/C Open Effective Date : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Open_Effective_Date</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>A/C Closed : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Accclosed</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        2. Interest
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped smallfrontTable">
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Unclear Balance : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Un_Clr_Bal_Amt</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Cumulative Int. Paid : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Cumulative_Int_Paid</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Cumulative DR Amount : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Cum_Dr_Amt</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Interest Cal Upto Date CR : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Interest_Calc_Upto_Date_Cr</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Cumulative CR Amount : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Cum_Cr_Amt</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Interest Cal Upto Date DR : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Interest_Calc_Upto_Date_Dr</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>ACRD Amount	: </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Acrd_Cr_Amt</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Last Interest Run Date CR : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Last_Interest_Run_Date_Cr</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Last Transaction Date : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Last_Tran_Date</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Last Interest Run Date DR : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Last_Interest_Run_Date_Dr</td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseThree">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        3. Lien
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseThree" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped smallfrontTable">
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Lien Amount : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Lien_Amt</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Lien Remarks : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Lien_Remarks</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Lien Expiry Date : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Lien_Expiry_Date</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Account Ownership : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Acct_Ownership</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Accrued Upto Date CR : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"></td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Accrued Upto Date DR : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Last Accrual Run Date CR : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Last_Accrual_Run_Date_Cr</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Last Accrual Run Date DR : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Last_Accrual_Run_Date_Dr</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Last Freeze Date : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Last_Frez_Date</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Last Unfreeze Date : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Last_Unfrez_Date</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Bal On Freeze Date	: </b></th>
+                                                    <td style=" width: 25%; text-align: left;"></td>
+                                                    <th style=" width: 25%; text-align: right;">Freeze Reason code</th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Frez_Reason_Code</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Freeze code : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Frez_Code</td>
+                                                    <th style=" width: 25%; text-align: right;"><b></b></th>
+                                                    <td style=" width: 25%; text-align: left;"></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-warning card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseFour">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        4. Book
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseFour" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped smallfrontTable">
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Booked Upto Date CR : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Booked_Upto_Date_Cr</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Booked Upto Date DR : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Booked_Upto_Date_Dr</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Last Booked Run Date CR : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Last_Book_Run_Date_Cr</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Last Booked Run Date DR : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Last_Book_Run_Date_Dr</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Last Book CR Txn ID : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Last_Book_Cr_Tran_Id</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Last Book CR Txn Date	 : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Last_Book_Cr_Tan_Date</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Last Book DR Txn ID : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Last_Book_Dr_Tran_Id</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Last Book DR Txn Date : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Last_Book_Dr_Tan_Date</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Normal Accrued Amount CR : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Nrml_Accrued_Amount_Cr</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Normal Accrued amt DR : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Nrml_Accrued_Amount_Dr</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Normal Book Amount CR : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Nrml_Booked_Amount_Cr</td>
+                                                    <th style=" width: 25%; text-align: right;">Normal Book Amt DR : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Nrml_Booked_Amount_Dr</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Next Interest Run Date : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Next_Int_Run_Date_Cr</td>
+                                                    <th style=" width: 25%; text-align: right;"><b></b></th>
+                                                    <td style=" width: 25%; text-align: left;"></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-warning card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseFive">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        5. Maturity
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseFive" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped smallfrontTable">
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Tenure (Months) : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Deposit_Period_Mths</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Payment Start Date : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Open_Effective_Date</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Maturity Date : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Maturity_Date</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Deposit Amount : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Maturity Amount : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Maturity_Amount</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Cumulative Principle : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Cumulative_Principal</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Cumulative Installment Paid : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Cumulative_Instl_Paid</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Cumulative Int Credited : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Cumulative_Int_Credited</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;"><b>Interest Accrual Flag : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Int_Accrual_Flg</td>
+                                                    <th style=" width: 25%; text-align: right;"><b>Interest Cr A/C : </b></th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.Interest_Cr_Ac</td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section ScriptSection
+{
+    <script>
+    $(document).ready(function () {
+
+    @if (TempData.ContainsKey("ErrorMessage"))
+    {
+        @:toastr.error('@TempData["ErrorMessage"]');
+    };
+    });
+    </script>
+    
+}

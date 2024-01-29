@@ -1,0 +1,368 @@
+﻿@using XCRV.Domain.Entities
+
+@model InterestDetails
+@{
+    ViewData["Title"] = "BBL - XCRV360 : LC Information";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Customer</a></li>
+                    <li class="breadcrumb-item active">LC Information</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">LC Information</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <form class="form-horizontal">
+                    <div class="card-body">
+                        <div class="row" style="margin-top: -25px;">
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Account No</label>
+                                    <div class='input-group'>
+                                        <input type="text" class="form-control" id="txtaccNo" value="@ViewBag.Accno" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>LC No</label>
+                                    <div class='input-group'>
+                                        <input type="text" class="form-control" id="txtLcNo" value="@ViewBag.Accno" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <div class='input-group'>
+                                        <button id="btnSearch" type="button" class="btn btn-primary" value="Insert"><span id="btnText"> Search</span></button>&nbsp;&nbsp;
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </form>
+             @*   <div class="row">
+                    <div class="col-md-12">
+                        <table id="customerInfo" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>A/C Number</th>
+                                    <th>LC Number</th>
+                                    <th>Applicant Name</th>
+                                    <th>Account Name</th>
+                                    <th>Com. Code</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>*@
+
+                <div class="row">
+                    <div class="col-12" id="accordion">
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        LC Wise Details
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped">
+                                                <tr style="line-height:9px;">
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Applicant Name : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"> <label id="applicant" class="font-weight-normal"> </label></td>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Date Closed : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="dateclose" class="font-weight-normal"> </label> </td>
+                                                </tr>
+                                                <tr style="line-height:9px;">
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Name Of Commodity : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"> <label id="com" class="font-weight-normal"></label> </td>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>DC Bill Utl Amount : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="dcbill" class="font-weight-normal"> </label> </td>
+                                                </tr>
+                                                <tr style="line-height:15px;">
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Quantity : </b></th>
+                                                    <td style=" width: 25%; text-align: left;word-break:break-word!important;font-size:0.9em"><label id="quan" class="font-weight-normal"> </label> </td>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Sol ID : </b></th>
+                                                    <td style=" width: 25%; text-align: left;font-size:0.9em"><label id="sol" class="font-weight-normal"> </label> </td>
+                                                </tr>
+                                                <tr style="line-height:9px;">
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Date Opened : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"> <label id="opendate" class="font-weight-normal" /></td>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>DC Reg type : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="dcreg" class="font-weight-normal"></label> </td>
+                                                </tr>
+                                                <tr style="line-height:9px;">
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Open Value : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"> <label id="openval" class="font-weight-normal" /></td>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>ExpiryDate	 : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="expdate" class="font-weight-normal"></label> </td>
+                                                </tr>
+                                                <tr style="line-height:9px;">
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Currency : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"> <label id="cur" class="font-weight-normal" /></td>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Func Code : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="fcode" class="font-weight-normal"></label> </td>
+                                                </tr>
+                                                <tr style="line-height:9px;">
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Last Shipment Date : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"> <label id="shipdate" class="font-weight-normal" /></td>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>CurrentValue : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="curval" class="font-weight-normal"></label> </td>
+                                                </tr>
+                                                <tr style="line-height:9px;">
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Port Of Origin	 : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"> <label id="port" class="font-weight-normal" /></td>
+                                                    <th style=" width: 25%; text-align: right;font-size:14px;"><b>Port Of Destination : </b></th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="destination" class="font-weight-normal"></label> </td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        A/C Wise All LC
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseTwo" class="collapse show" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table id="customerInfo" class="table table-bordered table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>A/C Number</th>
+                                                        <th>LC Number</th>
+                                                        <th>Applicant Name</th>
+                                                        <th>Account Name</th>
+                                                        <th>Com. Code</th>
+                                                        <th>Quantity</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+        </div>
+    </div>
+
+</div><!-- /.container-fluid -->
+@section ScriptSection
+{
+
+<!-- DataTables  & Plugins -->
+<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/plugins/jszip/jszip.min.js"></script>
+<script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+<script>
+      
+        $(document).on('click', '#btnSearch',  function () {
+          debugger;
+           let  searchString = $('#txtaccNo').val();
+           let  searchLcNo = $('#txtLcNo').val();
+           if(searchString=="")
+           {
+               toastr.error('Account No cannot be empty.');
+           }
+           if(searchLcNo=="")
+           {
+              $("#collapseTwo").css("display", "block");
+              loadSIInfo(searchString );
+              $("#collapseOne").css("display", "none");
+           }else{
+             $("#collapseOne").css("display", "block");
+             loadLCDetail(searchString,searchLcNo);
+              $("#collapseTwo").css("display", "none");
+           }        
+        });
+
+         function loadLCDetail(searchString,searchLcNo) {
+            debugger;
+                         $.ajax({
+                             type: 'GET',
+                             url: '/Lcinformation/getLcDetails',
+                             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                             data: {seachString:searchString,searchLcNo:searchLcNo},
+                             success: function (result) {
+                              if (result.data != null) {
+                                     $('#applicant').text(result.data.applicant_name);
+                                     $('#dateclose').text(result.data.date_clsd );
+                                     $('#com').text(result.data.ref_desc);
+                                     $('#foracid').text(result.data.foracid);
+                                     $('#dcbill').text(result.data.dc_bill_util_amt);
+                                     $('#quan').text(result.data.quantity);
+                                     $('#sol').text(result.data.sol_id);
+                                     $('#opendate').text(result.data.date_opnd);
+
+                                    $('#dcreg').text(result.data.dc_reg_type);
+
+                                    $('#openval').text(result.data.open_value);
+                                    $('#expdate').text(result.data.expiry_date );
+                                    $('#cur').text(result.data.actl_crncy_code);
+                                    $('#fcode').text(result.data.func_code);
+                                    $('#shipdate').text(result.data.last_ship_date);
+                                    $('#curval').text(result.data.current_value);
+                                    $('#port').text(result.data.port_of_origin);
+                                    $('#destination').text(result.data.port_of_destin);
+
+                                    //$("#collapseOne").css("display", "none");
+                                    //$("#id").css("display", "block");
+                                 }
+                                 else {
+                                     toastr.error('No Data Found!!!');
+                                     //$('#acct_name').text('');
+                                     //$('#cust_id').text('');
+                                     //$('#address').text('');
+                                     //$('#foracid').text('');
+                                     //$('#Account_Type').text('');
+                                     //$('#acct_crncy_code').text('');
+                                     //$('#aval_balance').text('');
+                                     //$('#effect_balance').text('');
+                                 }
+                             }
+                             //,
+                             //error: function () {
+                             //    toastr.error('Account No and Date field can not be empty!');
+                             //   // alert('Failed to receive the Data');
+                             //   // console.log('Failed ');
+                             //}
+
+                    });
+                    }
+
+        $('#customerInfo').DataTable({
+            "filter": false, // this is for disable filter (search box)
+            "paging": true,
+            "pageLength": 10,
+            "lengthChange": false,
+            "pagingType": "full_numbers",
+            "scrollX": false,
+            "autoWidth": true,
+            "initComplete": function (settings, json) {
+                $("#customerInfo").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+            },
+        });
+
+        function loadSIInfo(searchString) {
+            $('#customerInfo').DataTable().destroy();
+
+            $('#customerInfo').DataTable({
+                "language": {
+                    processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
+                "filter": false,
+                "paging": true,
+                "pageLength": 10,
+                "lengthChange": false,
+                "pagingType": "full_numbers",
+                "scrollX": false,
+                "autoWidth": true,
+                "ajax": {
+                    "url": "/Lcinformation/SearchLCinformation",
+                    "dataSrc": function (d) {
+                        if (d.data.length === 0) {
+                            var settings = $('#customerInfo').DataTable().settings()[0];
+                            settings.oLanguage.sEmptyTable = d.message;
+                        }
+                        return d.data;
+                    },
+                    "data": {seachString: searchString },
+                    "type": "GET",
+                    "dataType": "json"
+                },
+                "columns": [
+
+                    {
+                        "data": "foracid", "name": "foracid", render: function (data, type) {
+                            if (type === 'display') {
+                                let link = "/CaSaAccount/Index?accountNo="+data;
+                                return '<i class="fa fa-user"></i><a href="' + link + '">' + data + '</a>';
+                            }
+                            return data;
+                        } },
+                    { "data": "dc_ref_num", "name": "dc_ref_num" },
+                    { "data": "applicant_name", "name": "applicant_name" },
+                    { "data": "acct_name", "name": "acct_name" },
+                    { "data": "ref_desc", "name": "ref_desc" },
+                    { "data": "quantity", "name": "quantity" },
+
+                ]            
+            });
+
+            $("#customerInfo").wrap('<div style="overflow:auto;" />');
+
+            }
+
+
+</script>
+
+}

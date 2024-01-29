@@ -1,0 +1,288 @@
+﻿@using XCRV.Domain.Entities
+
+@model CustomerLimit
+@{
+    ViewData["Title"] = "Customer Limit";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Customer</a></li>
+                    <li class="breadcrumb-item active">Customer Limit</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Customer Limit Search</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row h-100 justify-content-center align-items-center">
+                    <div class="col-md-8">
+                        <form asp-controller="CustomerLimit" asp-action="Index">
+                           @* <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label font-weight-normal">Customer ID</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="txtSearchString" placeholder="CustomerId">
+                                </div>
+                                <span>
+                                    <button type="button" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                                </span>
+
+                            </div>*@
+
+                             <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-warning">Customer Id</button>
+                                </div>
+                                <!-- /btn-group -->
+                                <input type="text" id="txtSearchString"  class="form-control" >
+                                <span class="input-group-append">
+                                    <button type="button" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                                </span>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+                <div class="card-header">
+                    <h3 class="card-title">Customer Total Limit</h3>
+                    
+                </div>
+
+                <div class="row h-100 justify-content-center align-items-center">
+                    <div class="col-md-8">
+                        <div class="form-group row">
+                            <div class="col-12 table-responsive-sm">
+                                <table class="table smallfrontTable" id="custLimitInfo">
+                                    <tr>
+                                        <th>Customer Name</th>
+                                        <td><label id="name" class="font-weight-normal"></label></td>
+                                        <th>Total Limit</th>
+                                        <td><label id="tot_lim" class="font-weight-normal"></label></td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Total Outstanding</th>
+                                        <td><label id="tot_ostd" class="font-weight-normal"></label></td>
+                                        <th>Total Fund Liability</th>
+                                        <td><label id="tot_fun_lia" class="font-weight-normal"></label></td>
+                                    </tr>
+
+                                    @* <tr>
+                                        <th>Total Outstanding</th>
+                                        <td>@Model.tot_ostd</td>
+                                        <th>Total Fund Liability</th>
+                                        <td>@Model.tot_fun_lia</td>
+                                        </tr>*@
+
+                                    @*<label for="inputEmail3" class="col-sm-8 col-form-label">Name</label>
+                                        <label for="inputEmail3" class="col-sm-8 col-form-label">Test</label>
+
+                                        <label for="inputEmail3" class="col-sm-4 col-form-label">Total Outstanding	</label>
+                                        <br>
+                                        <label for="inputEmail3" class="col-sm-8 col-form-label">Total Limit</label>
+                                        <label for="inputEmail3" class="col-sm-4 col-form-label">Total Fund Liability</label>*@
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="customerLimit" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>CustomerId</th>
+                                    <th>Name</th>
+                                    <th>Account No</th>
+                                    <th>Limit</th>
+                                    <th>Currency</th>
+                                    <th>Current Outstand.</th>
+                                    <th>Sanct.Date</th>
+                                    <th>Lim.Exp.Date</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+</div><!-- /.contant -->
+@section ScriptSection
+{
+
+<!-- DataTables  & Plugins -->
+<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/plugins/jszip/jszip.min.js"></script>
+<script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+<script>
+
+
+    $(document).on('click', '#btnSearch',  function () {
+
+        //alert("ok");
+        //type = $('#btnSearchAction').text();
+
+        searchString = $('#txtSearchString').val();
+       // console.log(searchString);
+        loadCusomerInfo(searchString );
+        loadCustometLimitInfo(searchString);
+        
+    });
+
+   
+    $('#customerLimit').DataTable({
+        "filter": false, // this is for disable filter (search box)
+        "paging": true,
+        "pageLength": 10,
+        "lengthChange": false,
+        "pagingType": "full_numbers",
+        "scrollX": false,
+        "autoWidth": false,
+        "initComplete": function (settings, json) {
+            $("#customerLimit").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+        },
+    });
+
+    function loadCusomerInfo(srcvalue) {
+
+        $('#customerLimit').DataTable().destroy();
+
+        $('#customerLimit').DataTable({
+            "processing": true, // for show progress bar
+            "language": {
+                processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+            },
+            "filter": false, // this is for disable filter (search box)
+            "paging": true,
+            "pageLength": 10,
+            "lengthChange": false,
+            "pagingType": "full_numbers",
+            "scrollX": false,
+            "autoWidth": false,
+            "initComplete": function (settings, json) {
+                $("#customerLimit").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+            },
+
+            "ajax": {
+                "url": "/CustomerLimit/getCustomerLimit",
+                "dataSrc": function (d) {
+                                               if (d.data.length === 0) {
+                                                 var settings = $('#customerLimit').DataTable().settings()[0];
+                                                 settings.oLanguage.sEmptyTable = d.message;
+                                          }
+                                             return d.data;
+                                        },
+                "data": {seachString:srcvalue},
+                "type": "GET",
+                "dataType": "json"
+            },
+            "columns": [
+                 { "data": "cust_id", "name": "cust_id" },
+                { "data": "name", "name": "name" },
+                {
+                    "data": "acno", "name": "acno", render: function (data, type) {
+                        if (type === 'display') {
+                            let link = "/LoanAccount/Index?accountNo="+data;
+                            return '<i class="fa fa-user"></i><a href="' + link + '">' + data + '</a>';
+                        }
+                        return data;
+                    } },
+               // { "data": "acno", "name": "acno" },
+                { "data": "lmt", "name": "lmt" },
+                { "data": "crncy", "name": "crncy" },
+                { "data": "clr_bal_amt", "name": "clr_bal_amt" },
+                { "data": "snctn_date", "name": "snctn_date" },
+                { "data": "lim_exp_date", "name": "lim_exp_date" },
+
+            ]
+        });
+         $('#name').text('');
+        $('#tot_lim').text('');
+        $('#tot_ostd').text('');
+        $('#tot_fun_lia').text('');
+        }
+
+     function loadCustometLimitInfo(searchString) {
+         
+        $.ajax({
+            type: 'GET',
+            url: '/CustomerLimit/getCustomerLimitInfo',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            data: {Custid:searchString},        
+           // dataType:'Json',
+            success: function (result) {
+             if (result != null) {  
+                    $('#name').text(result.data.name);  
+                    $('#tot_lim').text(result.data.tot_lim);  
+                    $('#tot_ostd').text(result.data.tot_ostd);
+                    $('#tot_fun_lia').text(result.data.tot_fun_lia);
+                    
+                    
+                } else {  
+                    alert("Something went wrong");  
+                }           
+            }
+            //,
+            //error: function () {
+            //    alert('Failed to receive the Data');
+            //    console.log('Failed ');
+            //}
+
+        });
+
+     }
+
+        
+
+</script>
+
+}

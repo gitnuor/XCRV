@@ -1,0 +1,61 @@
+﻿@using XCRV.Domain.Entities;
+@model IList<CustomerSearch>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+<div class="row">
+    <div class="col-12">
+        <table id="list-of-account-tbl" class="table table-bordered table-striped table-sm" style="font-size: .7em;">
+            <thead>
+                <tr >
+                    <th>SOL</th>
+                    <th>Account No</th>
+                    <th>Customer Id</th>
+                    <th>Account Name</th>
+                    <th>Short Name</th>
+                    <th>Schm Type</th>
+                    <th>Schm Description</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach( var item in Model)
+                {
+                    <tr>
+                        <td>@item.sol_id</td>
+                        <td style="white-space: nowrap;">
+
+                            @switch (item.schm_type)
+                            {
+                                case "SBA":
+                                     <i class="fa fa-user"></i><a href="/CaSaAccount/Index?accountNo=@item.foracid" target="_blank"> @item.foracid </a>
+                                    break;
+                                case "CAA":
+                                     <i class="fa fa-user"></i><a href="/CaSaAccount/Index?accountNo=@item.foracid" target="_blank"> @item.foracid </a>
+                                    break;
+                                case "TDA":
+                                     <i class="fa fa-user"></i><a href="/TermDepositScheme/Index?accountNo=@item.foracid" target="_blank"> @item.foracid </a>
+                                    break;
+                                case "LAA":
+                                     <i class="fa fa-user"></i><a href="/LoanAccount/Index?accountNo=@item.foracid" target="_blank"> @item.foracid </a>
+                                    break;
+                                default:
+                                    <i class="fa fa-user"></i><a href="/CaSaAccount/Index?accountNo=@item.foracid" target="_blank"> @item.foracid </a>
+                                    break;
+                            }                           
+                        
+                        </td>        
+                        <td style="white-space: nowrap;"><i class="fa fa-user"></i><a href="/CustomerGeneralDetails/Index?customerId=@item.cust_id" target="_blank"> @item.cust_id </a></td>
+                        <td>@item.acct_name</td>
+                        <td>@item.acct_short_name</td>
+                        <td>@item.schm_type</td>
+                        <td>@item.schm_desc</td>
+                        <td class="text-right">@item.clr_bal_amt</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

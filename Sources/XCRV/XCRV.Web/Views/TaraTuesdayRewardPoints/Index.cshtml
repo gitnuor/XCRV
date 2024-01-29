@@ -1,0 +1,566 @@
+﻿@{
+    ViewData["Title"] = "BBL - XCRV360 : Tara Reward Tuesday Points";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+@using XCRV.Domain.Entities
+
+@model TuesdayRewardPoint
+<style>
+    .form-check {
+        padding-left: 0rem !important;
+    }
+
+    .dropdown-menu {
+        /*  position: absolute;
+                                                                top: 100%;
+                                                                left: 0;*/
+        z-index: 1035;
+    }
+
+</style>
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"> </h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Customer</a></li>
+                    <li class="breadcrumb-item active">Tara Reward Tuesday Points</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Tara Reward Tuesday Points</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <input id="tranchk" type="checkbox" value="true" name="Live" style="zoom:1.5;" />&nbsp;<b style="font-size: 11px;">Date Wise</b>
+                <input type="hidden" value="false" name="Live" />
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="input-group mb-3">
+
+                            <div class="input-group-prepend">
+
+                               
+                                <button type="button" id="btnSearchAction" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" style="min-width: 200px!important;margin-top:33px;">
+                                    Search By
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-item"><a href="#">Debit Card</a></li>
+                                    <li class="dropdown-item"><a href="#">Credit Card</a></li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label style="font-size:13px">Card No</label>
+                            <div class='input-group'>
+                                @* <input type="text" id="txtFromDate" class="form-control singledate" />*@
+                                <input type="text" class="form-control" id="txtSearchString" value="@ViewBag.Accno" />
+                                <input type="hidden" id="hdnAccountNo" name="hdnAccountNo" value="@ViewBag.AccountNo" />
+                                <input type="hidden" id="hdnFromDate" name="hdnFromDate" value="@ViewBag.FromDate" />
+                                <input type="hidden" id="hdnToDate" name="hdnToDate" value="@ViewBag.ToDate" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2" style="display:none" id="fdate">
+                        <div class="form-group">
+                            <label style="font-size:13px">From Date</label>
+                            <div class='input-group'>
+                                <input type="text" id="txtFromDate" class="form-control singledate" style="font-size: 14px;" />
+                                <div class="input-group-append">
+                                    <label for="txtFromDate" class="input-group-text">
+                                        <span class="fa fa-calendar"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2" style="display:none" id="tdate">
+                        <div class="form-group">
+                            <label style="font-size:13px">To Date</label>
+                            <div class='input-group'>
+                                <input type="text" id="txtToDate" class="form-control singledate" style="font-size: 13px;" />
+                                <div class="input-group-append">
+                                    <label for="txtToDate" class="input-group-text">
+                                        <span class="fa fa-calendar"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" id="date">
+                        <div class="form-group">
+                            <label style="font-size:13px">OnDate</label>
+                            <div class='input-group'>
+                                <input type="text" id="txtDate" class="form-control singledate" style="font-size: 14px;" />
+                                <div class="input-group-append">
+                                    <label for="txtDate" class="input-group-text">
+                                        <span class="fa fa-calendar"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <div class='input-group'>
+                                <button id="btnSearch" type="button" class="btn btn-primary" value="Insert"><span id="btnText"> Search</span></button>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>&nbsp;&nbsp;&nbsp;
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-12" id="accordion">
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        Tuesday Reward Poins
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped smallfrontTable">
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Card-holder Name :</th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="lblCardholderName" class="font-weight-normal"> </label></td>
+                                                    <th style=" width: 25%; text-align: right;">Card-holder Contact No : </th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="lblContact" class="font-weight-normal"> </label></td>
+
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Total Reward Points :</th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="lblTotalEarned" class="font-weight-normal"> </label></td>
+                                                    <th style=" width: 25%; text-align: right;">Available Reward Points :</th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="lblAvailableRewardPoints" class="font-weight-normal"> </label></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Double Reward Points For Tuesdays :</th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="lblRewardPointsEarned" class="font-weight-normal"> </label></td>
+                                                    <th style=" width: 25%; text-align: right; display:none;" id="statementDate">Last Statement Date Credit Card  :</th>
+                                                    <td style=" width: 25%; text-align: left;"><label id="lbllastStatementDate" class="font-weight-normal"> </label></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content -->
+@section ScriptSection
+{
+<!-- DataTables  & Plugins -->
+<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/plugins/jszip/jszip.min.js"></script>
+<script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="~/js/bootstrap-datepicker.js"></script>
+
+
+
+
+<script type="text/javascript">
+                $(function () {
+                                $('#txtFromDate').datepicker({
+                                    changeMonth: true,
+                                    changeYear: true,
+                                    format: "dd-M-yyyy",
+                                    language: "tr",
+                                    autoclose: true
+                                });
+                            });
+
+                             $(function () {
+                                $('#txtToDate').datepicker({
+                                    changeMonth: true,
+                                    changeYear: true,
+                                    format: "dd-M-yyyy",
+                                    language: "tr",
+                                    autoclose: true
+                                });
+                            });
+
+                 $(function () {
+                                $('#txtDate').datepicker({
+                                    changeMonth: true,
+                                    changeYear: true,
+                                    format: "dd-M-yyyy",
+                                    language: "tr",
+                                    autoclose: true
+                                });
+                                $('#txtDate').datepicker('setDate', 'today');
+                            });
+
+
+       $(function(){
+        $("#tranchk").change(function() {
+            if($(this).is(":checked")) {
+                  $('#date').hide();
+                  $('#fdate').show();
+                  $('#tdate').show();
+                 $('#btnSearchAction').text('Search By');
+                 $("#txtSearchString").val('');
+                 $('#lblCardholderName').text('');
+                 $('#lblTotalEarned').text('');
+                 $('#lblAvailableRewardPoints').text('');
+                 $('#lblRewardPointsEarned').text('');
+                 $('#lblRewardPointsEarned').text('');
+                 $('#lblContact').text('');
+
+            }
+            else {
+                  $('#fdate').hide();
+                  $('#tdate').hide();
+                  $('#date').show();
+                  $("#txtDate").datepicker("setDate", new Date());
+                 $('#btnSearchAction').text('Search By');
+                 $("#txtSearchString").val('');
+                 $('#lblCardholderName').text('');
+                 $('#lblTotalEarned').text('');
+                 $('#lblAvailableRewardPoints').text('');
+                 $('#lblRewardPointsEarned').text('');
+                 $('#lblRewardPointsEarned').text('');
+                 $('#lblContact').text('');
+
+            }
+
+        });
+
+    })
+
+    $('.dropdown-menu').on('click', 'a', function () {
+        $('#lblCardholderName').text('');
+        $('#lblTotalEarned').text('');
+        $('#lblAvailableRewardPoints').text('');
+        $('#lblRewardPointsEarned').text('');
+        $('#lblRewardPointsEarned').text('');
+        $('#lblContact').text('');
+        var text = $(this).html();
+        var htmlText = text;
+        debugger;
+        if(htmlText=="Credit Card")
+        {
+          $('#statementDate').show();
+        }else{
+          $('#statementDate').hide();
+        }
+        $(this).closest('.input-group-prepend').find('.dropdown-toggle').html(htmlText);
+    });
+</script>
+
+<script>
+     
+        $(document).on('click', '#btnSearch',  function () {
+            debugger;
+            var type = $('#btnSearchAction').text();
+            var searchString = $('#txtSearchString').val();
+            var fdate=$('#txtFromDate').val();
+            var tdate=$('#txtToDate').val();
+            var OnDate=$('#txtDate').val();
+
+            var searchType = '';
+            switch (type) {
+                case "Debit Card":
+                    searchType = "DebitCard";
+                    break;
+                case "Credit Card":
+                    searchType = "CreditCard";
+                     $('#statementDate').show();
+                    break;
+                default:
+                    searchType = type;
+                    break;
+            }
+
+            if ($('#tranchk').is(':checked'))
+            {
+                if(searchString=='')
+                {
+                  toastr.error('Card no cannot be empty.');
+                  return;
+                }
+                else if(fdate=='' || tdate=='')
+                {
+                  toastr.error('From date and To date  cannot be empty.');
+                  return;
+                }
+                else if(type=='Search By')
+                {
+                  toastr.error('Select debit or credit card.');
+                  return;
+                }
+                else{
+                  if( searchType == "DebitCard")
+                     {
+                       loadRewardInfoDebit(searchType, searchString,fdate,tdate );
+                     }
+                  else
+                    {
+                      loadRewardInfoCredit(searchType, searchString,fdate,tdate );
+                     // loadCardHolderContactNoCredit(searchString);
+                    }
+                }
+           }
+          else{
+                if(searchString=='')
+                {
+                  toastr.error('Card no cannot be empty.');
+                  return;
+                }
+                else if(type=="\n                                    Search By\n                                ")
+                {
+                  toastr.error('Select debit or credit card.');
+                  return;
+                }
+                //else if(type!='Credit Card')
+                //{
+                //  toastr.error('Select debit or credit card.');
+                //  return;
+                //}
+                else{
+                    if( searchType == "DebitCard")
+                       {
+                         loadRewardInfoDebitOnDate(searchType, searchString,OnDate);
+                       }
+                   else
+                      {
+                        loadRewardInfoCreditOnDate(searchType, searchString,OnDate);
+                        //loadCardHolderContactNoCredit(searchString);
+                      }
+                }
+          }
+
+        });
+
+       function loadRewardInfoDebit(searchType, searchString,fdate,tdate ) {
+
+                         $.ajax({
+                             type: 'GET',
+                             url: '/TaraTuesdayRewardPoints/getTaraTuesdayRewardPoint',
+                             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                             data: {seachType:searchType,seachString:searchString,fdate:fdate,tdate:tdate},
+                             success: function (result) {
+                              if (result.data.tuesdayDetail != null) {
+                                  debugger;
+                                     $('#lblCardholderName').text(result.data.tuesdayDetail.card_Holder_Name);
+                                     $('#lblTotalEarned').text(result.data.tuesdayDetail.totaL_REWARD);
+                                     $('#lblAvailableRewardPoints').text(result.data.tuesdayDetail.avail_Reward_point);
+                                     $('#lblRewardPointsEarned').text(result.data.tuesdayDetail.totaltuesday);
+                                     $('#lblContact').text(result.data.contactDetailDebit.mobileno);
+                                    // loadCardHolderContactNoDebit(searchString);
+
+                                 } else {
+                                      toastr.error('No data found.');
+                                       $('#lblCardholderName').text('');
+                                       $('#lblTotalEarned').text('');
+                                       $('#lblAvailableRewardPoints').text('');
+                                       $('#lblRewardPointsEarned').text('');
+                                       $('#lblContact').text('');
+                                 }
+                             },
+                             error: function () {
+                                 toastr.error('Reward Point Data :: Failed to receive the Data');
+                                 console.log('Failed ');
+                             }
+
+                    });
+            }
+
+     function loadRewardInfoDebitOnDate(searchType, searchString,OnDate) {
+
+                         $.ajax({
+                             type: 'GET',
+                             url: '/TaraTuesdayRewardPoints/getTaraTuesdayRewardPointOnDate',
+                             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                             data: {seachType:searchType,seachString:searchString,OnDate:OnDate},
+                             success: function (result) {
+                              if (result.data.tuesdayDetail != null) {
+                                  debugger;
+                                     $('#lblCardholderName').text(result.data.tuesdayDetail.card_Holder_Name);
+                                     $('#lblTotalEarned').text(result.data.tuesdayDetail.totaL_REWARD);
+                                     $('#lblAvailableRewardPoints').text(result.data.tuesdayDetail.avail_Reward_point);
+                                     $('#lblRewardPointsEarned').text(result.data.tuesdayDetail.totaltuesday);
+                                     $('#lblContact').text(result.data.contactDetailDebit.mobileno);
+                                    // loadCardHolderContactNoDebit(searchString);
+
+                                 } else {
+                                     toastr.error('No data found.');
+                                       $('#lblCardholderName').text('');
+                                       $('#lblTotalEarned').text('');
+                                       $('#lblAvailableRewardPoints').text('');
+                                       $('#lblRewardPointsEarned').text('');
+                                       $('#lblContact').text('');
+                                 }
+                             },
+                             error: function () {
+                                 toastr.error('Reward Point Data :: Failed to receive the Data');
+                                 console.log('Failed ');
+                             }
+
+                    });
+            }
+
+     function loadCardHolderContactNoDebit(searchString) {
+
+                         $.ajax({
+                             type: 'GET',
+                             url: '/TaraTuesdayRewardPoints/getCardHolderContactNo',
+                             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                             data: {seachString:searchString},
+                             success: function (result) {
+                              if (result.data != null) {
+                                     $('#lblContact').text(result.data.mobileno);
+                                 } else {
+                                     toastr.error('No data found.');
+                                 }
+                             },
+                             error: function () {
+                                 //alert('Reward Point Data :: Failed to receive the Data');
+                                 toastr.error('Reward Point Data :: Failed to receive the Data');
+                                 console.log('Failed ');
+                             }
+
+                    });
+
+            }
+    function loadRewardInfoCredit(searchType, searchString,fdate,tdate ) {
+
+                         $.ajax({
+                             type: 'GET',
+                             url: '/TaraTuesdayRewardPoints/getTaraTuesdayRewardPoint',
+                             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                             data: {seachType:searchType,seachString:searchString,fdate:fdate,tdate:tdate},
+                             success: function (result) {
+                              if (result.data.tuesdayDetail != null) {
+                                  debugger;
+                                    
+                                     $('#lblTotalEarned').text(result.data.tuesdayDetail.totaL_REWARD);
+                                     $('#lblAvailableRewardPoints').text(result.data.tuesdayDetail.availableReward);
+                                     $('#lblRewardPointsEarned').text(result.data.tuesdayDetail.twesdaY_REWARD);
+                                     $('#lbllastStatementDate').text(result.data.tuesdayDetail.statementDate);
+
+                                      $('#lblCardholderName').text(result.data.contactDetailDebit.cb_cardholder_name);
+                                      $('#lblContact').text(result.data.contactDetailDebit.cb_mobile_no);
+
+
+                                 } else {
+                                     toastr.error('No data found.');
+                                 }
+                             },
+                             error: function () {
+                                 toastr.error('Reward Point Data :: Failed to receive the Data');
+                                 console.log('Failed ');
+                             }
+                    });
+            }
+     function loadRewardInfoCreditOnDate(searchType, searchString,OnDate ) {
+
+                         $.ajax({
+                             type: 'GET',
+                             url: '/TaraTuesdayRewardPoints/getTaraTuesdayRewardPointOnDate',
+                             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                             data: {seachType:searchType,seachString:searchString,OnDate:OnDate},
+                             success: function (result) {
+                              if (result.data.tuesdayDetail != null) {
+                                  debugger;
+
+                                     $('#lblTotalEarned').text(result.data.tuesdayDetail.totaL_REWARD);
+                                     $('#lblAvailableRewardPoints').text(result.data.tuesdayDetail.availableReward);
+                                     $('#lblRewardPointsEarned').text(result.data.tuesdayDetail.twesdaY_REWARD);
+                                     $('#lbllastStatementDate').text(result.data.tuesdayDetail.statementDate);
+
+                                      $('#lblCardholderName').text(result.data.contactDetailDebit.cb_cardholder_name);
+                                      $('#lblContact').text(result.data.contactDetailDebit.cb_mobile_no);
+
+
+                                 } else {
+                                     toastr.error('No data found.');
+                                 }
+                             },
+                             error: function () {
+                                 toastr.error('Reward Point Data :: Failed to receive the Data');
+                                 console.log('Failed ');
+                             }
+                    });
+            }
+      function loadCardHolderContactNoCredit(searchString) {
+
+                         $.ajax({
+                             type: 'GET',
+                             url: '/TaraTuesdayRewardPoints/getCardHolderContactNoCredit',
+                             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                             data: {seachString:searchString},
+                             success: function (result) {
+                              if (result.data != null) {
+                                      $('#lblCardholderName').text(result.data.cb_cardholder_name);
+                                      $('#lblContact').text(result.data.cb_mobile_no);
+                                 } else {
+                                     toastr.error('No data found.');
+                                 }
+                             },
+                             error: function () {
+                                 //alert('Reward Point Data :: Failed to receive the Data');
+                                 toastr.error('Reward Point Data :: Failed to receive the Data');
+                                 console.log('Failed ');
+                             }
+
+                    });
+
+            }
+   
+   
+</script>
+
+}

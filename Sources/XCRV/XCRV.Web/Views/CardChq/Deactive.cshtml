@@ -1,0 +1,560 @@
+﻿
+@{
+    ViewData["Title"] = "Card Cheque Deactive";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Queue Management</a></li>
+                    <li class="breadcrumb-item active">Card Cheque Deactive Maker</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Card Cheque Deactive Maker</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <button type="button" class="btn btn-warning">Referance Number</button>
+                            </div>
+                            <!-- /btn-group -->
+                            <input type="text" id="refNo" name="refNo" class="form-control" value="@ViewBag.CustomerId">
+                            <span class="input-group-append">
+                                <button type="button" id="btnSearch" class="btn btn-primary form-control">Search</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <h5>CardPro Customer Information</h5>
+                <div class="row justify-content-center align-items-center" id="customerInfo">
+
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <table id="CustomerChqInfo" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Action</th>
+                                    <th>Cheque Book No</th>
+                                    <th>Cheque No</th>
+                                    <th>Payment Status</th>
+                                    <th>Remarks</th>
+                                    <th>Cancel Status</th>
+                                    <th>Status Change By</th>
+                                    <th>Status Change Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer justify-content-between">
+                <button id="btnShowChangeStatusMulti" type="button" class="btn btn-success">Change Status</button>
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+
+</div><!-- /.contant -->
+
+<div class="modal fade" id="ChqBookStatusEditModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-info">
+                <h4 class="modal-title">Cheque Book Status Update</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table smallfrontTable">
+                    <tr>
+                        <th style="text-align:right;">Cheque Book No :</th>
+                        <td style="text-align:left;">
+                            <span id="txtChqBookNo" />
+                        </td>
+                        <th style="text-align:right;">Cheque No :</th>
+                        <td style="text-align:left;">
+                            <span id="txtChqSLNo" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:right;">Cheque Status :</th>
+                        <td style="text-align:left;" colspan="3">
+                            <span id="txtChqStaus" />
+                        </td>                        
+                    </tr>                    
+                    <tr>
+                        <th style="text-align:right;">Remarks :</th>
+                        <td style="text-align:left;" colspan="3">
+                            <textarea class="form-control" rows="3" placeholder="Enter ..." id="txtConfirmRemarks"></textarea>
+                            <input type="hidden" id="hdnPaymentCode" name="hdnPaymentCode" class="form-control">
+                            <input type="hidden" id="hdnCancelCode" name="hdnCancelCode" class="form-control">
+                        </td>
+                    </tr>                    
+                    <tr>
+                        <th style="text-align:right;">Action :</th>
+                        <td style="text-align:left;">
+                            <div class="form-group">
+                                <select class="form-control" id="ddlChqBookAction" >
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" type="checkbox" id="applyForWholeBook">
+                                <label for="applyForWholeBook" class="custom-control-label">Apply for whole book</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" style="text-align:center">
+                            <label id="msg" style="color: red; font-weight:bold;"></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="btnChangeStatus" type="button" class="btn btn-success">Change Status</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="ChqBookStatusMultiEditModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-info">
+                <h4 class="modal-title">Cheque Book Status Update</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table smallfrontTable">
+                    <tr>
+                        <th style="text-align:right;">Cheque Book No :</th>
+                        <td style="text-align:left;" colspan="3">
+                            <span id="txtChqBookNoMulti" />
+                        </td>                        
+                    </tr>                    
+                    <tr>
+                        <th style="text-align:right;">Remarks :</th>
+                        <td style="text-align:left;" colspan="3">
+                            <textarea class="form-control" rows="3" placeholder="Enter ..." id="txtConfirmRemarksMulti"></textarea>
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:right;">Action :</th>
+                        <td style="text-align:left;" colspan="3">
+                            <div class="form-group">
+                                <select class="form-control" id="ddlChqBookActionMulti">
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="btnChangeStatusMulti" type="button" class="btn btn-success">Change Status</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@section ScriptSection
+{
+    <!-- DataTables  & Plugins -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/plugins/jszip/jszip.min.js"></script>
+    <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
+    <script>
+    $(document).ready(function () {
+
+    @if (TempData.ContainsKey("ErrorMessage"))
+    {
+        @:toastr.error('@TempData["ErrorMessage"]');
+    };
+    });
+    </script>
+
+
+    <script>
+
+        $('#CustomerChqInfo').DataTable({
+            "filter": false, // this is for disable filter (search box)
+            "paging": true,
+            "pageLength": 10,
+            "lengthChange": false,
+            "pagingType": "full_numbers",
+            "scrollX": false,
+            "autoWidth": true,
+            "ordering": false,
+            "initComplete": function (settings, json) {
+                $("#CustomerChqInfo").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+            },
+        });
+
+        var table;
+
+        function ChqBookInfo() {
+            var chqBookSL = $('#ddlChqBookSL').val();
+            $.ajax({
+                url: "@Url.Action("ShowCustomerChqBookDetails", "CardChq")",
+                data: { chqBookSL: chqBookSL },
+                success: function (res) {
+
+                    data = res.data;
+                    if (data != null) {
+                        if (data.chqBookInfo != null) {
+                            $("#chqIssueDate").text(data.chqBookInfo.issueDate);
+                            $("#numOfLeaf").text(data.chqBookInfo.intNumberOfLeaf);
+                            $("#chqBookStatus").text(data.chqBookInfo.bookStatus);
+                        }
+
+                        $('#CustomerChqInfo').DataTable().destroy();
+
+                        table = $('#CustomerChqInfo').DataTable({
+                            "filter": false, // this is for disable filter (search box)
+                            "paging": true,
+                            "pageLength": 10,
+                            "lengthChange": false,
+                            "pagingType": "full_numbers",
+                            "scrollX": false,
+                            "autoWidth": true,
+                            "ordering": false,
+                            "data": data.chqBookDetails,
+
+                            "initComplete": function (settings, json) {
+                                $("#CustomerChqInfo").wrap("<div style='overflow:auto; width:100%;position:relative;'></div>");
+                            },
+                            "columns": [
+                                {
+                                    "data": "numChqNo", "name": "numChqNo", render: function (data, type) {
+                                        if (type === 'display') {
+                                            return '<input type="checkbox"  selectRow="true" class="dt-checkboxes" id="chkSelect">'
+                                        }
+                                        return data;
+                                    }
+                                },
+                                {
+                                    "data": "numChqNo", "name": "numChqNo", render: function (data, type,full, meta) {
+                                        if (type === 'display') {
+
+                                            return '<button type="button" class="btn btn-info btn-sm edit" >' + 'Edit' + '</button>';
+                                        }
+                                        return data;
+                                    }
+                                },
+                                { "data": "strChqBookName", "name": "strChqBookName" },
+                                { "data": "numChqNo", "name": "numChqNo" },
+                                { "data": "chequeStatus", "name": "chequeStatus" },
+                                { "data": "strRemarks", "name": "strRemarks" },
+                                { "data": "chequeCancelStatus", "name": "chequeCancelStatus" },
+                                { "data": "intChqStatusChangeBy", "name": "intChqStatusChangeBy" },
+                                { "data": "dtChqStsChangeDate", "name": "dtChqStsChangeDate" }
+                            ],
+
+                        });
+
+                        $('#CustomerChqInfo tbody').off('click').on('click', 'button.edit', function () {
+
+                            $("#applyForWholeBook").prop("checked", false);
+
+                            GetChqActionStatuses();
+                            var data = table.row($(this).parents('tr')).data();
+                            $("#txtChqBookNo").text(data["strChqBookName"]);
+                            $("#txtChqSLNo").text(data["numChqNo"]);
+                            $("#txtChqStaus").text(data["chequeStatus"]);
+                            $("#txtConfirmRemarks").text(data["strRemarks"]);
+
+                            chqSts = data["intChqStatus"];
+                            paySta = data["intPaymentStatus"];
+                            $("#hdnPaymentCode").val(paySta);
+                            $("#hdnCancelCode").val(chqSts);
+
+                            $("#ChqBookStatusEditModal").modal("show");
+                        });
+                    }
+
+                }
+            });
+        }
+
+        function ChqCustomerInfo(submited) {
+            var refNo = $('#refNo').val();
+            $.ajax({
+                url: "@Url.Action("ShowCustomerInfoForDeActive", "CardChq")",
+                data: { refNo: refNo, submited: submited },
+                success: function (data) {
+                    $("#customerInfo").html(data);
+
+                    var message = $('#errorMessage').val();
+                    if (message) {
+                        toastr.error(message)
+                    }
+                    var ChqBookErrorMessage = $('#ChqBookErrorMessage').val();
+                    if (ChqBookErrorMessage) {
+                        toastr.error(ChqBookErrorMessage)
+                    }
+                    var ChqBookMessage = $('#ChqBookMessage').val();
+                    if (ChqBookMessage) {
+                        toastr.info(ChqBookMessage)
+                    }
+
+                    $(document).on('change', '#ddlChqBookSL', function () {
+                        ChqBookInfo();
+                    });
+                }
+            });
+        }
+
+        ChqCustomerInfo('');
+
+        $(document).on('click', '#btnSearch', function () {
+            ChqCustomerInfo('submited');
+        });
+
+
+
+        function GetChqActionStatuses() {
+            forFullBook = $("#applyForWholeBook").prop('checked');
+            $.ajax({
+                url: "@Url.Action("GetChqActionStatuses", "CardChq")",
+                data: { forFullBook: forFullBook },
+                success: function (data) {
+
+                    response = data;
+                    $('#ddlChqBookAction').html('');
+                    var options = '';
+                    options += '';
+                    for (var i = 0; i < response.length; i++) {
+                        options += '<option value="' + response[i].id + '">' + response[i].name + '</option>';
+                    }
+                    $('#ddlChqBookAction').append(options);
+                }
+            });
+        }
+
+
+        $(document).on('change', '#applyForWholeBook', function () {
+            GetChqActionStatuses()
+        });
+
+
+        $(document).on('click', '#btnChangeStatus', function () {
+
+            remarks = $('#txtConfirmRemarks').val();
+            status = $('#ddlChqBookAction').val();
+            statusText = $('#ddlChqBookAction').find('option:selected').text();
+            if (!remarks) {
+                toastr.error("Error", "Remarks is Required!!!");
+                return;
+            }
+
+            if (status=='-99') {
+                toastr.error("Error", "Select Cheque Status!!!");
+                return;
+            }
+
+            forFullBook = $("#applyForWholeBook").prop('checked');
+
+            //alert($("#hdnPaymentCode").val());
+
+            numChqBookSL = $("#txtChqSLNo").text();
+            if (forFullBook == true) {
+                numChqBookSL = $("#ddlChqBookSL").val()
+            }
+
+            data = {
+                strCancelRemarks: remarks,
+                numChqBookSL: numChqBookSL,
+                intChqStatus: status,
+                txtChqStatus: statusText,
+                paymentStatus: $("#hdnPaymentCode").val(),
+                chqCancelStatus: $("#hdnCancelCode").val(),
+                forFullBook: forFullBook
+            }
+
+            $.ajax({
+                url: "/CardChq/DeactiveChequeBookLeaf",
+                type: "POST",
+                data: { requst: data },
+                success: function (data) {
+                    if (data.status == true) {
+                        toastr.success("message", data.message);
+                        $("#ChqBookStatusEditModal").modal("hide");
+                        $('#txtConfirmRemarks').val('');
+                        ChqBookInfo();
+                    }
+                    else {
+                        toastr.error("Error", data.message);
+                    }
+                }
+                //,
+                //error: function (jqXHR, textStatus, errorThrown) {
+                //    if (jqXHR.status == 500) {
+                //        toastr.error("Error", 'Internal error: ' + jqXHR.responseText);
+                //    } else {
+                //        toastr.error("Error", 'Unexpected error.' + jqXHR.status);
+                //    }
+                //}
+            });
+
+
+
+        });
+
+        $(document).on('click', '#btnShowChangeStatusMulti', function () {
+
+            var checkedCheckboxes = $("#CustomerChqInfo input[id*='chkSelect']:checkbox:checked");
+
+            console.log(checkedCheckboxes);
+
+
+            if (checkedCheckboxes.length == 0) {
+                toastr.error("Error", "No Cheque Selected!!!");
+                return;
+            }
+
+            $.ajax({
+                url: "@Url.Action("GetChqActionStatuses", "CardChq")",
+                data: { forFullBook: false },
+                success: function (data) {
+
+                    response = data;
+                    $('#ddlChqBookActionMulti').html('');
+                    var options = '';
+                    options += '';
+                    for (var i = 0; i < response.length; i++) {
+                        options += '<option value="' + response[i].id + '">' + response[i].name + '</option>';
+                    }
+                    $('#ddlChqBookActionMulti').append(options);
+                }
+            });
+
+            $("#txtChqBookNoMulti").text($('#ddlChqBookSL').find('option:selected').text() + ' (' + checkedCheckboxes.length +' leaf(ves) selected)');
+
+            $("#ChqBookStatusMultiEditModal").modal("show");
+
+        });
+
+        $(document).on('click', '#btnChangeStatusMulti', function () {
+
+            remarks = $('#txtConfirmRemarksMulti').val();
+            status = $('#ddlChqBookActionMulti').val();
+            statusText = $('#ddlChqBookActionMulti').find('option:selected').text();
+            if (!remarks) {
+                toastr.error("Error", "Remarks is Required!!!");
+                return;
+            }
+            if (status == '-99') {
+                toastr.error("Error", "Select Cheque Status!!!");
+                return;
+            }
+
+            var checkedCheckboxes = $("#CustomerChqInfo input[id*='chkSelect']:checkbox:checked");
+
+            console.log(checkedCheckboxes);
+
+            list = [];
+            checkedCheckboxes.each(function () {
+
+                var rowData = table.row($(this).parents('tr')).data();
+
+                console.log(rowData);
+
+                data = {
+                    remarks: remarks,
+                    strCancelRemarks: remarks,
+                    numChqBookSL: rowData['numChqNo'],
+                    intChqStatus: status,
+                    txtChqStatus: statusText,
+                    paymentStatus: $("#hdnPaymentCode").val(),
+                    chqCancelStatus: $("#hdnCancelCode").val(),
+                }
+                list.push(data);
+            });
+
+            $.ajax({
+                url: "/CardChq/DeactiveMultiChequeBookLeaf",
+                type: "POST",
+                data: { requst: list },
+                success: function (data) {
+                    if (data.status == true) {
+                        toastr.success("message", data.message);
+                        $("#ChqBookStatusMultiEditModal").modal("hide");
+                        $('#txtConfirmRemarksMulti').val('');
+                        ChqBookInfo();
+                    }
+                    else {
+                        toastr.error("Error", data.message);
+                    }
+                }
+                //,
+                //error: function (jqXHR, textStatus, errorThrown) {
+                //    if (jqXHR.status == 500) {
+                //        toastr.error("Error", 'Internal error: ' + jqXHR.responseText);
+                //    } else {
+                //        toastr.error("Error", 'Unexpected error.' + jqXHR.status);
+                //    }
+                //}
+            });
+
+
+
+        });
+
+
+
+    </script>
+
+}
+
+

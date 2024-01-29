@@ -1,0 +1,79 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using XCRV.Domain.Entities;
+@model IEnumerable<CardChqActiveVerify>
+
+<div class="col-md-12">
+    <input type="hidden" id="ErrorMessage" value="@ViewBag.ErrorMessage" />
+    <h5>Cheque Book Information</h5>
+    <table class="table table-striped table-bordered smallfrontDataTable" id="chqbookList">
+        <thead>
+            <tr>
+                <th style="position:static !important">NRIC</th>
+                <th>Credit.Card.Number</th>
+                <th>Card.Holder.Name</th>
+                <th>Mobile</th>
+                <th>Cheque.Name</th>
+                <th>No.of.Leaf</th>
+                <th>Cheque.Start.No</th>
+                <th>Cheque.End.No</th>
+                <th>Issue.Date</th>
+                <th>Cheque.Used</th>
+                <th>Cheque.Available</th>
+                <th>Maker.Remarks</th>
+                <th>Cheque.Number</th>
+                <th>Cheque.Status</th>
+                <th>Activated.By</th>
+                <th>Activation.Date</th>
+                <th>SuperVisor.Remarks</th>
+                <th>Action</th>
+                <th>
+                    <input type="checkbox" id="checkall" />
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @item.NRIC_Number
+                </td>
+                <td>@item.strCardNo</td>
+                <td>@item.strcusname</td>
+                <td>@item.cb_mobile_no</td>
+                <td>@item.strChqBookName</td>
+                <td>@item.intNumberOfLeaf</td>
+                <td>@item.numChqStartNo</td>
+                <td>@item.numChqEndNo</td>
+                <td>@item.IssueDate</td>
+                <td>@item.ChequeUsed</td>
+                <td>@item.ChequeAvailable</td>
+                <td>@item.strRemarks</td>
+                <td>@item.numChqBookSL</td>
+                <td>@item.BookStatus</td>
+                <td>@item.UserName</td>
+                <td>@item.activitydate</td>
+                <td>
+                    <input type="text" id ="txtRemarksGrid_@item.numChqBookSL" runat="server" />
+                </td>
+                <td>
+                    <input type="button" id="btnAction" value="Action" class="btn btn-outline-primary"
+                           onclick="ShowConfirmModalPopup('@item.numChqBookSL', '@item.strCardNo')" />
+                </td>
+                <td>
+                    <input type="checkbox" id="chkSelect" class='delete_check' data-chqno="@item.numChqBookSL" data-cardno="@item.strCardNo" />
+                </td>
+
+
+
+
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

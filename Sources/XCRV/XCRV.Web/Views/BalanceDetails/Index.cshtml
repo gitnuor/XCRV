@@ -1,0 +1,215 @@
+﻿
+@{
+    ViewData["Title"] = "BBL - XCRV360 : Account Balance Details";
+    Layout = "~/Views/Shared/Template/_Layout.cshtml";
+}
+
+@model XCRV.Domain.Entities.BalanceDetails
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"></h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Deposit</a></li>
+                    <li class="breadcrumb-item active">Account Balance Details</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Account Balance Details</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-8">
+                        <form asp-controller="BalanceDetails" asp-action="Index">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-warning">Account Number</button>
+                                </div>
+                                <!-- /btn-group -->
+                                <input type="text" id="txtAccountNo" name="accountNo" class="form-control" value="@ViewBag.AccountNo">
+                                <span class="input-group-append">
+                                    <button type="submit" id="btnSearch" class="btn btn-info btn-flat">Search</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>                
+                </div>                
+                <div class="row">
+                    <div class="col-12" id="accordion">
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        Account Details
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped smallfrontTable">
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Account Number :</th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.foracid</td>
+                                                    <th style=" width: 25%; text-align: right;">Name : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.acct_name</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">SOL ID	 : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.sol_id</td>
+                                                    <th style=" width: 25%; text-align: right;">Currency Code : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.acct_crncy_code</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Balance : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.EffAvailAmt</td>
+                                                    <th style=" width: 25%; text-align: right;">Customer Status :</th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.CustStatus</td>
+                                                </tr>
+                                               
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        Balance Details
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped smallfrontTable">
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Clear Balance Amount : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.clr_bal_amt</td>
+                                                    <th style=" width: 25%; text-align: right;">Sanction Limit : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.sanct_lim</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Drawing Power	 : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.drwng_power</td>
+                                                    <th style=" width: 25%; text-align: right;">Utilized Amount : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.utilised_amt</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">DACC Limit : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.dacc_lim</td>
+                                                    <th style=" width: 25%; text-align: right;">Lien Amount	 : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.lien_amt</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Overdue Liability		: </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.OverDueLiability</td>
+                                                    <th style=" width: 25%; text-align: right;">System Reserved Amount : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.system_reserved_amt</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Funds In Clearing : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.un_clr_bal_amt</td>
+                                                    <th style=" width: 25%; text-align: right;">Effective Available Amount	 : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.EffAvailAmt</td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseThree">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        Secured Limits
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseThree" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped smallfrontTable">
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Adhoc Limit : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.adhoc_lim</td>
+                                                    <th style=" width: 25%; text-align: right;">Single Transaction Limit : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.single_tran_lim</td>
+                                                </tr>                                              
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-warning card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseFour">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                       Clean Limits
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseFour" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped smallfrontTable">
+                                                <tr>
+                                                    <th style=" width: 25%; text-align: right;">Adhoc Limit: </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.clean_adhoc_lim</td>
+                                                    <th style=" width: 25%; text-align: right;">Single Transaction Limit : </th>
+                                                    <td style=" width: 25%; text-align: left;">@Model.clean_single_tran_lim</td>
+                                                </tr>
+                                               
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section ScriptSection
+{
+    <script>
+    $(document).ready(function () {
+
+    @if (TempData.ContainsKey("ErrorMessage"))
+    {
+        @:toastr.error('@TempData["ErrorMessage"]');
+    };
+    });
+    </script>
+    
+}

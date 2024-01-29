@@ -1,0 +1,53 @@
+﻿@model CradProPreviousStatementViewModel
+
+
+<div class="col-12" id="accordion">
+    
+    <partial name="__CardStatementBasicInfo" model="@Model.CradProStatementSummary" />
+
+    <div class="card card-primary card-outline">
+        <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+            <div class="card-header">
+                <h4 class="card-title w-100">
+                    Transaction
+                </h4>
+            </div>
+        </a>
+        <div id="collapseTwo" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <table id="customerLimit" class="table table-bordered table-striped">
+                            <thead>
+                                <tr style="line-height:9px;">
+                                    <th>Card Holder Number</th>
+                                    <th>Txn. Date</th>
+                                    <th>Post Date</th>
+                                    <th>Txn. Code</th>
+                                    <th>MCC</th>
+                                    <th>Descripion</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(var item in Model.CardProTransactions)
+                                {
+                                    <tr style="line-height:9px;">
+                                        <td>@item.Card_Holder_Number</td>
+                                        <td>@item.TRXN_DATE</td>
+                                        <td>@item.POST_DATE</td>
+                                        <td>@item.TRXN_CODE</td>
+                                        <td>@item.MCC</td>
+                                        <td>@item.DESCRIPTION</td>
+                                        <td>@item.AMOUNT</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
